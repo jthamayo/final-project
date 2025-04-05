@@ -1,0 +1,13 @@
+# Editor/IDE directories and files
+**/.idea/
+**/.vscode/
+.project
+
+# Logs
+*.log
+.DS_Store
+Thumbs.db
+
+### Ignore OS files
+**/.DS_Store
+**/Thumbs.db
