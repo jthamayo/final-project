@@ -40,7 +40,7 @@ public class User {
 	return this.email;
     }
 
-    public void serId(Long id) {
+    public void setId(Long id) {
 	this.id = id;
     }
 
@@ -62,6 +62,12 @@ public class User {
 	this.firstName = "Unknown";
 	this.lastName = "Unknown";
 	this.email = "Unknown";
+    }
+
+    public User(String firstName, String lastName, String email) {
+	this.firstName = firstName;
+	this.lastName = lastName;
+	this.email = email;
     }
 
     public User(Long id, String firstName, String lastName, String email) {
