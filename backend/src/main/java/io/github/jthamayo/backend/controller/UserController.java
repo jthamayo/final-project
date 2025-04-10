@@ -1,5 +1,7 @@
 package io.github.jthamayo.backend.controller;
 
+import java.util.List;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -33,5 +35,11 @@ public class UserController {
     public ResponseEntity<UserDto> getUserById(@PathVariable("id") Long userId) {
 	UserDto userDto = userService.getUserById(userId);
 	return ResponseEntity.ok(userDto);
+    }
+    
+    @GetMapping
+    public ResponseEntity<List<UserDto>> getAllUsers(){
+	List<UserDto> usersDto = userService.getAllUsers();
+	return ResponseEntity.ok(usersDto);
     }
 }

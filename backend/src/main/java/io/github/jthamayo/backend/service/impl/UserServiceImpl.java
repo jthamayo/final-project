@@ -1,6 +1,8 @@
 package io.github.jthamayo.backend.service.impl;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
@@ -22,7 +24,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDto createUser(UserDto userDto) {
-	// TODO Auto-generated method stub
 	User user = UserMapper.mapToUser(userDto);
 	User savedUser = userRepository.save(user);
 	return UserMapper.mapToUserDto(savedUser);
@@ -30,10 +31,15 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDto getUserById(Long userId) {
-	// TODO Auto-generated method stub
 	User user = userRepository.findById(userId)
 		.orElseThrow(() -> new ResourceNotFoundException("User does not exist with given id: " + userId));
 	return UserMapper.mapToUserDto(user);
+    }
+
+    @Override
+    public List<UserDto> getAllUsers() {
+	List<User> users = userRepository.findAll();
+	return users.stream().map((user) -> UserMapper.mapToUserDto(user)).collect(Collectors.toList());
     }
 
 }
