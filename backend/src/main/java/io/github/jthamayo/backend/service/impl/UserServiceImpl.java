@@ -1,7 +1,6 @@
 package io.github.jthamayo.backend.service.impl;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
@@ -50,6 +49,13 @@ public class UserServiceImpl implements UserService {
 	user.setLastName(updatedUser.getLastName());
 	user.setEmail(updatedUser.getEmail());
 	return UserMapper.mapToUserDto(userRepository.save(user));
+    }
+
+    @Override
+    public void deleteUser(Long userId) {
+	userRepository.findById(userId)
+		.orElseThrow(() -> new ResourceNotFoundException("User does not exist with given id: " + userId));
+	userRepository.deleteById(userId);
     }
 
 }
