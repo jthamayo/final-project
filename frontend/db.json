@@ -1,9 +1,9 @@
 {
     "users": [
-      { "id": 1, "name": "Alice", "email": "alice@example.com" },
-      { "id": 2, "name": "Rose", "email": "rose@example.com" },
-      { "id": 3, "name": "Bob", "email": "bob@example.com" },
-      { "id": 4, "name": "Ruth", "email": "ruth@example.com" }
+      { "id": 1, "firstName": "Alice", "lastName": "A", "email": "alice@example.com" },
+      { "id": 2, "firstName": "Rose", "lastName": "B", "email": "rose@example.com" },
+      { "id": 3, "firstName": "Bob", "lastName": "C", "email": "bob@example.com" },
+      { "id": 4, "firstName": "Ruth", "lastName": "D", "email": "ruth@example.com" }
 
     ]
   }
