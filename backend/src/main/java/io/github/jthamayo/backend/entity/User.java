@@ -1,10 +1,14 @@
 package io.github.jthamayo.backend.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -21,11 +25,25 @@ public class User {
     private String lastName;
     @Column(nullable = false, unique = true)
     private String email;
+    @Column(nullable = false, unique = true)
+    private String number;
+    @JsonBackReference
+    @ManyToOne
+    @JoinColumn(name = "group_id")
+    private Group group;
 
     ////////////////// GETTERS&SETTERS///////////////////////
 
     public Long getId() {
 	return this.id;
+    }
+
+    public String getNumber() {
+	return number;
+    }
+
+    public Group getGroup() {
+	return group;
     }
 
     public String getFirstName() {
@@ -52,8 +70,16 @@ public class User {
 	this.lastName = lastName;
     }
 
+    public void setNumber(String number) {
+	this.number = number;
+    }
+
     public void setEmail(String email) {
 	this.email = email;
+    }
+
+    public void setGroup(Group group) {
+	this.group = group;
     }
 
     //////////////// CONSTRUCTOR////////////////
@@ -62,19 +88,26 @@ public class User {
 	this.firstName = "Unknown";
 	this.lastName = "Unknown";
 	this.email = "Unknown";
+	this.number = "Unknown";
+
     }
 
-    public User(String firstName, String lastName, String email) {
+    public User(String firstName, String lastName, String email, String number, Group group) {
 	this.firstName = firstName;
 	this.lastName = lastName;
 	this.email = email;
+	this.number = number;
+	this.group = group;
+
     }
 
-    public User(Long id, String firstName, String lastName, String email) {
+    public User(Long id, String firstName, String lastName, String email, String number, Group group) {
 	this.id = id;
 	this.firstName = firstName;
 	this.lastName = lastName;
 	this.email = email;
+	this.group = group;
+
     }
 
 }
