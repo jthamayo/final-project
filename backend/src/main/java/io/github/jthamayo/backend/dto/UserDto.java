@@ -6,6 +6,8 @@ public class UserDto {
     private String firstName;
     private String lastName;
     private String email;
+    private String number;
+    private Long groupId;
 
     ////////////////// GETTERS&SETTERS///////////////////////
 
@@ -25,6 +27,14 @@ public class UserDto {
 	return this.email;
     }
 
+    public String getNumber() {
+	return this.number;
+    }
+
+    public Long getGroupId() {
+	return this.groupId;
+    }
+
     public void setId(Long id) {
 	this.id = id;
     }
@@ -41,25 +51,34 @@ public class UserDto {
 	this.email = email;
     }
 
+    public void setNumber(String number) {
+	this.number = number;
+    }
+
+    public void setGroupId(Long groupId) {
+	this.groupId = groupId;
+    }
+
     //////////////// CONSTRUCTOR////////////////
 
     public UserDto() {
-	this.firstName = "Unknown";
-	this.lastName = "Unknown";
-	this.email = "Unknown";
     }
 
-    public UserDto(String firstName, String lastName, String email) {
+    public UserDto(String firstName, String lastName, String email, String number) {
 	this.firstName = firstName;
 	this.lastName = lastName;
 	this.email = email;
+	this.number = number;
+
     }
 
-    public UserDto(Long id, String firstName, String lastName, String email) {
+    public UserDto(Long id, String firstName, String lastName, String email, String number, Long groupId) {
 	this.id = id;
 	this.firstName = firstName;
 	this.lastName = lastName;
 	this.email = email;
+	this.number = number;
+	this.groupId = groupId;
     }
 
 }

@@ -40,6 +40,10 @@ public class Group {
 
     ///////////////////// CONTRUCTOR/////////////////////////
 
+    public Group() {
+
+    }
+
     public Group(Long id, List<User> users) {
 	this.id = id;
 	this.users = users;

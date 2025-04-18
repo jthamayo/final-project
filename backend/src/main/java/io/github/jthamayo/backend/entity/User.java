@@ -92,12 +92,20 @@ public class User {
 
     }
 
-    public User(String firstName, String lastName, String email, String number, Group group) {
+    public User(String firstName, String lastName, String email, String number) {
 	this.firstName = firstName;
 	this.lastName = lastName;
 	this.email = email;
 	this.number = number;
-	this.group = group;
+
+    }
+    
+    public User(Long id, String firstName, String lastName, String email, String number) {
+	this.id = id;
+	this.firstName = firstName;
+	this.lastName = lastName;
+	this.email = email;
+	this.number = number;
 
     }
 
