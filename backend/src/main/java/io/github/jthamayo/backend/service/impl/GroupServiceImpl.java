@@ -3,6 +3,8 @@ package io.github.jthamayo.backend.service.impl;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.springframework.stereotype.Service;
+
 import io.github.jthamayo.backend.dto.GroupDto;
 import io.github.jthamayo.backend.dto.UserDto;
 import io.github.jthamayo.backend.entity.Group;
@@ -14,15 +16,21 @@ import io.github.jthamayo.backend.repository.GroupRepository;
 import io.github.jthamayo.backend.repository.UserRepository;
 import io.github.jthamayo.backend.service.GroupService;
 
+@Service
 public class GroupServiceImpl implements GroupService {
 
     private GroupRepository groupRepository;
     private UserRepository userRepository;
 
+    public GroupServiceImpl(UserRepository userRepository, GroupRepository groupRepository) {
+	this.groupRepository = groupRepository;
+	this.userRepository = userRepository;
+    }
+
     @Override
     public GroupDto createGroup(GroupDto groupDto) {
 	Group group = GroupMapper.mapToGroup(groupDto);
-	List<User> users = groupDto.getUsers().stream()
+	List<User> users = groupDto.getUserIds().stream()
 		.map((userId) -> userRepository.findById(userId)
 			.orElseThrow(() -> new ResourceNotFoundException("User not found")))
 		.collect(Collectors.toList());
@@ -50,7 +58,7 @@ public class GroupServiceImpl implements GroupService {
     public GroupDto updateGroup(Long groupId, GroupDto groupDto) {
 	Group group = groupRepository.findById(groupId)
 		.orElseThrow(() -> new ResourceNotFoundException("Group not found: " + groupId));
-	List<User> users = groupDto.getUsers().stream()
+	List<User> users = groupDto.getUserIds().stream()
 		.map((userId) -> userRepository.findById(userId)
 			.orElseThrow(() -> new ResourceNotFoundException("User not found: " + userId)))
 		.collect(Collectors.toList());

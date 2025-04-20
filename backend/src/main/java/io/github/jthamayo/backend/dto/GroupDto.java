@@ -17,11 +17,11 @@ public class GroupDto {
 	this.id = id;
     }
 
-    public List<Long> getUsers() {
+    public List<Long> getUserIds() {
 	return userIds;
     }
 
-    public void setUsers(List<Long> userIds) {
+    public void setUserIds(List<Long> userIds) {
 	this.userIds = userIds;
     }
 
