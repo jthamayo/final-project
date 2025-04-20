@@ -17,7 +17,7 @@ import io.github.jthamayo.backend.dto.UserDto;
 import io.github.jthamayo.backend.service.UserService;
 
 @RestController
-@RequestMapping("/api/user")
+@RequestMapping("/api/users")
 public class UserController {
 
     private UserService userService;
