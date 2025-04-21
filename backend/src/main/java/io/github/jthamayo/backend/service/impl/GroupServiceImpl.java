@@ -74,4 +74,16 @@ public class GroupServiceImpl implements GroupService {
 	groupRepository.deleteById(groupId);
     }
 
+    @Override
+    public GroupDto removeUserFromGroup(Long groupId, Long userId) {
+	Group group = groupRepository.findById(groupId)
+		.orElseThrow(() -> new ResourceNotFoundException("Group not found: " + groupId));
+	User user = userRepository.findById(userId)
+		.orElseThrow(() -> new ResourceNotFoundException("User not found: " + userId));
+	user.setGroup(null);
+	group.getUsers().remove(user);
+	return GroupMapper.mapToGroupDto(groupRepository.save(group));
+
+    }
+
 }
