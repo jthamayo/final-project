@@ -19,7 +19,7 @@ public class Group {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @JsonManagedReference
-    @OneToMany(mappedBy = "group", orphanRemoval = true)
+    @OneToMany(mappedBy = "group")
     private List<User> users;
 
     public Long getId() {
