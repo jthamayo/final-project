@@ -60,8 +60,7 @@ public class GroupController {
     }
 
     @DeleteMapping("{groupId}/users/{userId}")
-    public ResponseEntity<GroupDto> removeUser(@PathVariable Long groupId,
-	    @PathVariable Long userId) {
+    public ResponseEntity<GroupDto> removeUser(@PathVariable Long groupId, @PathVariable Long userId) {
 	GroupDto group = groupService.removeUserFromGroup(groupId, userId);
 	return ResponseEntity.ok(group);
 

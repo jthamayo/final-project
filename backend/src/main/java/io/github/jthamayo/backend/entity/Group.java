@@ -22,6 +22,8 @@ public class Group {
     @OneToMany(mappedBy = "group")
     private List<User> users;
 
+    //////////////////////// GETTERS&SETTERS ////////////////////////////
+    
     public Long getId() {
 	return id;
     }
