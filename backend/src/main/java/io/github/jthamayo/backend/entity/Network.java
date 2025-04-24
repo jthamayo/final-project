@@ -88,4 +88,9 @@ public class Network {
 	this.dateStart = dateStart;
     }
 
+    public Network(Long id, LocalDate dateStart) {
+	this.id = id;
+	this.dateStart = dateStart;
+    }
+
 }

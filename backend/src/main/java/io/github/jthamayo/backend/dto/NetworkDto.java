@@ -5,8 +5,8 @@ import java.time.LocalDate;
 public class NetworkDto {
 
     private Long id;
-    private UserDto user1;
-    private UserDto user2;
+    private Long userId1;
+    private Long userId2;
     private LocalDate dateStart;
 
     public Long getId() {
@@ -17,20 +17,20 @@ public class NetworkDto {
 	this.id = id;
     }
 
-    public UserDto getUser1() {
-	return user1;
+    public Long getUserId1() {
+	return userId1;
     }
 
-    public void setUser1(UserDto user1) {
-	this.user1 = user1;
+    public void setUserId1(Long userId1) {
+	this.userId1 = userId1;
     }
 
-    public UserDto getUser2() {
-	return user2;
+    public Long getUserId2() {
+	return userId2;
     }
 
-    public void setUser2(UserDto user2) {
-	this.user2 = user2;
+    public void setUserId2(Long userId2) {
+	this.userId2 = userId2;
     }
 
     public LocalDate getDateStart() {
@@ -43,16 +43,16 @@ public class NetworkDto {
 
     //////////////// CONSTRUCTOR/////////////////////
 
-    public NetworkDto(Long id, UserDto user1, UserDto user2, LocalDate dateStart) {
+    public NetworkDto(Long id, Long userId1, Long userId2, LocalDate dateStart) {
 	this.id = id;
-	this.user1 = user1;
-	this.user2 = user2;
+	this.userId1 = Math.min(userId1, userId2);
+	this.userId2 = Math.max(userId1, userId2);
 	this.dateStart = dateStart;
     }
 
-    public NetworkDto(UserDto user1, UserDto user2, LocalDate dateStart) {
-	this.user1 = user1;
-	this.user2 = user2;
+    public NetworkDto(Long userId1, Long userId2, LocalDate dateStart) {
+	this.userId1 = Math.min(userId1, userId2);
+	this.userId2 = Math.max(userId1, userId2);
 	this.dateStart = dateStart;
     }
 
