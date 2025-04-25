@@ -100,7 +100,7 @@ public class User {
 	this.number = number;
 
     }
-    
+
     public User(Long id, String firstName, String lastName, String email, String number) {
 	this.id = id;
 	this.firstName = firstName;
@@ -118,5 +118,7 @@ public class User {
 	this.group = group;
 
     }
+
+    // TODO do remember to override equals user by id and hash
 
 }

@@ -15,19 +15,21 @@ public interface NetworkService {
     NetworkDto updateNetwork(Long networkId, NetworkDto networkDto);
 
     void deleteNetwork(Long networkId);
-    
+
     NetworkDto getNetworkBetweenUsers(Long userId1, Long userId2);
 
     List<NetworkDto> getAllNetworks();
 
-    List<UserDto> getConnectedUsers(Long userId);
+    List<UserDto> getUserConnections(Long userId);
 
-    List<UserDto> getMutualConnections(Long userId1, Long userId2);
+    List<UserDto> getGroupConnections(Long gropupId);
 
-    List<UserDto> getExclusiveConnections(Long userId1, Long userId2);
+    List<UserDto> getUsersMutualConnections(Long userId1, Long userId2);
+
+    List<UserDto> getUsersExclusiveConnections(Long userId1, Long userId2);
 
     List<UserDto> getGroupMutualConnections(Long groupId);
 
-    List<UserDto> getGroupExclusiveConnections(Long groupId);
+    List<UserDto> getUserSecondaryConnections(Long userId);
 
 }
