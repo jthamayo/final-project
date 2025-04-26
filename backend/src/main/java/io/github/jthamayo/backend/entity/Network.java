@@ -61,6 +61,10 @@ public class Network {
 
     //////////////////////// CONSTRUCTORS ////////////////////////////
 
+    public Network() {
+
+    }
+    
     public Network(Long id, User user1, User user2, LocalDate dateStart) {
 	this.id = id;
 

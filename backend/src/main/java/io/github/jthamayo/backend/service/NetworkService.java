@@ -1,7 +1,6 @@
 package io.github.jthamayo.backend.service;
 
 import java.util.List;
-import java.util.Optional;
 
 import io.github.jthamayo.backend.dto.NetworkDto;
 import io.github.jthamayo.backend.dto.UserDto;
@@ -31,5 +30,10 @@ public interface NetworkService {
     List<UserDto> getGroupMutualConnections(Long groupId);
 
     List<UserDto> getUserSecondaryConnections(Long userId);
+
+    // TODO add service to return a List of users sorted by the
+    // level of affinity (frequency of connections within group)
+
+    // TODO add service to return a List of best professional matches
 
 }

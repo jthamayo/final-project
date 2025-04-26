@@ -43,6 +43,9 @@ public class NetworkDto {
 
     //////////////// CONSTRUCTOR/////////////////////
 
+    public NetworkDto() {
+    }
+    
     public NetworkDto(Long id, Long userId1, Long userId2, LocalDate dateStart) {
 	this.id = id;
 	this.userId1 = Math.min(userId1, userId2);
@@ -54,6 +57,11 @@ public class NetworkDto {
 	this.userId1 = Math.min(userId1, userId2);
 	this.userId2 = Math.max(userId1, userId2);
 	this.dateStart = dateStart;
+    }
+
+    public NetworkDto(Long userId1, Long userId2) {
+	this.userId1 = Math.min(userId1, userId2);
+	this.userId2 = Math.max(userId1, userId2);
     }
 
 }
