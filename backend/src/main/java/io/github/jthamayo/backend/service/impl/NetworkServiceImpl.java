@@ -1,5 +1,6 @@
 package io.github.jthamayo.backend.service.impl;
 
+import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -36,11 +37,12 @@ public class NetworkServiceImpl implements NetworkService {
 
     @Override
     public NetworkDto createNetwork(NetworkDto networkDto) {
-	Network network = NetworkMapper.mapToNetwork(networkDto);
+	Network network = new Network();
 	network.setUser1(userRepository.findById(networkDto.getUserId1())
 		.orElseThrow(() -> new ResourceNotFoundException("User not found: " + networkDto.getUserId1())));
 	network.setUser2(userRepository.findById(networkDto.getUserId2())
 		.orElseThrow(() -> new ResourceNotFoundException("User not found: " + networkDto.getUserId2())));
+	network.setDateStart(LocalDate.now());
 	return NetworkMapper.mapToNetworkDto(networkRepository.save(network));
     }
 
@@ -87,41 +89,20 @@ public class NetworkServiceImpl implements NetworkService {
 
     @Override
     public List<UserDto> getUserConnections(Long userId) {
+	userRepository.findById(userId).orElseThrow(() -> new ResourceNotFoundException("User not found: " + userId));
 	List<User> users = networkRepository.findConnectedUsers(userId);
 	return users.stream().map(UserMapper::mapToUserDto).collect(Collectors.toList());
     }
 
     @Override
     public List<UserDto> getUsersMutualConnections(Long userId1, Long userId2) {
-	List<User> user1Connections = networkRepository.findConnectedUsers(userId1);
-	List<User> user2Connections = networkRepository.findConnectedUsers(userId2);
-	Set<User> intersection = new HashSet<>(user1Connections);
-	intersection.retainAll(user2Connections);
+	List<User> intersection = networkRepository.findMutualConnections(userId1, userId2);
 	return intersection.stream().map(UserMapper::mapToUserDto).collect(Collectors.toList());
     }
 
     @Override
     public List<UserDto> getUsersExclusiveConnections(Long userId1, Long userId2) {
-	List<User> user1Connections = networkRepository.findConnectedUsers(userId1);
-	List<User> user2Connections = networkRepository.findConnectedUsers(userId2);
-	Set<User> relativeComplement = new HashSet<>(user2Connections);
-	relativeComplement.removeAll(user1Connections);
-	return relativeComplement.stream().map(UserMapper::mapToUserDto).collect(Collectors.toList());
-    }
-
-    @Override
-    public List<UserDto> getUserSecondaryConnections(Long userId) {
-	userRepository.findById(userId).orElseThrow(() -> new ResourceNotFoundException("User not found: " + userId));
-	Set<User> userConnections = new HashSet<>(networkRepository.findConnectedUsers(userId));
-	Set<User> relativeComplement = new HashSet<>();
-	for (User connection : userConnections) {
-	    List<User> secondaryConnections = networkRepository.findConnectedUsers(connection.getId());
-	    for (User sc : secondaryConnections) {
-		if (!sc.getId().equals(userId) && !userConnections.contains(sc)) {
-		    relativeComplement.add(sc);
-		}
-	    }
-	}
+	List<User> relativeComplement = networkRepository.findExclusiveConnections(userId1, userId2);
 	return relativeComplement.stream().map(UserMapper::mapToUserDto).collect(Collectors.toList());
     }
 
@@ -129,24 +110,20 @@ public class NetworkServiceImpl implements NetworkService {
     public List<UserDto> getGroupConnections(Long groupId) {
 	Group group = groupRepository.findById(groupId)
 		.orElseThrow(() -> new ResourceNotFoundException("Group not found: " + groupId));
-	Set<User> groupConnections = new HashSet<>(
-		networkRepository.findConnectedUsers(group.getUsers().get(0).getId()));
-	for (User user : group.getUsers()) {
-	    groupConnections.addAll(networkRepository.findConnectedUsers(user.getId()));
-	}
-	groupConnections.removeAll(group.getUsers());
+	List<Long> users = group.getUsers().stream().map(User::getId).collect(Collectors.toList());
+	List<User> groupConnections = networkRepository.findConnectionsOutsideGroup(users);
 	return groupConnections.stream().map(UserMapper::mapToUserDto).collect(Collectors.toList());
     }
 
     @Override
-    public List<UserDto> getGroupMutualConnections(Long groupId) {
-	Group group = groupRepository.findById(groupId)
-		.orElseThrow(() -> new ResourceNotFoundException("Group not found: " + groupId));
-	Set<User> mutuals = new HashSet<>(networkRepository.findConnectedUsers(group.getUsers().get(0).getId()));
-	for (int i = 1; i < group.getUsers().size(); i++) {
-	    mutuals.retainAll(networkRepository.findConnectedUsers(group.getUsers().get(i).getId()));
-	}
-	mutuals.removeAll(group.getUsers());
-	return mutuals.stream().map(UserMapper::mapToUserDto).collect(Collectors.toList());
+    public List<UserDto> getUserSecondaryConnections(Long userId) {
+	userRepository.findById(userId).orElseThrow(() -> new ResourceNotFoundException("User not found: " + userId));
+	Set<User> userConnections = new HashSet<>(networkRepository.findConnectedUsers(userId));
+	Set<User> secondaryConnections = userConnections.stream()
+		.flatMap(friend -> networkRepository.findConnectedUsers(friend.getId()).stream())
+		.filter(secondary -> !secondary.getId().equals(userId) && !userConnections.contains(secondary))
+		.collect(Collectors.toSet());
+	return secondaryConnections.stream().map(UserMapper::mapToUserDto).collect(Collectors.toList());
     }
+
 }

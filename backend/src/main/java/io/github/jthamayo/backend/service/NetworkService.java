@@ -27,8 +27,6 @@ public interface NetworkService {
 
     List<UserDto> getUsersExclusiveConnections(Long userId1, Long userId2);
 
-    List<UserDto> getGroupMutualConnections(Long groupId);
-
     List<UserDto> getUserSecondaryConnections(Long userId);
 
     // TODO add service to return a List of users sorted by the

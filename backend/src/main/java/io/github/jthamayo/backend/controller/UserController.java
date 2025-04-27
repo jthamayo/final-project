@@ -30,7 +30,6 @@ public class UserController {
     public ResponseEntity<UserDto> createUser(@RequestBody UserDto userDto) {
 	UserDto savedUser = userService.createUser(userDto);
 	return new ResponseEntity<>(savedUser, HttpStatus.CREATED);
-
     }
 
     @GetMapping("{id}")
