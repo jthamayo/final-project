@@ -1,6 +1,10 @@
 package io.github.jthamayo.backend.service.impl;
 
 import java.time.LocalDate;
+import java.util.List;
+import java.util.stream.Collectors;
+
+import org.springframework.stereotype.Service;
 
 import io.github.jthamayo.backend.dto.RequestDto;
 import io.github.jthamayo.backend.entity.Request;
@@ -10,10 +14,16 @@ import io.github.jthamayo.backend.repository.RequestRepository;
 import io.github.jthamayo.backend.repository.UserRepository;
 import io.github.jthamayo.backend.service.RequestService;
 
+@Service
 public class RequestServiceImpl implements RequestService {
 
     private UserRepository userRepository;
     private RequestRepository requestRepository;
+
+    public RequestServiceImpl(UserRepository userRepository, RequestRepository requestRepository) {
+	this.userRepository = userRepository;
+	this.requestRepository = requestRepository;
+    }
 
     @Override
     public RequestDto createRequest(RequestDto requestDto) {
@@ -23,7 +33,7 @@ public class RequestServiceImpl implements RequestService {
 	request.setUserReceiver(userRepository.findById(requestDto.getUserReceiver())
 		.orElseThrow(() -> new ResourceNotFoundException("User not found: " + requestDto.getUserReceiver())));
 	request.setSentDate(LocalDate.now());
-	return RequestMapper.mapToNetworkDto(request);
+	return RequestMapper.mapToNetworkDto(requestRepository.save(request));
     }
 
     @Override
@@ -50,6 +60,12 @@ public class RequestServiceImpl implements RequestService {
 	requestRepository.findById(requestId)
 		.orElseThrow(() -> new ResourceNotFoundException("Network not found: " + requestId));
 	requestRepository.deleteById(requestId);
+    }
+
+    @Override
+    public List<RequestDto> getAllRequests() {
+	List<Request> requests = requestRepository.findAll();
+	return requests.stream().map(RequestMapper::mapToNetworkDto).collect(Collectors.toList());
     }
 
 }
