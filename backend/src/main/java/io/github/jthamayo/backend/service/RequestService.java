@@ -15,4 +15,14 @@ public interface RequestService {
     void deleteRequest(Long requestId);
 
     List<RequestDto> getAllRequests();
+
+    RequestDto rejectRequest(Long requestId);
+
+    RequestDto acceptRequest(Long requestId);
+
+    RequestDto sendUserRequest(Long senderId, Long receiverId);
+
+    List<RequestDto> getPendingReceivedRequests(Long userId);
+
+    List<RequestDto> getPendingSentRequests(Long userId);
 }
