@@ -2,7 +2,10 @@ package io.github.jthamayo.backend.entity;
 
 import java.time.LocalDate;
 
+import io.github.jthamayo.backend.entity.enums.UserRequestStatus;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -11,7 +14,7 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "connect_requests")
+@Table(name = "user_requests")
 public class Request {
 
     @Id
@@ -24,7 +27,8 @@ public class Request {
     @JoinColumn(name = "fk_receiver", nullable = false)
     private User userReceiver;
     private LocalDate sentDate;
-    // private Enum status;
+    @Enumerated(EnumType.STRING)
+    private UserRequestStatus status = UserRequestStatus.PENDING;
 
     /////////////////////////////// GETTERS&SETTERS///////////////////////////////
 
@@ -60,16 +64,25 @@ public class Request {
 	this.sentDate = sentDate;
     }
 
+    public UserRequestStatus getStatus() {
+	return status;
+    }
+
+    public void setStatus(UserRequestStatus status) {
+	this.status = status;
+    }
+
     /////////////////////////////// CONSTRUCTOR////////////////////////////////////////
 
     public Request() {
     }
 
-    public Request(Long id, User userSender, User userReceiver, LocalDate sentDate) {
+    public Request(Long id, User userSender, User userReceiver, LocalDate sentDate, UserRequestStatus status) {
 	this.id = id;
 	this.userSender = userSender;
 	this.userReceiver = userReceiver;
 	this.sentDate = sentDate;
+	this.status = status;
     }
 
     public Request(User userSender, User userReceiver) {
@@ -77,9 +90,10 @@ public class Request {
 	this.userReceiver = userReceiver;
     }
 
-    public Request(Long id, LocalDate sentDate) {
+    public Request(Long id, LocalDate sentDate, UserRequestStatus status) {
 	this.id = id;
 	this.sentDate = sentDate;
+	this.status = status;
     }
 
 }

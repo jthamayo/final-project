@@ -2,13 +2,15 @@ package io.github.jthamayo.backend.dto;
 
 import java.time.LocalDate;
 
+import io.github.jthamayo.backend.entity.enums.UserRequestStatus;
+
 public class RequestDto {
 
     private Long id;
     private Long userSenderId;
     private Long userReceiverId;
     private LocalDate sentDate;
-    // private Enum status;
+    private UserRequestStatus status;
 
     /////////////////////////////// GETTERS&SETTERS///////////////////////////////
 
@@ -32,6 +34,10 @@ public class RequestDto {
 	return userReceiverId;
     }
 
+    public UserRequestStatus getStatus() {
+	return status;
+    }
+
     public void setUserReceiver(Long userReceiverId) {
 	this.userReceiverId = userReceiverId;
     }
@@ -44,16 +50,21 @@ public class RequestDto {
 	this.sentDate = sentDate;
     }
 
+    public void setStatus(UserRequestStatus status) {
+	this.status = status;
+    }
+
     /////////////////////////////// CONSTRUCTOR////////////////////////////////////////
 
     public RequestDto() {
     }
 
-    public RequestDto(Long id, Long userSenderId, Long userReceiverId, LocalDate sentDate) {
+    public RequestDto(Long id, Long userSenderId, Long userReceiverId, LocalDate sentDate, UserRequestStatus status) {
 	this.id = id;
 	this.userSenderId = userSenderId;
 	this.userReceiverId = userReceiverId;
 	this.sentDate = sentDate;
+	this.status = status;
     }
 
     public RequestDto(Long userSenderId, Long userReceiverId) {
