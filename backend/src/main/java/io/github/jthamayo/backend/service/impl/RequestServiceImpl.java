@@ -113,17 +113,25 @@ public class RequestServiceImpl implements RequestService {
     }
 
     @Override
-    public RequestDto rejectRequest(Long requestId) {
+    public RequestDto rejectRequest(Long userId, Long requestId) {
+	userRepository.findById(userId).orElseThrow(() -> new ResourceNotFoundException("User not found: " + userId));
 	Request request = requestRepository.findById(requestId)
 		.orElseThrow(() -> new ResourceNotFoundException("Request not found: " + requestId));
+	if (!request.getUserReceiver().getId().equals(userId)) {
+	    throw new InvalidOperationException("User cannot accept this request");
+	}
 	request.setStatus(UserRequestStatus.REJECTED);
 	return RequestMapper.mapToRequestDto(requestRepository.save(request));
     }
 
     @Override
-    public RequestDto acceptRequest(Long requestId) {
+    public RequestDto acceptRequest(Long userId, Long requestId) {
+	userRepository.findById(userId).orElseThrow(() -> new ResourceNotFoundException("User not found: " + userId));
 	Request request = requestRepository.findById(requestId)
 		.orElseThrow(() -> new ResourceNotFoundException("Request not found: " + requestId));
+	if (!request.getUserReceiver().getId().equals(userId)) {
+	    throw new InvalidOperationException("User cannot reject this request");
+	}
 	request.setStatus(UserRequestStatus.ACCEPTED);
 	return RequestMapper.mapToRequestDto(requestRepository.save(request));
     }

@@ -16,9 +16,9 @@ public interface RequestService {
 
     List<RequestDto> getAllRequests();
 
-    RequestDto rejectRequest(Long requestId);
+    RequestDto rejectRequest(Long requestId, Long userId);
 
-    RequestDto acceptRequest(Long requestId);
+    RequestDto acceptRequest(Long requestId, Long userId);
 
     RequestDto sendUserRequest(Long senderId, Long receiverId);
 
