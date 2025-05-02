@@ -3,6 +3,7 @@ package io.github.jthamayo.backend.service.impl;
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -13,6 +14,7 @@ import io.github.jthamayo.backend.dto.UserDto;
 import io.github.jthamayo.backend.entity.Group;
 import io.github.jthamayo.backend.entity.Network;
 import io.github.jthamayo.backend.entity.User;
+import io.github.jthamayo.backend.exception.InvalidOperationException;
 import io.github.jthamayo.backend.exception.ResourceNotFoundException;
 import io.github.jthamayo.backend.mapper.NetworkMapper;
 import io.github.jthamayo.backend.mapper.UserMapper;
@@ -37,6 +39,15 @@ public class NetworkServiceImpl implements NetworkService {
 
     @Override
     public NetworkDto createNetwork(NetworkDto networkDto) {
+	if (networkDto.getUserId1().equals(networkDto.getUserId2())) {
+	    throw new InvalidOperationException("A user cannot connect with themselves");
+	}
+	Optional<Network> existingNetwork = networkRepository.findNetworkBetweenUsers(networkDto.getUserId1(),
+		networkDto.getUserId2());
+	if (existingNetwork.isPresent()) {
+	    throw new InvalidOperationException("Users are already connected");
+	}
+	//TODO verify accepted request
 	Network network = new Network();
 	network.setUser1(userRepository.findById(networkDto.getUserId1())
 		.orElseThrow(() -> new ResourceNotFoundException("User not found: " + networkDto.getUserId1())));
