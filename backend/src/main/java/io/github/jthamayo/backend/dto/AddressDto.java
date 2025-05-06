@@ -66,7 +66,7 @@ public class AddressDto {
 	return type;
     }
 
-    public void setAddressType(AddressType type) {
+    public void setType(AddressType type) {
 	this.type = type;
     }
 

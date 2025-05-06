@@ -3,6 +3,8 @@ package io.github.jthamayo.backend.entity;
 import io.github.jthamayo.backend.entity.enums.AddressType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -20,6 +22,7 @@ public class Address {
     private String zip;
     private String country;
     private int number;
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private AddressType type;
 
@@ -77,7 +80,7 @@ public class Address {
 	return type;
     }
 
-    public void setAddressType(AddressType type) {
+    public void setType(AddressType type) {
 	this.type = type;
     }
 
