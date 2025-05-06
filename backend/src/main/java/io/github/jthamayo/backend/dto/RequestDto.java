@@ -66,6 +66,14 @@ public class RequestDto {
 	this.sentDate = sentDate;
 	this.status = status;
     }
+    
+    public RequestDto(Long id, Long userSenderId, Long userReceiverId, LocalDate sentDate, String status) {
+	this.id = id;
+	this.userSenderId = userSenderId;
+	this.userReceiverId = userReceiverId;
+	this.sentDate = sentDate;
+	this.status = UserRequestStatus.valueOf(status);
+    }
 
     public RequestDto(Long userSenderId, Long userReceiverId) {
 	this.userSenderId = userSenderId;
