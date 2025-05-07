@@ -1,5 +1,7 @@
 package io.github.jthamayo.backend.dto;
 
+import java.util.List;
+
 public class UserDto {
 
     private Long id;
@@ -8,6 +10,8 @@ public class UserDto {
     private String email;
     private String number;
     private Long groupId;
+    private List<Long> jobIds;
+    private Long homeAddressId;
 
     ////////////////// GETTERS&SETTERS///////////////////////
 
@@ -35,6 +39,14 @@ public class UserDto {
 	return this.groupId;
     }
 
+    public List<Long> getJobIds() {
+	return jobIds;
+    }
+
+    public Long getHomeAddressId() {
+	return this.homeAddressId;
+    }
+
     public void setId(Long id) {
 	this.id = id;
     }
@@ -59,6 +71,14 @@ public class UserDto {
 	this.groupId = groupId;
     }
 
+    public void setJobIds(List<Long> jobIds) {
+	this.jobIds = jobIds;
+    }
+
+    public void setHomeAddressId(Long homeAddressId) {
+	this.homeAddressId = homeAddressId;
+    }
+
     //////////////// CONSTRUCTOR////////////////
 
     public UserDto() {
@@ -72,13 +92,16 @@ public class UserDto {
 
     }
 
-    public UserDto(Long id, String firstName, String lastName, String email, String number, Long groupId) {
+    public UserDto(Long id, String firstName, String lastName, String email, String number, Long groupId,
+	    List<Long> jobIds, Long homeAddressId) {
 	this.id = id;
 	this.firstName = firstName;
 	this.lastName = lastName;
 	this.email = email;
 	this.number = number;
 	this.groupId = groupId;
+	this.jobIds = jobIds;
+	this.homeAddressId = homeAddressId;
     }
 
 }
