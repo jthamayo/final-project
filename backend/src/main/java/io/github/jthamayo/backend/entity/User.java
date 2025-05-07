@@ -1,7 +1,10 @@
 package io.github.jthamayo.backend.entity;
 
+import java.util.List;
+
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -10,6 +13,8 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -32,6 +37,11 @@ public class User {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "group_id")
     private Group group;
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Job> jobs;
+    @OneToOne
+    @JoinColumn(name = "home_address_id")
+    private Address homeAddress;
 
     ////////////////// GETTERS&SETTERS///////////////////////
 
@@ -55,8 +65,16 @@ public class User {
 	return this.lastName;
     }
 
+    public List<Job> getJobs() {
+	return this.jobs;
+    }
+
     public String getEmail() {
 	return this.email;
+    }
+
+    public Address getHomeAddress() {
+	return homeAddress;
     }
 
     public void setId(Long id) {
@@ -83,14 +101,18 @@ public class User {
 	this.group = group;
     }
 
+    public void setJobs(List<Job> jobs) {
+	this.jobs = jobs;
+    }
+
+    public void setHomeAddress(Address homeAddress) {
+	this.homeAddress = homeAddress;
+    }
+
     //////////////// CONSTRUCTOR////////////////
 
     public User() {
-	this.firstName = "Unknown";
-	this.lastName = "Unknown";
-	this.email = "Unknown";
-	this.number = "Unknown";
-
+	
     }
 
     public User(String firstName, String lastName, String email, String number) {
@@ -110,13 +132,15 @@ public class User {
 
     }
 
-    public User(Long id, String firstName, String lastName, String email, String number, Group group) {
+    public User(Long id, String firstName, String lastName, String email, String number, Group group, List<Job> jobs,
+	    Address homeAddress) {
 	this.id = id;
 	this.firstName = firstName;
 	this.lastName = lastName;
 	this.email = email;
 	this.group = group;
-
+	this.jobs = jobs;
+	this.homeAddress = homeAddress;
     }
 
     // TODO do remember to override equals user by id and hash

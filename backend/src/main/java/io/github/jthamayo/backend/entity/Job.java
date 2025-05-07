@@ -19,7 +19,7 @@ public class Job {
     @JoinColumn(name = "address_id")
     private Address address;
     @ManyToOne
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "user_id", nullable = false)
     private User user;
     private boolean irregular;
     private boolean nocturnal;
