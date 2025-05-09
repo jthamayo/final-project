@@ -39,7 +39,7 @@ public class User {
     private Group group;
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Job> jobs;
-    @OneToOne
+    @OneToOne(optional = true, cascade = CascadeType.ALL)
     @JoinColumn(name = "home_address_id")
     private Address homeAddress;
 
