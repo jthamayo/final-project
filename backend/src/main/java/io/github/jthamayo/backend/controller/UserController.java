@@ -13,6 +13,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import io.github.jthamayo.backend.dto.AddressDto;
+import io.github.jthamayo.backend.dto.JobDto;
+import io.github.jthamayo.backend.dto.JobWithAddressDto;
 import io.github.jthamayo.backend.dto.UserDto;
 import io.github.jthamayo.backend.service.UserService;
 
@@ -54,5 +57,29 @@ public class UserController {
     public ResponseEntity<String> deleteUser(@PathVariable("id") Long userId) {
 	userService.deleteUser(userId);
 	return ResponseEntity.ok("The user has been successfully deleted");
+    }
+
+    @PostMapping("{id}/profile/address")
+    public ResponseEntity<UserDto> addHomeAddress(@PathVariable("id") Long userId, @RequestBody AddressDto addressDto) {
+	UserDto userDto = userService.addHomeAddress(userId, addressDto);
+	return new ResponseEntity<>(userDto, HttpStatus.CREATED);
+    }
+
+    @PostMapping("{id}/profile/jobs")
+    public ResponseEntity<UserDto> addJob(@PathVariable("id") Long userId, @RequestBody JobWithAddressDto job) {
+	UserDto userDto = userService.addJob(userId, job.getJob(), job.getAddress());
+	return new ResponseEntity<>(userDto, HttpStatus.CREATED);
+    }
+
+    @GetMapping("{id}/profile/address")
+    public ResponseEntity<AddressDto> getHomeAddress(@PathVariable("id") Long userId) {
+	AddressDto addressDto = userService.getHomeAddress(userId);
+	return ResponseEntity.ok(addressDto);
+    }
+
+    @GetMapping("{id}/profile/jobs")
+    public ResponseEntity<List<JobDto>> getJobs(@PathVariable("id") Long userId) {
+	List<JobDto> jobs = userService.getJobs(userId);
+	return ResponseEntity.ok(jobs);
     }
 }
