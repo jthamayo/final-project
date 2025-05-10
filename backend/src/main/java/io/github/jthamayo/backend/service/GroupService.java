@@ -12,6 +12,8 @@ public interface GroupService {
     GroupDto getGroupById(Long groupId);
 
     List<UserDto> getAllUsers(Long groupId);
+    
+    List<GroupDto> getAllGroups();
 
     GroupDto updateGroup(Long groupId, GroupDto groupDto);
 

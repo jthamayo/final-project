@@ -41,6 +41,12 @@ public class GroupController {
 	return ResponseEntity.ok(group);
     }
 
+    @GetMapping
+    public ResponseEntity<List<GroupDto>> getAllGroups() {
+	List<GroupDto> groups = groupService.getAllGroups();
+	return ResponseEntity.ok(groups);
+    }
+
     @GetMapping("{id}/users")
     public ResponseEntity<List<UserDto>> getGroupUsers(@PathVariable("id") Long groupId) {
 	List<UserDto> groupUsers = groupService.getAllUsers(groupId);

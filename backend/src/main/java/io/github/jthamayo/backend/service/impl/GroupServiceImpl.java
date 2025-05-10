@@ -86,4 +86,10 @@ public class GroupServiceImpl implements GroupService {
 
     }
 
+    @Override
+    public List<GroupDto> getAllGroups() {
+	List<Group> groups = groupRepository.findAll();
+	return groups.stream().map(GroupMapper::mapToGroupDto).collect(Collectors.toList());
+    }
+
 }
