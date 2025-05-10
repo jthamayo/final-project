@@ -1,17 +1,46 @@
 package io.github.jthamayo.backend.dto;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 
 public class UserDto {
 
     private Long id;
+    
+    @NotBlank(message = "First name is required")
     private String firstName;
+    
+    @NotBlank(message = "Last name is required")
     private String lastName;
+    
+    @NotBlank(message = "Username is required")
+    private String username;
+    
+    @Size(max = 40, message = "Email must be under 40 characters")
+    @NotBlank(message = "Email is required")
+    @Email(message = "Not a valid email format")
     private String email;
-    private String number;
+    
+    @Size(min = 6, message = "Password must be at least 6 characters")
+    private String password;
+    
+    @NotBlank(message = "Phone number is required")
+    @Pattern(regexp = "^[+]?\\d{7,15}$", message = "Invalid phone number format")
+    private String phoneNumber;
+    
     private Long groupId;
+    
     private List<Long> jobIds;
+    
     private Long homeAddressId;
+    
+    private Set<RoleDto> roleIds = new HashSet<>();
 
     ////////////////// GETTERS&SETTERS///////////////////////
 
@@ -29,10 +58,6 @@ public class UserDto {
 
     public String getEmail() {
 	return this.email;
-    }
-
-    public String getNumber() {
-	return this.number;
     }
 
     public Long getGroupId() {
@@ -63,10 +88,6 @@ public class UserDto {
 	this.email = email;
     }
 
-    public void setNumber(String number) {
-	this.number = number;
-    }
-
     public void setGroupId(Long groupId) {
 	this.groupId = groupId;
     }
@@ -78,27 +99,60 @@ public class UserDto {
     public void setHomeAddressId(Long homeAddressId) {
 	this.homeAddressId = homeAddressId;
     }
+    
+    public String getUsername() {
+        return username;
+    }
 
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public Set<RoleDto> getRoleIds() {
+        return roleIds;
+    }
+
+    public void setRoleIds(Set<RoleDto> roleIds) {
+        this.roleIds = roleIds;
+    }
+    
     //////////////// CONSTRUCTOR////////////////
 
     public UserDto() {
     }
 
-    public UserDto(String firstName, String lastName, String email, String number) {
+    public UserDto(String firstName, String lastName, String email, String phoneNumber) {
 	this.firstName = firstName;
 	this.lastName = lastName;
 	this.email = email;
-	this.number = number;
+	this.phoneNumber = phoneNumber;
 
     }
 
-    public UserDto(Long id, String firstName, String lastName, String email, String number, Long groupId,
+    public UserDto(Long id, String firstName, String lastName, String username, String email, String phoneNumber, Long groupId,
 	    List<Long> jobIds, Long homeAddressId) {
 	this.id = id;
 	this.firstName = firstName;
 	this.lastName = lastName;
+	this.username = username;
 	this.email = email;
-	this.number = number;
+	this.phoneNumber = phoneNumber;
 	this.groupId = groupId;
 	this.jobIds = jobIds;
 	this.homeAddressId = homeAddressId;
