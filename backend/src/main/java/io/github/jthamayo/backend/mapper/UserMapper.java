@@ -9,7 +9,7 @@ import io.github.jthamayo.backend.entity.User;
 public class UserMapper {
 
     public static UserDto mapToUserDto(User user) {
-	return new UserDto(user.getId(), user.getFirstName(), user.getLastName(), user.getEmail(), user.getNumber(),
+	return new UserDto(user.getId(), user.getFirstName(), user.getLastName(),user.getUsername(), user.getEmail(), user.getPhoneNumber(),
 		user.getGroup() != null ? user.getGroup().getId() : null,
 		user.getJobs() != null ? user.getJobs().stream().map((job) -> job.getId()).collect(Collectors.toList())
 			: new ArrayList<>(),
@@ -17,7 +17,7 @@ public class UserMapper {
     }
 
     public static User mapToUser(UserDto userDto) {
-	return new User(userDto.getId(), userDto.getFirstName(), userDto.getLastName(), userDto.getEmail(),
-		userDto.getNumber());
+	return new User(userDto.getId(), userDto.getFirstName(), userDto.getLastName(),userDto.getUsername(), userDto.getEmail(),
+		userDto.getPhoneNumber());
     }
 }

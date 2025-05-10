@@ -43,8 +43,7 @@ public class UserServiceImpl implements UserService {
 	this.jobRepository = jobRepository;
     }
 
-    // TODO add verified status, last_active, type of user admin, professional,
-    // client
+    // TODO add verified status, last_active
     // TODO create login
 
     @Override
@@ -67,8 +66,9 @@ public class UserServiceImpl implements UserService {
 		.orElseThrow(() -> new ResourceNotFoundException("User does not exist with given id: " + userId));
 	user.setFirstName(updatedUser.getFirstName());
 	user.setLastName(updatedUser.getLastName());
+	user.setUsername(updatedUser.getUsername());
 	user.setEmail(updatedUser.getEmail());
-	user.setNumber(updatedUser.getNumber());
+	user.setPhoneNumber(updatedUser.getPhoneNumber());
 	if (updatedUser.getGroupId() != null) {
 	    Group group = groupRepository.findById(updatedUser.getGroupId())
 		    .orElseThrow(() -> new ResourceNotFoundException("Group not found"));
