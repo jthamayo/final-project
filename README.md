@@ -13,7 +13,7 @@
 
 ## Getting stated
 
-instructions will help you run the project locally for development and testing purposes.
+These instructions will help you run the project locally for development and testing purposes.
 
 ---
 
