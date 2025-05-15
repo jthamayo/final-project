@@ -25,6 +25,10 @@ public class SignUpRequest {
     @NotBlank
     @Size(min = 5, max = 40)
     private String password;
+    
+    @NotBlank
+    @Size(min = 5, max = 40)
+    private String phoneNumber;
 
     /////////////////// GETTERS&SETTERS ////////////////////////////////
 
@@ -66,6 +70,14 @@ public class SignUpRequest {
 
     public void setPassword(String password) {
 	this.password = password;
+    }
+
+    public String getPhoneNumber() {
+	return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+	this.phoneNumber = phoneNumber;
     }
 
 }
