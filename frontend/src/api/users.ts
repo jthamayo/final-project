@@ -8,4 +8,4 @@ export interface User {
 }
 
 export const fetchUsers = () =>
-  axios.get<User[]>("http://localhost:3001/users");
+  axios.get<User[]>("http://localhost:3000/users");
