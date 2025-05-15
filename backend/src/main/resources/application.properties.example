@@ -12,3 +12,10 @@ spring.jpa.hibernate.ddl-auto=update
 
 # Hibernate Logging
 logging.level.org.hibernate.SQL= DEBUG
+
+## App Properties
+app.jwtSecret=<secret>
+app.jwtExpirationInMs=604800000
+
+## CORS config
+app.cors.allowedOrigins = http://localhost:5173
