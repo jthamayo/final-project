@@ -51,8 +51,7 @@ public class SecurityConfig {
 		.exceptionHandling(handling -> handling.authenticationEntryPoint(unauthorizedHandler))
 		.sessionManagement(management -> management.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 		.authorizeHttpRequests(requests -> requests
-			.requestMatchers("/", "/favicon.ico", "/**/*.png", "/**/*.gif", "/**/*.svg", "/**/*.jpg",
-				"/**/*.html", "/**/*.css", "/**/*.js")
+			.requestMatchers("/", "/favicon.ico", "/static/**")
 			.permitAll().requestMatchers("/api/auth/**").permitAll()
 			.requestMatchers("/api/user/checkUsernameAvailability", "/api/user/checkEmailAvailability")
 			.permitAll().requestMatchers(HttpMethod.GET, "/api/groups/**", "/api/users/**").permitAll()
