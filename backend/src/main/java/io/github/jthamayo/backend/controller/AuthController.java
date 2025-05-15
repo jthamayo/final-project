@@ -67,7 +67,7 @@ public class AuthController {
 	    return new ResponseEntity<>(new ApiResponse(false, "Email address already in use"), HttpStatus.BAD_REQUEST);
 	}
 	User user = new User(signUpRequest.getFirstName(), signUpRequest.getLastName(), signUpRequest.getUsername(),
-		signUpRequest.getEmail());
+		signUpRequest.getEmail(), signUpRequest.getPhoneNumber());
 	user.setPassword(passwordEncoder.encode(signUpRequest.getPassword()));
 
 	Role userRoles = roleRepository.findByName(RoleType.USER)

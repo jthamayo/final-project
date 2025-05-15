@@ -167,9 +167,10 @@ public class User {
 
     }
 
-    public User(String firstName, String lastName, String email, String phoneNumber) {
+    public User(String firstName, String lastName, String username, String email, String phoneNumber) {
 	this.firstName = firstName;
 	this.lastName = lastName;
+	this.username = username;
 	this.email = email;
 	this.phoneNumber = phoneNumber;
 
