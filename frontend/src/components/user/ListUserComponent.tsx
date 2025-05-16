@@ -17,7 +17,7 @@ const ListUserComponent = () => {
       <ul className="w-[400px] flex flex-col gap-1">
         {users.map((user, index) => (
           <li
-            className="bg-blue-200 rounded-md w-full h-[50px] pl-5 flex items-center"
+            className="bg-[#EDECF6] text-black rounded-md w-full h-[50px] pl-5 flex items-center"
             key={index}
           >{`${user.firstName}, ${user.email}, ${user.username}`}</li>
         ))}
