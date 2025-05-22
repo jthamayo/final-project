@@ -137,9 +137,10 @@ public class UserDto {
     public UserDto() {
     }
 
-    public UserDto(String firstName, String lastName, String email, String phoneNumber) {
+    public UserDto(String firstName, String lastName, String username, String email, String phoneNumber) {
 	this.firstName = firstName;
 	this.lastName = lastName;
+	this.username = username;
 	this.email = email;
 	this.phoneNumber = phoneNumber;
 
