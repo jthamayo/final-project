@@ -4,6 +4,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.mockStatic;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
@@ -88,6 +90,7 @@ public class UserServiceTest {
 	}
     }
 
+    //TODO overwrite equals
 //    @Test
 //    public void testUpdateUser() {
 //	Long userId = 1L;
@@ -108,7 +111,16 @@ public class UserServiceTest {
 //	}
 //    }
 
-    public void testDeleteUser(Long userId) {
+    @Test
+    public void testDeleteUser() {
+	Long userId = 1L;
+	User user = new User(userId, "testUser", "lastname", "username", "email", "phoneNumber");
+
+	when(userRepository.findById(userId)).thenReturn(Optional.of(user));
+	userService.deleteUser(userId);
+	
+	verify(userRepository).findById(userId);
+	verify(userRepository).deleteById(userId);
 
     }
 }
