@@ -70,7 +70,8 @@ public class GroupServiceTest {
 		// TODO assertEquals
 	    }
 	}
-
+	
+	@Test
 	void updateGroup() {
 	    Long groupId = 1L;
 	    GroupDto upatedGroup = new GroupDto(usersDto);

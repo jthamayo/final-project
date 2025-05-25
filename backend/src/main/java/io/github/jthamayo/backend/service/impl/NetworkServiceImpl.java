@@ -48,7 +48,7 @@ public class NetworkServiceImpl implements NetworkService {
 	    throw new InvalidOperationException("Users are already connected");
 	}
 	//TODO verify accepted request
-	Network network = new Network();
+	Network network = NetworkMapper.mapToNetwork(networkDto);
 	network.setUser1(userRepository.findById(networkDto.getUserId1())
 		.orElseThrow(() -> new ResourceNotFoundException("User not found: " + networkDto.getUserId1())));
 	network.setUser2(userRepository.findById(networkDto.getUserId2())
