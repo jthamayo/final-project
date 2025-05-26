@@ -130,7 +130,6 @@ public class GroupServiceTest {
 	    GroupDto groupDto1 = new GroupDto(usersDto);
 	    GroupDto groupDto2 = new GroupDto(usersDto);
 	    List<Group> groups = List.of(group1, group2);
-	    List<GroupDto> groupsDto = List.of(groupDto1, groupDto2);
 
 	    when(groupRepository.findAll()).thenReturn(groups);
 

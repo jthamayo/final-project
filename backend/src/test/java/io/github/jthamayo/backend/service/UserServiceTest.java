@@ -4,11 +4,9 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.mockStatic;
-import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -74,7 +72,6 @@ public class UserServiceTest {
 	UserDto user1Dto = new UserDto("testUser1", "lastname", "username", "email", "phoneNumber");
 	UserDto user2Dto = new UserDto("testUser2", "lastname", "username", "email", "phoneNumber");
 	List<User> users = List.of(user1, user2);
-	List<UserDto> usersDto = List.of(user1Dto, user2Dto);
 
 	when(userRepository.findAll()).thenReturn(users);
 
@@ -91,25 +88,24 @@ public class UserServiceTest {
     }
 
     //TODO overwrite equals
-//    @Test
-//    public void testUpdateUser() {
-//	Long userId = 1L;
-//	User foundUser = new User(userId, "testUser", "lastname", "username", "email", "phoneNumber");
-//	UserDto userDto = new UserDto("changedUser", "lastname", "username", "email", "phoneNumber");
-//	User updatedUser = new User(1L, "changedUser", "lastname", "username", "email", "phoneNumber");
-//	UserDto updatedUserDto = new UserDto("changedUser", "lastname", "username", "email", "phoneNumber");
-//
-//	try (MockedStatic<UserMapper> mapperMock = mockStatic(UserMapper.class)) {
-//	    when(userRepository.findById(userId)).thenReturn(Optional.of(foundUser));
-//	    mapperMock.when(() -> UserMapper.mapToUser(userDto)).thenReturn(updatedUser);
-//	    when(userRepository.save(updatedUser)).thenReturn(updatedUser);
-//	    mapperMock.when(() -> UserMapper.mapToUserDto(updatedUser)).thenReturn(updatedUserDto);
-//
-//	    UserDto result = userService.updateUser(userId, userDto);
-//	    assertNotNull(result);
-//	    assertNotEquals("testUser", result.getFirstName());
-//	}
-//    }
+    @Test
+    public void testUpdateUser() {
+	Long userId = 1L;
+	User foundUser = new User(userId, "testUser", "lastname", "username", "email", "phoneNumber");
+	User savedUser = new User(userId, "testUser", "lastname", "username", "email", "phoneNumber");
+	UserDto userDto = new UserDto("changedUser", "lastname", "username", "email", "phoneNumber");
+	UserDto updatedUserDto = new UserDto("changedUser", "lastname", "username", "email", "phoneNumber");
+
+	try (MockedStatic<UserMapper> mapperMock = mockStatic(UserMapper.class)) {
+	    when(userRepository.findById(userId)).thenReturn(Optional.of(foundUser));
+	    when(userRepository.save(foundUser)).thenReturn(savedUser);
+	    mapperMock.when(() -> UserMapper.mapToUserDto(savedUser)).thenReturn(updatedUserDto);
+
+	    UserDto result = userService.updateUser(userId, userDto);
+	    assertNotNull(result);
+	    assertNotEquals("testUser", result.getFirstName());
+	}
+    }
 
     @Test
     public void testDeleteUser() {
