@@ -8,7 +8,6 @@ import static org.mockito.Mockito.mockStatic;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -24,7 +23,6 @@ import org.mockito.MockedStatic;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import io.github.jthamayo.backend.dto.NetworkDto;
-import io.github.jthamayo.backend.dto.UserDto;
 import io.github.jthamayo.backend.entity.Network;
 import io.github.jthamayo.backend.entity.User;
 import io.github.jthamayo.backend.mapper.NetworkMapper;
