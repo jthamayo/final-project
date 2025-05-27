@@ -79,3 +79,23 @@ npm install && npm start
 ```
 
 3. Open your browser and go to `http://localhost:5173`
+
+## Testing
+
+At the moment this project only includes **unit tests** in the services layer to verify business logic.
+
+### Test Structure
+
+All test classes are located in the `src/test/java` directory.
+
+### Frameworks used
+
+- JUnit 5 – Test framework  
+- Spring Boot Test – Spring context support  
+- Mockito – Mocking and stubbing
+
+### To run all tests using maven
+
+```bash
+ mvn test 
+ ```
