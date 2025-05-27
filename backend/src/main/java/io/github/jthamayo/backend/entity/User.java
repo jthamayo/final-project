@@ -2,7 +2,10 @@ package io.github.jthamayo.backend.entity;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
+
+import org.hibernate.proxy.HibernateProxy;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
@@ -199,6 +202,28 @@ public class User {
 	this.homeAddress = homeAddress;
     }
 
-    // TODO do remember to override equals user by id and hash
+    @Override
+    public boolean equals(Object o) {
+
+	if (this == o)
+	    return true;
+	if (o == null)
+	    return false;
+	if (getEffectiveClass(this) != getEffectiveClass(o))
+	    return false;
+	User other = (User) o;
+	return getId() != null && Objects.equals(getId(), other.getId());
+
+    }
+
+    @Override
+    public int hashCode() {
+	return getId() != null ? Objects.hash(getEffectiveClass(this), getId()) : 0;
+    }
+
+    private static Class<?> getEffectiveClass(Object obj) {
+	return obj instanceof HibernateProxy ? ((HibernateProxy) obj).getHibernateLazyInitializer().getPersistentClass()
+		: obj.getClass();
+    }
 
 }
