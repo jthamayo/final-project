@@ -2,13 +2,11 @@ package io.github.jthamayo.backend.entity;
 
 import java.util.HashSet;
 import java.util.List;
-import java.util.Objects;
 import java.util.Set;
-
-import org.hibernate.proxy.HibernateProxy;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
+import io.github.jthamayo.backend.entity.base.BaseEntity;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -27,7 +25,7 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name = "users")
 
-public class User {
+public class User extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -200,30 +198,6 @@ public class User {
 	this.group = group;
 	this.jobs = jobs;
 	this.homeAddress = homeAddress;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-
-	if (this == o)
-	    return true;
-	if (o == null)
-	    return false;
-	if (getEffectiveClass(this) != getEffectiveClass(o))
-	    return false;
-	User other = (User) o;
-	return getId() != null && Objects.equals(getId(), other.getId());
-
-    }
-
-    @Override
-    public int hashCode() {
-	return getId() != null ? Objects.hash(getEffectiveClass(this), getId()) : 0;
-    }
-
-    private static Class<?> getEffectiveClass(Object obj) {
-	return obj instanceof HibernateProxy ? ((HibernateProxy) obj).getHibernateLazyInitializer().getPersistentClass()
-		: obj.getClass();
     }
 
 }
