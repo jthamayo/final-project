@@ -34,7 +34,7 @@ public class UserServiceTest {
     @Test
     public void testCreateUser() {
 	UserDto userDto = new UserDto("testUser", "lastname", "username", "email", "phoneNumber");
-	User user = new User("testUser", "lastname", "username", "email", "phoneNumber");
+	User user = new User(1L, "testUser", "lastname", "username", "email", "phoneNumber");
 	User savedUser = new User(1L, "testUser", "lastname", "username", "email", "phoneNumber");
 	UserDto resultUser = new UserDto("testUser", "lastname", "username", "email", "phoneNumber");
 
@@ -45,7 +45,7 @@ public class UserServiceTest {
 
 	    UserDto testResult = userService.createUser(userDto);
 	    assertNotNull(testResult);
-	    assertEquals("testUser", testResult.getFirstName());
+	    assertEquals(user, savedUser);
 	}
     }
 
@@ -61,16 +61,16 @@ public class UserServiceTest {
 
 	    UserDto result = userService.getUserById(userId);
 	    assertNotNull(result);
-	    assertEquals("testUser", result.getFirstName());
+	    assertEquals(foundUser.getEmail(), result.getEmail());
 	}
     }
 
     @Test
     public void testGetAllUsers() {
-	User user1 = new User(2L, "testUser1", "lastname", "username", "email", "phoneNumber");
-	User user2 = new User(3L, "testUser2", "lastname", "username", "email", "phoneNumber");
-	UserDto user1Dto = new UserDto("testUser1", "lastname", "username", "email", "phoneNumber");
-	UserDto user2Dto = new UserDto("testUser2", "lastname", "username", "email", "phoneNumber");
+	User user1 = new User(2L, "testUser1", "lastname", "username", "email1", "phoneNumber");
+	User user2 = new User(3L, "testUser2", "lastname", "username", "email2", "phoneNumber");
+	UserDto user1Dto = new UserDto("testUser1", "lastname", "username", "email1", "phoneNumber");
+	UserDto user2Dto = new UserDto("testUser2", "lastname", "username", "email2", "phoneNumber");
 	List<User> users = List.of(user1, user2);
 
 	when(userRepository.findAll()).thenReturn(users);
@@ -82,8 +82,9 @@ public class UserServiceTest {
 	    List<UserDto> result = userService.getAllUsers();
 	    assertNotNull(result);
 	    assertEquals(2, result.size());
-	    assertEquals("testUser1", result.get(0).getFirstName());
-	    assertEquals("testUser2", result.get(1).getFirstName());
+	    assertEquals(user1.getEmail(), result.get(0).getEmail());
+	    assertEquals(user2.getEmail(), result.get(1).getEmail());
+	    assertNotEquals(user1.getEmail(), result.get(1).getEmail());
 	}
     }
 
@@ -91,10 +92,10 @@ public class UserServiceTest {
     @Test
     public void testUpdateUser() {
 	Long userId = 1L;
-	User foundUser = new User(userId, "testUser", "lastname", "username", "email", "phoneNumber");
-	User savedUser = new User(userId, "testUser", "lastname", "username", "email", "phoneNumber");
-	UserDto userDto = new UserDto("changedUser", "lastname", "username", "email", "phoneNumber");
-	UserDto updatedUserDto = new UserDto("changedUser", "lastname", "username", "email", "phoneNumber");
+	User foundUser = new User(userId, "testUser", "lastname", "username", "email1", "phoneNumber");
+	User savedUser = new User(userId, "testUser", "lastname", "username", "email2", "phoneNumber");
+	UserDto userDto = new UserDto("changedUser", "lastname", "username", "email2", "phoneNumber");
+	UserDto updatedUserDto = new UserDto("changedUser", "lastname", "username2", "email", "phoneNumber");
 
 	try (MockedStatic<UserMapper> mapperMock = mockStatic(UserMapper.class)) {
 	    when(userRepository.findById(userId)).thenReturn(Optional.of(foundUser));
@@ -103,7 +104,8 @@ public class UserServiceTest {
 
 	    UserDto result = userService.updateUser(userId, userDto);
 	    assertNotNull(result);
-	    assertNotEquals("testUser", result.getFirstName());
+	    assertEquals(foundUser, savedUser);
+	    assertNotEquals(foundUser.getEmail(), result.getEmail());
 	}
     }
 
