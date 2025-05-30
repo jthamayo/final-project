@@ -1,6 +1,4 @@
-import axios from "axios";
-
-const REST_API_BASE_URL = "http://localhost:8080/api/users";
+import axios from "../util/axiosInstance";
 
 export interface User {
   id: number;
@@ -10,4 +8,10 @@ export interface User {
   email: string;
 }
 
-export const listUsers = () => axios.get<User[]>(REST_API_BASE_URL);
+export const listUsers = () =>
+  axios.get<User[]>(`/api/users`).then((res) => res.data);
+
+
+export const getCurrentUser = () => {
+  return axios.get<User>("/api/user/me").then((res) => res.data);
+};
