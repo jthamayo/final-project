@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,7 +17,6 @@ import io.github.jthamayo.backend.dto.AddressDto;
 import io.github.jthamayo.backend.dto.JobDto;
 import io.github.jthamayo.backend.dto.JobWithAddressDto;
 import io.github.jthamayo.backend.dto.UserDto;
-import io.github.jthamayo.backend.security.UserPrincipal;
 import io.github.jthamayo.backend.service.UserService;
 
 @RestController
@@ -85,10 +83,4 @@ public class UserController {
 	return ResponseEntity.ok(jobs);
     }
 
-    @GetMapping("/user/me")
-    public ResponseEntity<UserDto> getCurrentUser(@AuthenticationPrincipal UserPrincipal currentUser) {
-	UserDto user = new UserDto(currentUser.getFirstName(), currentUser.getLastName(), currentUser.getUsername(),
-		currentUser.getEmail());
-	return ResponseEntity.ok(user);
-    }
 }
