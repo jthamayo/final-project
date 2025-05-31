@@ -18,16 +18,13 @@ function App() {
 
   const navigate = useNavigate();
 
-  useEffect(() => {
-    loadCurrentUser();
-  }, []);
-
   const loadCurrentUser = () => {
     getCurrentUser()
       .then((user) => {
         setCurrentUser(user);
         setIsAuthenticated(true);
         setIsLoading(false);
+        navigate(`/users/${user.username}`);
       })
       .catch(() => {
         setIsLoading(false);
@@ -35,8 +32,8 @@ function App() {
   };
   const handleLogin = () => {
     loadCurrentUser();
-    navigate("/");
   };
+
   const handleLogout = (redirectTo = "/") => {
     localStorage.removeItem(ACCESS_TOKEN);
     setCurrentUser(null);
@@ -44,9 +41,9 @@ function App() {
     navigate(redirectTo);
   };
 
-  if (isLoading) {
+ /*  if (isLoading) {
     return <Loading />;
-  }
+  } */
 
   return (
     <main className="content">

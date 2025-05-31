@@ -5,10 +5,10 @@ interface ProfileProps {
 }
 
 const Profile = ({ currentUser }: ProfileProps) => {
-  if (!currentUser) return <p>Loading user...</p>;
+  if (!currentUser) return <p className="text-white">Loading user...</p>;
   return (
     <>
-      <h1>Hello, {currentUser.username}</h1>
+      <h1 className="text-white">Hello, {currentUser.username}</h1>
     </>
   );
 };
