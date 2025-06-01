@@ -1,24 +1,26 @@
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useState } from "react";
-import { loginUser } from "../../services/UserService";
+import { useAuth } from "../../context/useAuth";
 
 type LoginValues = {
   usernameOrEmail: string;
   password: string;
 };
 
-const LoginComponent = ({ onLogin }: { onLogin: () => void }) => {
+const LoginComponent = () => {
   const { register, handleSubmit } = useForm<LoginValues>();
   const [error, setError] = useState("");
-  const onSubmit: SubmitHandler<LoginValues> = (data) => {
-    loginUser(data)
-      .then(() => {
-        onLogin();
-      })
-      .catch((error) => {
-        console.error("Login failed:", error.message);
-        setError("Invalid username or password");
-      });
+  const { login } = useAuth();
+
+  const onSubmit: SubmitHandler<LoginValues> = async (data: {
+    usernameOrEmail: string;
+    password: string;
+  }) => {
+    try {
+      await login(data.usernameOrEmail, data.password);
+    } catch {
+      setError("Invalid username or password");
+    }
   };
 
   return (
