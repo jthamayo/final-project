@@ -59,9 +59,16 @@ public class User {
     @JoinColumn(name = "home_address_id")
     private Address homeAddress;
 
+    @OneToOne(optional = true, cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "vehicle_id")
+    private Vehicle vehicle;
+
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles = new HashSet<>();
+
+    @Column
+    private boolean isVerified;
 
     ////////////////// GETTERS&SETTERS///////////////////////
 
@@ -161,33 +168,53 @@ public class User {
 	this.roles = roles;
     }
 
+    public boolean isVerified() {
+	return isVerified;
+    }
+
+    public void setVerified(boolean isVerified) {
+	this.isVerified = isVerified;
+    }
+
+    public Vehicle getVehicle() {
+	return vehicle;
+    }
+
+    public void setVehicle(Vehicle vehicle) {
+	this.vehicle = vehicle;
+    }
+
     //////////////// CONSTRUCTOR////////////////
 
     public User() {
 
     }
 
-    public User(String firstName, String lastName, String username, String email, String phoneNumber) {
+    public User(String firstName, String lastName, String username, String email, String phoneNumber,
+	    boolean isVerified) {
 	this.firstName = firstName;
 	this.lastName = lastName;
 	this.username = username;
 	this.email = email;
 	this.phoneNumber = phoneNumber;
+	this.isVerified = isVerified;
 
     }
 
-    public User(Long id, String firstName, String lastName, String username, String email, String phoneNumber) {
+    public User(Long id, String firstName, String lastName, String username, String email, String phoneNumber,
+	    boolean isVerified) {
 	this.id = id;
 	this.firstName = firstName;
 	this.lastName = lastName;
 	this.username = username;
 	this.email = email;
 	this.phoneNumber = phoneNumber;
+	this.isVerified = isVerified;
 
     }
 
     public User(Long id, String firstName, String lastName, String username, String email, String phoneNumber,
-	    Group group, List<Job> jobs, Address homeAddress) {
+	    Group group, List<Job> jobs, Address homeAddress, Vehicle vehicle, boolean isVerified, Set<Role> roles) {
 	this.id = id;
 	this.firstName = firstName;
 	this.lastName = lastName;
@@ -197,8 +224,9 @@ public class User {
 	this.group = group;
 	this.jobs = jobs;
 	this.homeAddress = homeAddress;
+	this.vehicle = vehicle;
+	this.isVerified = isVerified;
+	this.roles = roles;
     }
-
-    // TODO do remember to override equals user by id and hash
 
 }

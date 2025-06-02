@@ -4,6 +4,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
@@ -12,35 +14,39 @@ import jakarta.validation.constraints.Size;
 public class UserDto {
 
     private Long id;
-    
+
     @NotBlank(message = "First name is required")
     private String firstName;
-    
+
     @NotBlank(message = "Last name is required")
     private String lastName;
-    
+
     @NotBlank(message = "Username is required")
     private String username;
-    
+
     @Size(max = 40, message = "Email must be under 40 characters")
     @NotBlank(message = "Email is required")
     @Email(message = "Not a valid email format")
     private String email;
-    
+
     @Size(min = 6, message = "Password must be at least 6 characters")
     private String password;
-    
+
     @NotBlank(message = "Phone number is required")
     @Pattern(regexp = "^[+]?\\d{7,15}$", message = "Invalid phone number format")
     private String phoneNumber;
-    
+
     private Long groupId;
-    
+
     private List<Long> jobIds;
-    
+
     private Long homeAddressId;
-    
-    private Set<RoleDto> roleIds = new HashSet<>();
+
+    private Long vehicleId;
+
+    private Set<Long> roleIds = new HashSet<>();
+
+    private boolean isVerified;
 
     ////////////////// GETTERS&SETTERS///////////////////////
 
@@ -99,54 +105,63 @@ public class UserDto {
     public void setHomeAddressId(Long homeAddressId) {
 	this.homeAddressId = homeAddressId;
     }
-    
+
     public String getUsername() {
-        return username;
+	return username;
     }
 
     public void setUsername(String username) {
-        this.username = username;
+	this.username = username;
     }
 
     public String getPassword() {
-        return password;
+	return password;
     }
 
     public void setPassword(String password) {
-        this.password = password;
+	this.password = password;
     }
 
     public String getPhoneNumber() {
-        return phoneNumber;
+	return phoneNumber;
     }
 
     public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
+	this.phoneNumber = phoneNumber;
     }
 
-    public Set<RoleDto> getRoleIds() {
-        return roleIds;
+    public Set<Long> getRoleIds() {
+	return roleIds;
     }
 
-    public void setRoleIds(Set<RoleDto> roleIds) {
-        this.roleIds = roleIds;
+    public void setRoleIds(Set<Long> roleIds) {
+	this.roleIds = roleIds;
     }
-    
+
+    public boolean isVerified() {
+	return isVerified;
+    }
+
+    public void setVerified(boolean isVerified) {
+	this.isVerified = isVerified;
+    }
+
+    public Long getVehicleId() {
+	return vehicleId;
+    }
+
+    public void setVehicleId(Long vehicleId) {
+	this.vehicleId = vehicleId;
+    }
+
     //////////////// CONSTRUCTOR////////////////
 
     public UserDto() {
     }
 
-    public UserDto(String firstName, String lastName, String email, String phoneNumber) {
-	this.firstName = firstName;
-	this.lastName = lastName;
-	this.email = email;
-	this.phoneNumber = phoneNumber;
-
-    }
-
-    public UserDto(Long id, String firstName, String lastName, String username, String email, String phoneNumber, Long groupId,
-	    List<Long> jobIds, Long homeAddressId) {
+    public UserDto(Long id, String firstName, String lastName, String username, String email, String phoneNumber,
+	    Long groupId, List<Long> jobIds, Long homeAddressId, Long vehicleId, List<Long> roleIds,
+	    boolean isVerified) {
 	this.id = id;
 	this.firstName = firstName;
 	this.lastName = lastName;
@@ -156,6 +171,9 @@ public class UserDto {
 	this.groupId = groupId;
 	this.jobIds = jobIds;
 	this.homeAddressId = homeAddressId;
+	this.vehicleId = vehicleId;
+	this.roleIds = new HashSet<>(roleIds);
+	this.isVerified = isVerified;
     }
 
 }

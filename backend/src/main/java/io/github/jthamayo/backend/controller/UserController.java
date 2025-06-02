@@ -17,6 +17,7 @@ import io.github.jthamayo.backend.dto.AddressDto;
 import io.github.jthamayo.backend.dto.JobDto;
 import io.github.jthamayo.backend.dto.JobWithAddressDto;
 import io.github.jthamayo.backend.dto.UserDto;
+import io.github.jthamayo.backend.dto.UserSummary;
 import io.github.jthamayo.backend.service.UserService;
 
 @RestController
@@ -81,6 +82,14 @@ public class UserController {
     public ResponseEntity<List<JobDto>> getJobs(@PathVariable("id") Long userId) {
 	List<JobDto> jobs = userService.getJobs(userId);
 	return ResponseEntity.ok(jobs);
+    }
+
+    @GetMapping("profile/{username}")
+    public ResponseEntity<UserSummary> getUserByUsername(@PathVariable("username") String username) {
+	UserDto userDto = userService.getUserByUsername(username);
+	return ResponseEntity.ok(new UserSummary(userDto.getFirstName(), userDto.getLastName(), userDto.getUsername(),
+		userDto.getEmail()));
+
     }
 
 }

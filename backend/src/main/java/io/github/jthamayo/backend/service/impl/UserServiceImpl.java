@@ -11,20 +11,24 @@ import org.springframework.transaction.annotation.Transactional;
 import io.github.jthamayo.backend.dto.AddressDto;
 import io.github.jthamayo.backend.dto.JobDto;
 import io.github.jthamayo.backend.dto.UserDto;
+import io.github.jthamayo.backend.dto.VehicleDto;
 import io.github.jthamayo.backend.entity.Address;
 import io.github.jthamayo.backend.entity.Group;
 import io.github.jthamayo.backend.entity.Job;
 import io.github.jthamayo.backend.entity.User;
+import io.github.jthamayo.backend.entity.Vehicle;
 import io.github.jthamayo.backend.entity.enums.AddressType;
 import io.github.jthamayo.backend.exception.InvalidOperationException;
 import io.github.jthamayo.backend.exception.ResourceNotFoundException;
 import io.github.jthamayo.backend.mapper.AddressMapper;
 import io.github.jthamayo.backend.mapper.JobMapper;
 import io.github.jthamayo.backend.mapper.UserMapper;
+import io.github.jthamayo.backend.mapper.VehicleMapper;
 import io.github.jthamayo.backend.repository.AddressRepository;
 import io.github.jthamayo.backend.repository.GroupRepository;
 import io.github.jthamayo.backend.repository.JobRepository;
 import io.github.jthamayo.backend.repository.UserRepository;
+import io.github.jthamayo.backend.repository.VehicleRepository;
 import io.github.jthamayo.backend.service.UserService;
 
 @Service
@@ -33,14 +37,16 @@ public class UserServiceImpl implements UserService {
     private UserRepository userRepository;
     private GroupRepository groupRepository;
     private AddressRepository addressRepository;
+    private VehicleRepository vehicleRepository;
     private JobRepository jobRepository;
 
     public UserServiceImpl(UserRepository userRepository, GroupRepository groupRepository,
-	    AddressRepository addressRepository, JobRepository jobRepository) {
+	    AddressRepository addressRepository, JobRepository jobRepository, VehicleRepository vehicleRepository) {
 	this.userRepository = userRepository;
 	this.groupRepository = groupRepository;
 	this.addressRepository = addressRepository;
 	this.jobRepository = jobRepository;
+	this.vehicleRepository = vehicleRepository;
     }
 
     // TODO add verified status, last_active
@@ -60,7 +66,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    @Transactional	
+    @Transactional
     public UserDto updateUser(Long userId, UserDto updatedUser) {
 	User user = userRepository.findById(userId)
 		.orElseThrow(() -> new ResourceNotFoundException("User does not exist with given id: " + userId));
@@ -81,6 +87,11 @@ public class UserServiceImpl implements UserService {
 	    Address address = addressRepository.findById(updatedUser.getHomeAddressId())
 		    .orElseThrow(() -> new ResourceNotFoundException("Home Address not found"));
 	    user.setHomeAddress(address);
+	}
+	if (updatedUser.getVehicleId() != null) {
+	    Vehicle vehicle = vehicleRepository.findById(updatedUser.getVehicleId())
+		    .orElseThrow(() -> new ResourceNotFoundException("Vehicle not found"));
+	    user.setVehicle(vehicle);
 	}
 	if (updatedUser.getJobIds() != null && !updatedUser.getJobIds().isEmpty()) {
 	    List<Job> jobs = updatedUser.getJobIds().stream()
@@ -155,6 +166,34 @@ public class UserServiceImpl implements UserService {
 	User user = userRepository.findById(userId)
 		.orElseThrow(() -> new ResourceNotFoundException("User does not exist with given id: " + userId));
 	return AddressMapper.mapToAddressDto(user.getHomeAddress());
+    }
+
+    @Override
+    public UserDto getUserByUsername(String username) {
+	User user = userRepository.findByUsername(username).orElseThrow(
+		() -> new ResourceNotFoundException("User does not exist with given username: " + username));
+	return UserMapper.mapToUserDto(user);
+    }
+
+    @Override
+    public UserDto addVehicle(Long userId, VehicleDto vehicleDto) {
+	User user = userRepository.findById(userId)
+		.orElseThrow(() -> new ResourceNotFoundException("User does not exist with given id: " + userId));
+	if (user.getVehicle() != null) {
+	    throw new InvalidOperationException("User already has a vehicle");
+	}
+	Vehicle vehicle = vehicleRepository.save(VehicleMapper.mapToVehicle(vehicleDto));
+	user.setVehicle(vehicle);
+	return UserMapper.mapToUserDto(userRepository.save(user));
+    }
+
+    @Override
+    public VehicleDto getVehicle(Long userId) {
+	User user = userRepository.findById(userId)
+		.orElseThrow(() -> new ResourceNotFoundException("User does not exist with given id: " + userId));
+
+	return VehicleMapper.mapToVehicleDto(user.getVehicle());
+
     }
 
 }

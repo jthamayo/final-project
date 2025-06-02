@@ -5,6 +5,7 @@ import java.util.List;
 import io.github.jthamayo.backend.dto.AddressDto;
 import io.github.jthamayo.backend.dto.JobDto;
 import io.github.jthamayo.backend.dto.UserDto;
+import io.github.jthamayo.backend.dto.VehicleDto;
 
 public interface UserService {
 
@@ -23,9 +24,13 @@ public interface UserService {
     UserDto addJob(Long userId, JobDto jobDto, AddressDto addressDto);
     
     List<JobDto> getJobs(Long userId);
+
+    UserDto addVehicle(Long userId, VehicleDto vehicleDto);
+    
+    VehicleDto getVehicle(Long userId);
     
     AddressDto getHomeAddress(Long userId);
     
-    
+    UserDto getUserByUsername(String username);
     
 }
