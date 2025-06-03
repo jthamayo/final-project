@@ -1,0 +1,129 @@
+package io.github.jthamayo.backend.dto;
+
+import java.util.List;
+
+public class UserProfileDto {
+    private Long id;
+    private String username;
+    private String email;
+    private String firstName;
+    private String lastName;
+    private String password;
+    private String phoneNumber;
+    private List<JobDto> jobs;
+    private List<AddressDto> addresses;
+    private List<VehicleDto> vehicles;
+    private boolean isVerified;
+
+    ////////////////////////////////////////////////////////////////////////
+
+    public Long getId() {
+	return id;
+    }
+
+    public void setId(Long id) {
+	this.id = id;
+    }
+
+    public String getUsername() {
+	return username;
+    }
+
+    public void setUsername(String username) {
+	this.username = username;
+    }
+
+    public String getEmail() {
+	return email;
+    }
+
+    public void setEmail(String email) {
+	this.email = email;
+    }
+
+    public String getFirstName() {
+	return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+	this.firstName = firstName;
+    }
+
+    public String getLastName() {
+	return lastName;
+    }
+
+    public void setLastName(String lastName) {
+	this.lastName = lastName;
+    }
+
+    public List<JobDto> getJobs() {
+	return jobs;
+    }
+
+    public void setJobs(List<JobDto> jobs) {
+	this.jobs = jobs;
+    }
+
+    public List<AddressDto> getAddresses() {
+	return addresses;
+    }
+
+    public void setAddresses(List<AddressDto> addresses) {
+	this.addresses = addresses;
+    }
+
+    public List<VehicleDto> getVehicles() {
+	return vehicles;
+    }
+
+    public void setVehicles(List<VehicleDto> vehicles) {
+	this.vehicles = vehicles;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public boolean isVerified() {
+        return isVerified;
+    }
+
+    public void setVerified(boolean isVerified) {
+        this.isVerified = isVerified;
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////
+    
+    public UserProfileDto(Long id, String username, String email, String phoneNumber, String firstName, String lastName, String password, List<JobDto> jobs,
+	    List<AddressDto> addresses, List<VehicleDto> vehicles, boolean isVerified) {
+	super();
+	this.id = id;
+	this.username = username;
+	this.email = email;
+	this.phoneNumber = phoneNumber;
+	this.firstName = firstName;
+	this.lastName = lastName;
+	this.password = password;
+	this.jobs = jobs;
+	this.addresses = addresses;
+	this.vehicles = vehicles;
+	this.isVerified = isVerified;
+    }
+
+    public UserProfileDto() {
+
+    }
+}
