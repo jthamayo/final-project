@@ -1,18 +1,14 @@
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useState } from "react";
 import { useAuth } from "../../context/useAuth";
-
-type LoginValues = {
-  usernameOrEmail: string;
-  password: string;
-};
+import { Login } from "../../services/UserService";
 
 const LoginComponent = () => {
-  const { register, handleSubmit } = useForm<LoginValues>();
+  const { register, handleSubmit } = useForm<Login>();
   const [error, setError] = useState("");
   const { login } = useAuth();
 
-  const onSubmit: SubmitHandler<LoginValues> = async (data: {
+  const onSubmit: SubmitHandler<Login> = async (data: {
     usernameOrEmail: string;
     password: string;
   }) => {
@@ -24,7 +20,7 @@ const LoginComponent = () => {
   };
 
   return (
-    <>
+    <div className="flex flex-col">
       <h2 className="text-white font-title text-4xl text-center"> Login</h2>
       <div className=" my-5 w-120 h-100 bg-white rounded-4xl">
         <form
@@ -58,7 +54,7 @@ const LoginComponent = () => {
           </button>
         </form>
       </div>
-    </>
+    </div>
   );
 };
 export default LoginComponent;
