@@ -79,7 +79,7 @@ public class Network {
 	this.dateStart = dateStart;
     }
 
-    public Network(User user1, User user2, LocalDate dateStart) {
+    public Network(User user1, User user2) {
 
 	if (user1.getId() < user2.getId()) {
 	    this.user1 = user1;
@@ -88,8 +88,6 @@ public class Network {
 	    this.user1 = user2;
 	    this.user2 = user1;
 	}
-
-	this.dateStart = dateStart;
     }
 
     public Network(Long id, LocalDate dateStart) {

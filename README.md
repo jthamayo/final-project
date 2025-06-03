@@ -15,7 +15,6 @@
 
 These instructions will help you run the project locally for development and testing purposes.
 
----
 
 ## Installation
 
@@ -44,15 +43,16 @@ These instructions will help you run the project locally for development and tes
 cp src/main/resources/application.properties.example src/main/resources/application.properties
 ```
 
-* update it with your database credentials `<username>` and `<password>` and your `<databaseName>`:
+* update it with your database credentials `<username>`, `<password>` and your `<databaseName>`:
 
 ```properties
 spring.datasource.url=jdbc:mysql://localhost:3306/<databaseName>
 spring.datasource.username=<username>
 spring.datasource.password=<password>
-
-spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.MySQLDialect
-spring.jpa.hibernate.ddl-auto=update
+```
+* add your own JWT secret Key `<secretKey>`:
+```properties
+app.jwtSecret=<secretKey>
 
 ```
 
@@ -80,15 +80,22 @@ npm install && npm start
 
 3. Open your browser and go to `http://localhost:5173`
 
-## API Example
+## Testing
 
-### Register a User - POST request
+At the moment this project only includes **unit tests** in the services layer to verify business logic.
 
-```json
-{
-    "firstName" : "",
-    "lastName" : "",
-    "email" : "",
-    "role" : ""
-}
-```
+### Test Structure
+
+All test classes are located in the `src/test/java` directory.
+
+### Frameworks used
+
+- JUnit 5 – Test framework  
+- Spring Boot Test – Spring context support  
+- Mockito – Mocking and stubbing
+
+### To run all tests using maven
+
+```bash
+ mvn test 
+ ```

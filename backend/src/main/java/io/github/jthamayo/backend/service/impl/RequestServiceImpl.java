@@ -35,7 +35,7 @@ public class RequestServiceImpl implements RequestService {
 
     @Override
     public RequestDto createRequest(RequestDto requestDto) {
-	Request request = new Request();
+	Request request = RequestMapper.mapToRequest(requestDto);
 	request.setUserSender(userRepository.findById(requestDto.getUserSender())
 		.orElseThrow(() -> new ResourceNotFoundException("User not found: " + requestDto.getUserSender())));
 	request.setUserReceiver(userRepository.findById(requestDto.getUserReceiver())
