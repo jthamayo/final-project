@@ -33,7 +33,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       const res = await loginUser({ usernameOrEmail, password });
       localStorage.setItem(ACCESS_TOKEN, res.accessToken);
       await loadCurrentUser();
-      navigate(`/dashboard`);
+      navigate(`/`);
     } catch (err) {
       console.error("Login failed", err);
       throw err;
