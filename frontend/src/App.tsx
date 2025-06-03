@@ -13,22 +13,22 @@ function App() {
   return (
     <main className="content w-full h-full flex items-center justify-center">
       <Routes>
-        <Route path="/" element={<LoginComponent />}></Route>
+        <Route
+          path="/"
+          element={
+            <PrivateRoute>
+              <DashboardComponent />
+            </PrivateRoute>
+          }
+        ></Route>
         <Route path="/users" element={<ListUserComponent />}></Route>
         <Route path="/signup" element={<SignupComponent />}></Route>
+        <Route path="/login" element={<LoginComponent />}></Route>
         <Route
           path="/users/:username"
           element={
             <PrivateRoute>
               <ProfileComponent />
-            </PrivateRoute>
-          }
-        ></Route>
-        <Route
-          path="/dashboard"
-          element={
-            <PrivateRoute>
-              <DashboardComponent />
             </PrivateRoute>
           }
         ></Route>

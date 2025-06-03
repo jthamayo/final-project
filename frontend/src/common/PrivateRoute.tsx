@@ -6,7 +6,7 @@ const PrivateRoute = ({ children }: { children: ReactElement }) => {
   const { isAuthenticated, isLoading } = useAuth();
 
   if (isLoading) return <p className="text-white">Loading...</p>;
-  if (!isAuthenticated) return <Navigate to="/" replace />;
+  if (!isAuthenticated) return <Navigate to="/login" replace />;
 
   return children;
 };
