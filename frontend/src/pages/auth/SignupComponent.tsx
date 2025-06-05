@@ -228,7 +228,7 @@ const SignupComponent = () => {
                 id="termsAccepted"
                 type="checkbox"
                 {...register("termsAccepted", {
-                  required: "You must accept the terms and conditions",
+                  required: "Accept the terms and conditions",
                 })}
               />
               <label htmlFor="terms" className="field m-0 w-full">
@@ -253,6 +253,12 @@ const SignupComponent = () => {
                 *{error}
               </p>
             )}
+            <a
+              className="text-center hover:underline decoration"
+              onClick={() => navigate("/login")}
+            >
+              Log in if you already have an account
+            </a>
           </fieldset>
         </form>
       </div>

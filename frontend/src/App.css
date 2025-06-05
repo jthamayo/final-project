@@ -1,1 +1,17 @@
+.step {
+  background-color: var(--color-accent);
+  width: 20px;
+  height: 20px;
+  border-radius: 100%;
+}
 
+
+.sequence::after {
+  content: "";
+  position: absolute;
+  background-color: var(--color-accent);
+  width: 20px;
+  height: 20px;
+  border-radius: 100%;
+  left: 0;
+}

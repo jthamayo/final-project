@@ -7,7 +7,7 @@ import ProfileComponent from "../components/user/ProfileComponent";
 
 const DashboardComponent = () => {
   const { currentUser, isLoading, logout } = useAuth();
-  const [activePanel, setActivePanel] = useState("search");
+  const [activePanel, setActivePanel] = useState("profile");
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -84,9 +84,7 @@ const DashboardComponent = () => {
       </aside>
       <div className="panel w-full overflow-y-auto">
         {activePanel === "search" && <ListUserComponent />}
-        {activePanel === "profile" && (
-          <ProfileComponent username={currentUser.username} />
-        )}
+        {activePanel === "profile" && <ProfileComponent />}
       </div>
       {/* <section className="h-full w-4/5 p-8">
         <hgroup className="flex items-center justify-start gap-2">
