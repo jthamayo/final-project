@@ -99,3 +99,4 @@ All test classes are located in the `src/test/java` directory.
 ```bash
  mvn test 
  ```
+![tests](https://res.cloudinary.com/ddguqr8l8/image/upload/v1749163191/Captura_de_pantalla_2025-06-06_003730_ck0vcv.png)
