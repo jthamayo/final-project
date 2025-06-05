@@ -69,7 +69,7 @@ public class User extends BaseEntity {
     private Set<Role> roles = new HashSet<>();
 
     @Column
-    private boolean isVerified;
+    private Boolean isVerified;
 
     ////////////////// GETTERS&SETTERS///////////////////////
 
@@ -169,7 +169,7 @@ public class User extends BaseEntity {
 	this.roles = roles;
     }
 
-    public boolean isVerified() {
+    public Boolean isVerified() {
 	return isVerified;
     }
 
@@ -192,7 +192,7 @@ public class User extends BaseEntity {
     }
 
     public User(String firstName, String lastName, String username, String email, String phoneNumber,
-	    boolean isVerified) {
+	    Boolean isVerified) {
 	this.firstName = firstName;
 	this.lastName = lastName;
 	this.username = username;
@@ -203,7 +203,7 @@ public class User extends BaseEntity {
     }
 
     public User(Long id, String firstName, String lastName, String username, String email, String phoneNumber,
-	    boolean isVerified) {
+	    Boolean isVerified) {
 	this.id = id;
 	this.firstName = firstName;
 	this.lastName = lastName;
@@ -215,7 +215,7 @@ public class User extends BaseEntity {
     }
 
     public User(Long id, String firstName, String lastName, String username, String email, String phoneNumber,
-	    Group group, List<Job> jobs, Address homeAddress, Vehicle vehicle, boolean isVerified, Set<Role> roles) {
+	    Group group, List<Job> jobs, Address homeAddress, Vehicle vehicle, Boolean isVerified, Set<Role> roles) {
 	this.id = id;
 	this.firstName = firstName;
 	this.lastName = lastName;

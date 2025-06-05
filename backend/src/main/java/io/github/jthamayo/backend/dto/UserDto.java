@@ -46,7 +46,7 @@ public class UserDto {
 
     private Set<Long> roleIds = new HashSet<>();
 
-    private boolean isVerified;
+    private Boolean isVerified;
 
     ////////////////// GETTERS&SETTERS///////////////////////
 
@@ -138,11 +138,11 @@ public class UserDto {
 	this.roleIds = roleIds;
     }
 
-    public boolean isVerified() {
+    public Boolean isVerified() {
 	return isVerified;
     }
 
-    public void setVerified(boolean isVerified) {
+    public void setVerified(Boolean isVerified) {
 	this.isVerified = isVerified;
     }
 
@@ -161,7 +161,7 @@ public class UserDto {
 
     public UserDto(Long id, String firstName, String lastName, String username, String email, String phoneNumber,
 	    Long groupId, List<Long> jobIds, Long homeAddressId, Long vehicleId, List<Long> roleIds,
-	    boolean isVerified) {
+	    Boolean isVerified) {
 	this.id = id;
 	this.firstName = firstName;
 	this.lastName = lastName;
