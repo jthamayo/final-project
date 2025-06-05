@@ -54,12 +54,7 @@ public class CurrentUserController {
 
     @GetMapping("/me/profile")
     public ResponseEntity<UserProfileDto> getCurrentUserProfile(@AuthenticationPrincipal UserPrincipal currentUser) {
-	Long userId = currentUser.getId();
-	List<JobDto> jobs = userService.getJobs(userId);
-	AddressDto address = userService.getHomeAddress(userId);
-	VehicleDto vehicle = userService.getVehicle(userId);
-	UserDto user = userService.getUserById(userId);
-	UserProfileDto profile = new UserProfileDto();
+	UserProfileDto profile = userService.getProfile(currentUser.getId());
 	return ResponseEntity.ok(profile);
 
     }

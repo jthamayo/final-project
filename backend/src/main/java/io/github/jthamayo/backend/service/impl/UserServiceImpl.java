@@ -1,5 +1,6 @@
 package io.github.jthamayo.backend.service.impl;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -11,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import io.github.jthamayo.backend.dto.AddressDto;
 import io.github.jthamayo.backend.dto.JobDto;
 import io.github.jthamayo.backend.dto.UserDto;
+import io.github.jthamayo.backend.dto.UserProfileDto;
 import io.github.jthamayo.backend.dto.VehicleDto;
 import io.github.jthamayo.backend.entity.Address;
 import io.github.jthamayo.backend.entity.Group;
@@ -194,6 +196,20 @@ public class UserServiceImpl implements UserService {
 
 	return VehicleMapper.mapToVehicleDto(user.getVehicle());
 
+    }
+
+    @Override
+    public UserProfileDto getProfile(Long userId) {
+	User user = userRepository.findById(userId)
+		.orElseThrow(() -> new ResourceNotFoundException("User does not exist with given id: " + userId));
+	UserProfileDto profile = new UserProfileDto(userId, user.getUsername(), user.getEmail(), user.getPhoneNumber(),
+		user.getFirstName(), user.getLastName(),
+		user.getJobs() != null
+			? user.getJobs().stream().map(JobMapper::mapToJobDto).collect(Collectors.toList())
+			: new ArrayList<>(),
+		user.getHomeAddress() != null ? AddressMapper.mapToAddressDto(user.getHomeAddress()) : null,
+		user.getVehicle() != null ? VehicleMapper.mapToVehicleDto(user.getVehicle()) : null, user.isVerified());
+	return profile;
     }
 
 }
