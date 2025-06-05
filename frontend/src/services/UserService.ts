@@ -25,6 +25,10 @@ export const getCurrentUser = () => {
   return axiosAuth.get<User>("/api/user/me").then((res) => res.data);
 };
 
+export const getProfileInformation = () => {
+  return axiosAuth.get<User>("/api/user/me/profile").then((res) => res.data);
+};
+
 export interface Login {
   usernameOrEmail: string;
   password: string;

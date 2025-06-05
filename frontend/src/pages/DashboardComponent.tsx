@@ -1,11 +1,13 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useAuth } from "../context/useAuth";
 import { useNavigate } from "react-router-dom";
 import UserAccount from "../components/user/UserAccount";
 import ListUserComponent from "../components/user/ListUserComponent";
+import ProfileComponent from "../components/user/ProfileComponent";
 
 const DashboardComponent = () => {
   const { currentUser, isLoading, logout } = useAuth();
+  const [activePanel, setActivePanel] = useState("search");
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -27,19 +29,64 @@ const DashboardComponent = () => {
         <div className="p-8 h-full flex flex-col justify-start gap-8">
           <nav>
             <ul className="flex flex-col gap-1">
-              <li className="list">Profile</li>
-              <li className="list">Settings</li>
-              <li className="list">Schedule</li>
-              <li className="list">Messages</li>
-              <li className="list">Chats</li>
-              <li className="list">Search</li>
+              <li>
+                <button
+                  className="list"
+                  onClick={() => setActivePanel("profile")}
+                >
+                  Profile
+                </button>
+              </li>
+              <li>
+                <button
+                  className="list"
+                  onClick={() => setActivePanel("search")}
+                >
+                  Search
+                </button>
+              </li>
+              <li>
+                <button
+                  className="list"
+                  onClick={() => setActivePanel("settings")}
+                >
+                  Settings
+                </button>
+              </li>
+              <li>
+                <button
+                  className="list"
+                  onClick={() => setActivePanel("schedule")}
+                >
+                  Schedule
+                </button>
+              </li>
+              <li>
+                <button
+                  className="list"
+                  onClick={() => setActivePanel("messages")}
+                >
+                  Messages
+                </button>
+              </li>
+              <li>
+                <button
+                  className="list"
+                  onClick={() => setActivePanel("chats")}
+                >
+                  Chats
+                </button>
+              </li>
             </ul>
           </nav>
         </div>
         <UserAccount account={currentUser} onLogout={logout} />
       </aside>
-      <div className="w-full overflow-y-auto">
-        <ListUserComponent />
+      <div className="panel w-full overflow-y-auto">
+        {activePanel === "search" && <ListUserComponent />}
+        {activePanel === "profile" && (
+          <ProfileComponent username={currentUser.username} />
+        )}
       </div>
       {/* <section className="h-full w-4/5 p-8">
         <hgroup className="flex items-center justify-start gap-2">

@@ -1,24 +1,28 @@
-import { useEffect } from "react";
-import { useAuth } from "../../context/useAuth";
-import { useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { getProfileInformation } from "../../services/UserService";
+import { User } from "../../services/UserService";
 
-const ProfileComponent = () => {
-  const { currentUser, isLoading } = useAuth();
-  const navigate = useNavigate();
+const ProfileComponent = ({ username }: { username: string }) => {
+  const [user, setUser] = useState<User | null>(null);
 
   useEffect(() => {
-    if (!isLoading && !currentUser) {
-      navigate("/");
-    }
-  }, [isLoading, currentUser, navigate]);
-
-  if (isLoading) {
-    return <p className="text-white">Loading user...</p>;
-  }
-  if (!currentUser) return null;
+    const fetchProfile = async () => {
+      try {
+        const data = await getProfileInformation();
+        setUser(data);
+      } catch (err) {
+        console.error("Failed to fetch profile", err);
+      }
+    };
+    fetchProfile();
+  }, []);
   return (
     <>
-      <h1 className="text-white">Hello, {currentUser.username}</h1>
+      {user ? (
+        <h1 className="text-white">Hello, {user.username}</h1>
+      ) : (
+        <p className="text-white">Loading profile...</p>
+      )}
     </>
   );
 };
