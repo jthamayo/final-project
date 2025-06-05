@@ -173,7 +173,7 @@ public class User extends BaseEntity {
 	return isVerified;
     }
 
-    public void setVerified(boolean isVerified) {
+    public void setVerified(Boolean isVerified) {
 	this.isVerified = isVerified;
     }
 

@@ -21,7 +21,7 @@ public class Address {
     private String street;
     private String zip;
     private String country;
-    private int number;
+    private Integer number;
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private AddressType type;
@@ -68,11 +68,11 @@ public class Address {
 	this.country = country;
     }
 
-    public int getNumber() {
+    public Integer getNumber() {
 	return number;
     }
 
-    public void setNumber(int number) {
+    public void setNumber(Integer number) {
 	this.number = number;
     }
 
@@ -90,7 +90,7 @@ public class Address {
 
     }
 
-    public Address(Long id, String city, String street, String zip, String country, int number, AddressType type) {
+    public Address(Long id, String city, String street, String zip, String country, Integer number, AddressType type) {
 	this.id = id;
 	this.city = city;
 	this.street = street;
@@ -100,7 +100,7 @@ public class Address {
 	this.type = type;
     }
 
-    public Address(String city, String street, String zip, String country, int number, AddressType type) {
+    public Address(String city, String street, String zip, String country, Integer number, AddressType type) {
 	this.city = city;
 	this.street = street;
 	this.zip = zip;

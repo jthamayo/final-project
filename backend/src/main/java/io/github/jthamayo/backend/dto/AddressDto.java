@@ -9,7 +9,7 @@ public class AddressDto {
     private String street;
     private String zip;
     private String country;
-    private int number;
+    private Integer number;
     private AddressType type;
 
     ///////////////////// GETTES&SETTERS////////////
@@ -54,11 +54,11 @@ public class AddressDto {
 	this.country = country;
     }
 
-    public int getNumber() {
+    public Integer getNumber() {
 	return number;
     }
 
-    public void setNumber(int number) {
+    public void setNumber(Integer number) {
 	this.number = number;
     }
 
@@ -76,7 +76,7 @@ public class AddressDto {
 
     }
 
-    public AddressDto(Long id, String city, String street, String zip, String country, int number, AddressType type) {
+    public AddressDto(Long id, String city, String street, String zip, String country, Integer number, AddressType type) {
 	this.id = id;
 	this.city = city;
 	this.street = street;
@@ -86,7 +86,7 @@ public class AddressDto {
 	this.type = type;
     }
 
-    public AddressDto(String city, String street, String zip, String country, int number, AddressType type) {
+    public AddressDto(String city, String street, String zip, String country, Integer number, AddressType type) {
 	this.city = city;
 	this.street = street;
 	this.zip = zip;

@@ -14,7 +14,7 @@ public class UserSummary {
     private String lastName;
     private String email;
 
-    public UserSummary(long id, String firstName, String lastName, String username, String email) {
+    public UserSummary(Long id, String firstName, String lastName, String username, String email) {
 	this.id = id;
 	this.firstName = firstName;
 	this.lastName = lastName;

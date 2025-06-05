@@ -21,8 +21,8 @@ public class Job {
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
-    private boolean irregular;
-    private boolean nocturnal;
+    private Boolean irregular;
+    private Boolean nocturnal;
 
     ///////////////////////////// GETTERS&SETTERS//////////////////////////////
 
@@ -50,11 +50,11 @@ public class Job {
 	this.user = user;
     }
 
-    public boolean isIrregular() {
+    public Boolean isIrregular() {
 	return irregular;
     }
 
-    public void setIrregular(boolean irregular) {
+    public void setIrregular(Boolean irregular) {
 	this.irregular = irregular;
     }
 
@@ -62,7 +62,7 @@ public class Job {
 	return nocturnal;
     }
 
-    public void setNocturnal(boolean nocturnal) {
+    public void setNocturnal(Boolean nocturnal) {
 	this.nocturnal = nocturnal;
     }
 
@@ -72,7 +72,7 @@ public class Job {
 
     }
 
-    public Job(Long id, Address address, User user, boolean irregular, boolean nocturnal) {
+    public Job(Long id, Address address, User user, Boolean irregular, Boolean nocturnal) {
 	this.id = id;
 	this.address = address;
 	this.user = user;
@@ -80,7 +80,7 @@ public class Job {
 	this.nocturnal = nocturnal;
     }
 
-    public Job(Long id, boolean irregular, boolean nocturnal) {
+    public Job(Long id, Boolean irregular, Boolean nocturnal) {
 	this.id = id;
 	this.irregular = irregular;
 	this.nocturnal = nocturnal;

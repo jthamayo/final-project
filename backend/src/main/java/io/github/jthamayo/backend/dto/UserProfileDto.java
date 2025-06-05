@@ -11,9 +11,9 @@ public class UserProfileDto {
     private String password;
     private String phoneNumber;
     private List<JobDto> jobs;
-    private List<AddressDto> addresses;
-    private List<VehicleDto> vehicles;
-    private boolean isVerified;
+    private AddressDto address;
+    private VehicleDto vehicle;
+    private Boolean isVerified;
 
     ////////////////////////////////////////////////////////////////////////
 
@@ -65,61 +65,59 @@ public class UserProfileDto {
 	this.jobs = jobs;
     }
 
-    public List<AddressDto> getAddresses() {
-	return addresses;
+    public AddressDto getAddresses() {
+	return address;
     }
 
-    public void setAddresses(List<AddressDto> addresses) {
-	this.addresses = addresses;
+    public void setAddresses(AddressDto address) {
+	this.address = address;
     }
 
-    public List<VehicleDto> getVehicles() {
-	return vehicles;
+    public VehicleDto getVehicles() {
+	return vehicle;
     }
 
-    public void setVehicles(List<VehicleDto> vehicles) {
-	this.vehicles = vehicles;
+    public void setVehicles(VehicleDto vehicle) {
+	this.vehicle = vehicle;
     }
 
     public String getPassword() {
-        return password;
+	return password;
     }
 
     public void setPassword(String password) {
-        this.password = password;
+	this.password = password;
     }
 
     public String getPhoneNumber() {
-        return phoneNumber;
+	return phoneNumber;
     }
 
     public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
+	this.phoneNumber = phoneNumber;
     }
 
-    public boolean isVerified() {
-        return isVerified;
+    public Boolean isVerified() {
+	return isVerified;
     }
 
-    public void setVerified(boolean isVerified) {
-        this.isVerified = isVerified;
+    public void setVerified(Boolean isVerified) {
+	this.isVerified = isVerified;
     }
 
     ////////////////////////////////////////////////////////////////////////////////
-    
-    public UserProfileDto(Long id, String username, String email, String phoneNumber, String firstName, String lastName, String password, List<JobDto> jobs,
-	    List<AddressDto> addresses, List<VehicleDto> vehicles, boolean isVerified) {
-	super();
+
+    public UserProfileDto(Long id, String username, String email, String phoneNumber, String firstName, String lastName,
+	    List<JobDto> jobs, AddressDto address, VehicleDto vehicle, Boolean isVerified) {
 	this.id = id;
 	this.username = username;
 	this.email = email;
 	this.phoneNumber = phoneNumber;
 	this.firstName = firstName;
 	this.lastName = lastName;
-	this.password = password;
 	this.jobs = jobs;
-	this.addresses = addresses;
-	this.vehicles = vehicles;
+	this.address = address;
+	this.vehicle = vehicle;
 	this.isVerified = isVerified;
     }
 
