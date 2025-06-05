@@ -8,7 +8,7 @@ const UserAccount = ({
   account: User;
   onLogout: () => void;
 }) => {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(true);
   const toggleDropdown = () => setIsOpen((prev) => !prev);
   return (
     <div className="relative">

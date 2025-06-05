@@ -1,6 +1,9 @@
 import { ACCESS_TOKEN, REST_API_BASE_URL } from "../constants";
 import axiosAuth from "../util/axiosInstance";
 import axios from "axios";
+import { Address } from "./AddressService";
+import { Job } from "./JobService";
+import { Vehicle } from "./VehicleService";
 
 export interface User {
   id: number;
@@ -9,10 +12,13 @@ export interface User {
   username: string;
   email: string;
   isVerified: boolean;
-  jobId?: number;
-  addressId?: number;
-  childrenId?: number;
-  vehicleId?: number;
+}
+
+export interface UserProfile extends User {
+  phoneNumber: string;
+  vehicle: Vehicle;
+  address: Address;
+  jobs: Job[];
 }
 
 export const getListUsers = () => {
@@ -26,7 +32,17 @@ export const getCurrentUser = () => {
 };
 
 export const getProfileInformation = () => {
-  return axiosAuth.get<User>("/api/user/me/profile").then((res) => res.data);
+  return axiosAuth
+    .get<UserProfile>("/api/user/me/profile")
+    .then((res) => res.data);
+};
+
+export const updateUserProfile = (updatedProfile: UserProfile) => {
+  return axiosAuth
+    .put(`${REST_API_BASE_URL}/api/user/me/profile`, updatedProfile)
+    .then((res) => {
+      return res.data;
+    });
 };
 
 export interface Login {
