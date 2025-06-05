@@ -1,9 +1,11 @@
 import { useEffect } from "react";
-import { useAuth } from "../../context/useAuth";
+import { useAuth } from "../context/useAuth";
 import { useNavigate } from "react-router-dom";
+import UserAccount from "../components/user/UserAccount";
+import ListUserComponent from "../components/user/ListUserComponent";
 
-const ProfileComponent = () => {
-  const { currentUser, isLoading } = useAuth();
+const DashboardComponent = () => {
+  const { currentUser, isLoading, logout } = useAuth();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -29,19 +31,17 @@ const ProfileComponent = () => {
               <li className="list">Settings</li>
               <li className="list">Schedule</li>
               <li className="list">Messages</li>
+              <li className="list">Chats</li>
+              <li className="list">Search</li>
             </ul>
           </nav>
         </div>
-        <div className="details border-2 border-gray-200 flex p-4 items-center justify-start gap-4">
-          <div className="avatar h-full aspect-square bg-light rounded-md"></div>
-          <div>
-            <div className="text-xl">{currentUser.username}</div>
-            <div className="text-gray-400">{currentUser.email}</div>
-          </div>
-          <button className="size-5 bg-base rounded-full"></button>
-        </div>
+        <UserAccount account={currentUser} onLogout={logout} />
       </aside>
-      <section className="h-full w-4/5 p-8">
+      <div className="w-full overflow-y-auto">
+        <ListUserComponent />
+      </div>
+      {/* <section className="h-full w-4/5 p-8">
         <hgroup className="flex items-center justify-start gap-2">
           <h1 className="">Hello, {currentUser.username}</h1>
           <h2
@@ -58,9 +58,9 @@ const ProfileComponent = () => {
           {!currentUser.childrenId && <li className="card">Add a child +</li>}
           {!currentUser.vehicleId && <li className="card">Add a vehicle +</li>}
         </ul>
-      </section>
+      </section> */}
     </div>
   );
 };
 
-export default ProfileComponent;
+export default DashboardComponent;

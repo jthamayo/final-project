@@ -8,10 +8,18 @@ export interface User {
   lastName: string;
   username: string;
   email: string;
+  isVerified: boolean;
+  jobId?: number;
+  addressId?: number;
+  childrenId?: number;
+  vehicleId?: number;
 }
 
-export const listUsers = () =>
-  axiosAuth.get<User[]>(`/api/users`).then((res) => res.data);
+export const getListUsers = () => {
+  return axios
+    .get<User[]>(`${REST_API_BASE_URL}/api/users`)
+    .then((res) => res.data);
+};
 
 export const getCurrentUser = () => {
   return axiosAuth.get<User>("/api/user/me").then((res) => res.data);

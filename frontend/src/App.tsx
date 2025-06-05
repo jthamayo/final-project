@@ -2,12 +2,12 @@ import "./App.css";
 import { Routes, Route } from "react-router-dom";
 
 import ListUserComponent from "./components/user/ListUserComponent";
-import SignupComponent from "./components/auth/SignupComponent";
-import LoginComponent from "./components/auth/LoginComponent";
+import SignupComponent from "./pages/auth/SignupComponent";
+import LoginComponent from "./pages/auth/LoginComponent";
 import NotFound from "./common/NotFound";
 import PrivateRoute from "./common/PrivateRoute";
 import ProfileComponent from "./components/user/ProfileComponent";
-import DashboardComponent from "./components/user/DashboardComponent";
+import DashboardComponent from "./pages/DashboardComponent";
 
 function App() {
   return (
