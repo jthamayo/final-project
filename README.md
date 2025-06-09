@@ -1,15 +1,33 @@
-# final-project
+# Final Project
 
 ## Description
+
+A full-stack web application built with Java and Spring Boot on the backend, and React with TypeScript on the frontend.
+
 ## Features
 
-## Technologies
+- User authentication and authorization  
+- CRUD operations for managing data  
+- Responsive and modern UI using Tailwind CSS  
+- Integration between frontend and backend via REST API  
+- Unit and integration testing  
+- Clean and modular project structure  
 
-- Java 17
-- Spring Boot
-- MySQL
-- React
-- Maven
+## Technologies Used
+
+**Backend:**
+- Java 17  
+- Spring Boot  
+- MySQL  
+- Maven  
+- JUnit  
+- Mockito  
+
+**Frontend:**
+- React  
+- TypeScript  
+- Tailwind CSS
+
 
 ## Getting stated
 
@@ -99,3 +117,4 @@ All test classes are located in the `src/test/java` directory.
 ```bash
  mvn test 
  ```
+![tests](https://res.cloudinary.com/ddguqr8l8/image/upload/v1749163191/Captura_de_pantalla_2025-06-06_003730_ck0vcv.png)
