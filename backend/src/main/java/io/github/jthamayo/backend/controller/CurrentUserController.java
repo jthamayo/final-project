@@ -1,12 +1,16 @@
 package io.github.jthamayo.backend.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import io.github.jthamayo.backend.dto.AddressDto;
 import io.github.jthamayo.backend.dto.JobDto;
@@ -14,6 +18,7 @@ import io.github.jthamayo.backend.dto.UserDto;
 import io.github.jthamayo.backend.dto.UserProfileDto;
 import io.github.jthamayo.backend.dto.UserSummary;
 import io.github.jthamayo.backend.dto.VehicleDto;
+import io.github.jthamayo.backend.exception.BadRequestException;
 import io.github.jthamayo.backend.security.UserPrincipal;
 import io.github.jthamayo.backend.service.UserService;
 
@@ -58,4 +63,19 @@ public class CurrentUserController {
 	return ResponseEntity.ok(profile);
 
     }
+
+    @PostMapping("/me/profile/picture")
+    public ResponseEntity<Map<String, String>> uploadProfilePicture(@AuthenticationPrincipal UserPrincipal currentUser,
+	    @RequestParam("file") MultipartFile file) {
+	String res = userService.uploadProfilePicture(currentUser.getId(), file);
+	try {
+	    String url = userService.uploadProfilePicture(currentUser.getId(), file);
+	    return ResponseEntity.ok(Map.of("url", url));
+	} catch (BadRequestException e) {
+	    return ResponseEntity.badRequest().body(Map.of("error", e.getMessage()));
+	} catch (Exception e) {
+	    return ResponseEntity.internalServerError().body(Map.of("error", "Unexpected error"));
+	}
+    }
+
 }

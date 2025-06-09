@@ -1,5 +1,6 @@
 package io.github.jthamayo.backend.service.impl;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -8,6 +9,7 @@ import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import io.github.jthamayo.backend.dto.AddressDto;
 import io.github.jthamayo.backend.dto.JobDto;
@@ -20,6 +22,7 @@ import io.github.jthamayo.backend.entity.Job;
 import io.github.jthamayo.backend.entity.User;
 import io.github.jthamayo.backend.entity.Vehicle;
 import io.github.jthamayo.backend.entity.enums.AddressType;
+import io.github.jthamayo.backend.exception.BadRequestException;
 import io.github.jthamayo.backend.exception.InvalidOperationException;
 import io.github.jthamayo.backend.exception.ResourceNotFoundException;
 import io.github.jthamayo.backend.mapper.AddressMapper;
@@ -31,6 +34,7 @@ import io.github.jthamayo.backend.repository.GroupRepository;
 import io.github.jthamayo.backend.repository.JobRepository;
 import io.github.jthamayo.backend.repository.UserRepository;
 import io.github.jthamayo.backend.repository.VehicleRepository;
+import io.github.jthamayo.backend.service.CloudinaryService;
 import io.github.jthamayo.backend.service.UserService;
 
 @Service
@@ -42,17 +46,18 @@ public class UserServiceImpl implements UserService {
     private VehicleRepository vehicleRepository;
     private JobRepository jobRepository;
 
+    private CloudinaryService cloudinaryService;
+
     public UserServiceImpl(UserRepository userRepository, GroupRepository groupRepository,
-	    AddressRepository addressRepository, JobRepository jobRepository, VehicleRepository vehicleRepository) {
+	    AddressRepository addressRepository, JobRepository jobRepository, VehicleRepository vehicleRepository,
+	    CloudinaryService cloudinaryService) {
 	this.userRepository = userRepository;
 	this.groupRepository = groupRepository;
 	this.addressRepository = addressRepository;
 	this.jobRepository = jobRepository;
 	this.vehicleRepository = vehicleRepository;
+	this.cloudinaryService = cloudinaryService;
     }
-
-    // TODO add verified status, last_active
-    // TODO create login
 
     @Override
     public UserDto createUser(UserDto userDto) {
@@ -210,6 +215,19 @@ public class UserServiceImpl implements UserService {
 		user.getHomeAddress() != null ? AddressMapper.mapToAddressDto(user.getHomeAddress()) : null,
 		user.getVehicle() != null ? VehicleMapper.mapToVehicleDto(user.getVehicle()) : null, user.isVerified());
 	return profile;
+    }
+
+    @Override
+    public String uploadProfilePicture(Long userId, MultipartFile file) {
+	if (file.isEmpty()) {
+	    throw new BadRequestException("File is empty");
+	}
+
+	String url = cloudinaryService.uploadFile(file, "user_profiles");
+	User user = userRepository.findById(userId).orElseThrow(() -> new ResourceNotFoundException("User not found"));
+	user.setProfilePictureUrl(url);
+	userRepository.save(user);
+	return user.getProfilePictureUrl();
     }
 
 }

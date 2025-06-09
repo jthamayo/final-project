@@ -71,6 +71,8 @@ public class User extends BaseEntity {
     @Column
     private Boolean isVerified;
 
+    private String profilePictureUrl;
+
     ////////////////// GETTERS&SETTERS///////////////////////
 
     public Long getId() {
@@ -185,6 +187,21 @@ public class User extends BaseEntity {
 	this.vehicle = vehicle;
     }
 
+    public Boolean getIsVerified() {
+	return isVerified;
+    }
+
+    public void setIsVerified(Boolean isVerified) {
+	this.isVerified = isVerified;
+    }
+
+    public String getProfilePictureUrl() {
+	return profilePictureUrl;
+    }
+
+    public void setProfilePictureUrl(String profilePictureUrl) {
+	this.profilePictureUrl = profilePictureUrl;
+    }
     //////////////// CONSTRUCTOR////////////////
 
     public User() {
@@ -215,7 +232,8 @@ public class User extends BaseEntity {
     }
 
     public User(Long id, String firstName, String lastName, String username, String email, String phoneNumber,
-	    Group group, List<Job> jobs, Address homeAddress, Vehicle vehicle, Boolean isVerified, Set<Role> roles) {
+	    Group group, List<Job> jobs, Address homeAddress, Vehicle vehicle, Boolean isVerified,
+	    String profilePictureUrl, Set<Role> roles) {
 	this.id = id;
 	this.firstName = firstName;
 	this.lastName = lastName;
@@ -227,6 +245,7 @@ public class User extends BaseEntity {
 	this.homeAddress = homeAddress;
 	this.vehicle = vehicle;
 	this.isVerified = isVerified;
+	this.profilePictureUrl = profilePictureUrl;
 	this.roles = roles;
     }
 

@@ -2,6 +2,8 @@ package io.github.jthamayo.backend.service;
 
 import java.util.List;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import io.github.jthamayo.backend.dto.AddressDto;
 import io.github.jthamayo.backend.dto.JobDto;
 import io.github.jthamayo.backend.dto.UserDto;
@@ -35,5 +37,7 @@ public interface UserService {
     UserDto getUserByUsername(String username);
     
     UserProfileDto getProfile(Long userId);
+    
+    String uploadProfilePicture(Long userId, MultipartFile file);
     
 }
