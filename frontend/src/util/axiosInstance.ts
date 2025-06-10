@@ -3,9 +3,6 @@ import { REST_API_BASE_URL, ACCESS_TOKEN } from "../constants/index.ts";
 
 const axiosInstance = axios.create({
   baseURL: REST_API_BASE_URL,
-  headers: {
-    "Content-Type": "application/json",
-  },
 });
 
 axiosInstance.interceptors.request.use((config) => {
