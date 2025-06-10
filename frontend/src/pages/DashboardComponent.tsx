@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import UserAccount from "../components/user/UserAccount";
 import ListUserComponent from "../components/user/ListUserComponent";
 import ProfileComponent from "../components/user/ProfileComponent";
+import { SettingsComponent } from "../components/SettingsComponent";
 
 const DashboardComponent = () => {
   const { currentUser, isLoading, logout } = useAuth();
@@ -85,6 +86,7 @@ const DashboardComponent = () => {
       <div className="panel w-full overflow-y-auto">
         {activePanel === "search" && <ListUserComponent />}
         {activePanel === "profile" && <ProfileComponent />}
+        {activePanel === "settings" && <SettingsComponent />}
       </div>
       {/* <section className="h-full w-4/5 p-8">
         <hgroup className="flex items-center justify-start gap-2">
