@@ -48,6 +48,8 @@ public class UserDto {
 
     private Boolean isVerified;
 
+    private String profilePictureUrl;
+
     ////////////////// GETTERS&SETTERS///////////////////////
 
     public Long getId() {
@@ -154,13 +156,21 @@ public class UserDto {
 	this.vehicleId = vehicleId;
     }
 
+    public String getProfilePictureUrl() {
+        return profilePictureUrl;
+    }
+
+    public void setProfilePictureUrl(String profilePictureUrl) {
+	this.profilePictureUrl = profilePictureUrl;
+    }
+
     //////////////// CONSTRUCTOR////////////////
 
     public UserDto() {
     }
 
     public UserDto(Long id, String firstName, String lastName, String username, String email, String phoneNumber,
-	    Long groupId, List<Long> jobIds, Long homeAddressId, Long vehicleId, List<Long> roleIds,
+	    Long groupId, List<Long> jobIds, Long homeAddressId, Long vehicleId, List<Long> roleIds, String profilePictureUrl,
 	    Boolean isVerified) {
 	this.id = id;
 	this.firstName = firstName;
@@ -173,6 +183,7 @@ public class UserDto {
 	this.homeAddressId = homeAddressId;
 	this.vehicleId = vehicleId;
 	this.roleIds = new HashSet<>(roleIds);
+	this.profilePictureUrl = profilePictureUrl;
 	this.isVerified = isVerified;
     }
 

@@ -13,6 +13,7 @@ public class UserSummary {
     private String firstName;
     private String lastName;
     private String email;
+    private String profilePictureUrl;
 
     public UserSummary(Long id, String firstName, String lastName, String username, String email) {
 	this.id = id;
@@ -22,11 +23,12 @@ public class UserSummary {
 	this.email = email;
     }
 
-    public UserSummary(String firstName, String lastName, String username, String email) {
+    public UserSummary(String firstName, String lastName, String username, String email, String profilePictureUrl) {
 	this.firstName = firstName;
 	this.lastName = lastName;
 	this.username = username;
 	this.email = email;
+	this.profilePictureUrl = profilePictureUrl;
     }
 
     public String getUsername() {
@@ -59,6 +61,14 @@ public class UserSummary {
 
     public void setEmail(String email) {
 	this.email = email;
+    }
+
+    public String getProfilePictureUrl() {
+	return profilePictureUrl;
+    }
+
+    public void setProfilePictureUrl(String profilePictureUrl) {
+	this.profilePictureUrl = profilePictureUrl;
     }
 
 }

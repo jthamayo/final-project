@@ -14,7 +14,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import io.github.jthamayo.backend.dto.AddressDto;
 import io.github.jthamayo.backend.dto.JobDto;
-import io.github.jthamayo.backend.dto.UserDto;
 import io.github.jthamayo.backend.dto.UserProfileDto;
 import io.github.jthamayo.backend.dto.UserSummary;
 import io.github.jthamayo.backend.dto.VehicleDto;
@@ -36,6 +35,7 @@ public class CurrentUserController {
     public ResponseEntity<UserSummary> getCurrentUser(@AuthenticationPrincipal UserPrincipal currentUser) {
 	UserSummary user = new UserSummary(currentUser.getId(), currentUser.getFirstName(), currentUser.getLastName(),
 		currentUser.getUsername(), currentUser.getEmail());
+	user.setProfilePictureUrl(userService.getProfilePicture(currentUser.getId()));
 	return ResponseEntity.ok(user);
     }
 
@@ -66,8 +66,7 @@ public class CurrentUserController {
 
     @PostMapping("/me/profile/picture")
     public ResponseEntity<Map<String, String>> uploadProfilePicture(@AuthenticationPrincipal UserPrincipal currentUser,
-	    @RequestParam("file") MultipartFile file) {
-	String res = userService.uploadProfilePicture(currentUser.getId(), file);
+	    @RequestParam MultipartFile file) {
 	try {
 	    String url = userService.uploadProfilePicture(currentUser.getId(), file);
 	    return ResponseEntity.ok(Map.of("url", url));

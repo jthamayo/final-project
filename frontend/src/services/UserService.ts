@@ -12,6 +12,7 @@ export interface User {
   username: string;
   email: string;
   isVerified: boolean;
+  profilePictureUrl?: string;
 }
 
 export interface UserProfile extends User {
@@ -19,7 +20,10 @@ export interface UserProfile extends User {
   vehicle: Vehicle;
   address: Address;
   jobs: Job[];
+  profilePictureUrl: string;
 }
+
+export type ProfilePictureProps = { url: string };
 
 export const getListUsers = () => {
   return axios
@@ -40,6 +44,16 @@ export const getProfileInformation = () => {
 export const updateUserProfile = (updatedProfile: UserProfile) => {
   return axiosAuth
     .put(`${REST_API_BASE_URL}/api/user/me/profile`, updatedProfile)
+    .then((res) => {
+      return res.data;
+    });
+};
+
+export const uploadProfilePicture = (file: File) => {
+  const formData = new FormData();
+  formData.append("file", file);
+  return axiosAuth
+    .post(`${REST_API_BASE_URL}/api/user/me/profile/picture`, formData)
     .then((res) => {
       return res.data;
     });

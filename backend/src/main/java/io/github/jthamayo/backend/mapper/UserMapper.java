@@ -15,7 +15,8 @@ public class UserMapper {
 			: new ArrayList<>(),
 		user.getHomeAddress() != null ? user.getHomeAddress().getId() : null,
 		user.getVehicle() != null ? user.getVehicle().getId() : null,
-		user.getRoles().stream().map((role) -> role.getId()).collect(Collectors.toList()), user.isVerified());
+		user.getRoles().stream().map((role) -> role.getId()).collect(Collectors.toList()),
+		user.getProfilePictureUrl(), user.isVerified());
     }
 
     public static User mapToUser(UserDto userDto) {

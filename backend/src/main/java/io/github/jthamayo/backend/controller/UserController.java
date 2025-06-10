@@ -85,10 +85,10 @@ public class UserController {
     }
 
     @GetMapping("profile/{username}")
-    public ResponseEntity<UserSummary> getUserByUsername(@PathVariable("username") String username) {
+    public ResponseEntity<UserSummary> getUserByUsername(@PathVariable String username) {
 	UserDto userDto = userService.getUserByUsername(username);
 	return ResponseEntity.ok(new UserSummary(userDto.getFirstName(), userDto.getLastName(), userDto.getUsername(),
-		userDto.getEmail()));
+		userDto.getEmail(), userDto.getProfilePictureUrl()));
 
     }
 

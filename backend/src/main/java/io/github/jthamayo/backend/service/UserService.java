@@ -40,4 +40,6 @@ public interface UserService {
     
     String uploadProfilePicture(Long userId, MultipartFile file);
     
+    String getProfilePicture(Long userId);
+    
 }

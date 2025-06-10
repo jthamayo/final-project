@@ -13,6 +13,7 @@ public class UserProfileDto {
     private List<JobDto> jobs;
     private AddressDto address;
     private VehicleDto vehicle;
+    private String profilePictureUrl;
     private Boolean isVerified;
 
     ////////////////////////////////////////////////////////////////////////
@@ -97,6 +98,14 @@ public class UserProfileDto {
 	this.phoneNumber = phoneNumber;
     }
 
+    public String getProfilePictureUrl() {
+	return profilePictureUrl;
+    }
+
+    public void setProfilePictureUrl(String profilePictureUrl) {
+	this.profilePictureUrl = profilePictureUrl;
+    }
+
     public Boolean isVerified() {
 	return isVerified;
     }
@@ -108,7 +117,7 @@ public class UserProfileDto {
     ////////////////////////////////////////////////////////////////////////////////
 
     public UserProfileDto(Long id, String username, String email, String phoneNumber, String firstName, String lastName,
-	    List<JobDto> jobs, AddressDto address, VehicleDto vehicle, Boolean isVerified) {
+	    List<JobDto> jobs, AddressDto address, VehicleDto vehicle, String profilePictureUrl, Boolean isVerified) {
 	this.id = id;
 	this.username = username;
 	this.email = email;
@@ -118,6 +127,7 @@ public class UserProfileDto {
 	this.jobs = jobs;
 	this.address = address;
 	this.vehicle = vehicle;
+	this.profilePictureUrl = profilePictureUrl;
 	this.isVerified = isVerified;
     }
 

@@ -213,7 +213,8 @@ public class UserServiceImpl implements UserService {
 			? user.getJobs().stream().map(JobMapper::mapToJobDto).collect(Collectors.toList())
 			: new ArrayList<>(),
 		user.getHomeAddress() != null ? AddressMapper.mapToAddressDto(user.getHomeAddress()) : null,
-		user.getVehicle() != null ? VehicleMapper.mapToVehicleDto(user.getVehicle()) : null, user.isVerified());
+		user.getVehicle() != null ? VehicleMapper.mapToVehicleDto(user.getVehicle()) : null,
+		user.getProfilePictureUrl(), user.isVerified());
 	return profile;
     }
 
@@ -222,11 +223,17 @@ public class UserServiceImpl implements UserService {
 	if (file.isEmpty()) {
 	    throw new BadRequestException("File is empty");
 	}
-
 	String url = cloudinaryService.uploadFile(file, "user_profiles");
+
 	User user = userRepository.findById(userId).orElseThrow(() -> new ResourceNotFoundException("User not found"));
 	user.setProfilePictureUrl(url);
 	userRepository.save(user);
+	return user.getProfilePictureUrl();
+    }
+
+    @Override
+    public String getProfilePicture(Long userId) {
+	User user = userRepository.findById(userId).orElseThrow(() -> new ResourceNotFoundException("User not found"));
 	return user.getProfilePictureUrl();
     }
 
