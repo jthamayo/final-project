@@ -17,7 +17,7 @@ public interface RequestRepository extends JpaRepository<Request, Long> {
     @Query("SELECT r from Request r where r.userSender.id = :senderId AND r.status = 'PENDING'")
     List<Request> findUserPendingSentRequests(@Param("senderId") Long senderId);
 
-    @Query("SELECT r from Request r where r.userSender.id = :senderId AND r.userReceiver.id = :receiverId AND r.status = 'PENDING'")
+    @Query("SELECT r from Request r where (r.userSender.id = :senderId AND r.userReceiver.id = :receiverId) OR (r.userSender.id = :receiverId AND r.userReceiver.id = :senderId) AND r.status = 'PENDING'")
     Optional<Request> findPendingRequestBetweenUsers(@Param("senderId") Long senderId,
 	    @Param("receiverId") Long receiverId);
 

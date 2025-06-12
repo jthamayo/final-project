@@ -136,4 +136,10 @@ public class RequestServiceImpl implements RequestService {
 	return RequestMapper.mapToRequestDto(requestRepository.save(request));
     }
 
+    @Override
+    public Optional<RequestDto> getPendingRequestBetweenUsers(Long senderId, Long receiverId) {
+	Optional<Request> request = requestRepository.findPendingRequestBetweenUsers(senderId, receiverId);
+	return request.map(RequestMapper::mapToRequestDto);
+    }
+
 }

@@ -3,6 +3,7 @@ package io.github.jthamayo.backend.repository;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -22,6 +23,16 @@ public interface NetworkRepository extends JpaRepository<Network, Long> {
     	SELECT n.user1.id FROM Network n WHERE n.user2.id = :userId)
     	""")
     List<User> findConnectedUsers(@Param("userId") Long userId);
+
+    @Query("""
+    	SELECT u FROM User u
+    	   WHERE u.id != :userId
+    	   AND NOT EXISTS (
+    	   SELECT 1 FROM Network n
+    	   WHERE (n.user1.id = :userId AND n.user2.id = u.id)
+    	   OR (n.user2.id = :userId AND n.user1.id = u.id))
+    	""")
+    List<User> findUnconnectedUsers(@Param("userId") Long userId, Pageable pageable);
 
     @Query("""
     	SELECT u FROM User u WHERE u.id IN
