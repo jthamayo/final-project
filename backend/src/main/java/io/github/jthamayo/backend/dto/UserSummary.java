@@ -1,11 +1,5 @@
 package io.github.jthamayo.backend.dto;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
-import io.github.jthamayo.backend.entity.Job;
-
 public class UserSummary {
 
     private Long id;
@@ -14,6 +8,7 @@ public class UserSummary {
     private String lastName;
     private String email;
     private String profilePictureUrl;
+    private Boolean hasPendingRequest;
 
     public UserSummary(Long id, String firstName, String lastName, String username, String email) {
 	this.id = id;
@@ -22,7 +17,7 @@ public class UserSummary {
 	this.username = username;
 	this.email = email;
     }
-
+    
     public UserSummary(String firstName, String lastName, String username, String email, String profilePictureUrl) {
 	this.firstName = firstName;
 	this.lastName = lastName;
@@ -70,5 +65,22 @@ public class UserSummary {
     public void setProfilePictureUrl(String profilePictureUrl) {
 	this.profilePictureUrl = profilePictureUrl;
     }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Boolean getHasPendingRequest() {
+        return hasPendingRequest;
+    }
+
+    public void setHasPendingRequest(Boolean hasPendingRequest) {
+        this.hasPendingRequest = hasPendingRequest;
+    }
+    
 
 }

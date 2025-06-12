@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.stream.Collectors;
 
 import io.github.jthamayo.backend.dto.UserDto;
+import io.github.jthamayo.backend.dto.UserSummary;
 import io.github.jthamayo.backend.entity.User;
 
 public class UserMapper {
@@ -22,5 +23,10 @@ public class UserMapper {
     public static User mapToUser(UserDto userDto) {
 	return new User(userDto.getId(), userDto.getFirstName(), userDto.getLastName(), userDto.getUsername(),
 		userDto.getEmail(), userDto.getPhoneNumber(), userDto.isVerified());
+    }
+
+    public static UserSummary mapToUserSummary(User user) {
+	return new UserSummary(user.getFirstName(), user.getLastName(), user.getUsername(),
+		user.getEmail(), user.getProfilePictureUrl());
     }
 }

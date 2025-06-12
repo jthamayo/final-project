@@ -5,14 +5,19 @@ import { Address } from "./AddressService";
 import { Job } from "./JobService";
 import { Vehicle } from "./VehicleService";
 
-export interface User {
-  id: number;
+
+export interface PublicUser {
   firstName: string;
   lastName: string;
   username: string;
   email: string;
   isVerified: boolean;
-  profilePictureUrl?: string;
+  profilePictureUrl: string;
+  hasPendingRequest: boolean;
+}
+
+export interface User extends PublicUser{
+  id: number;
 }
 
 export interface UserProfile extends User {
@@ -31,6 +36,12 @@ export const getListUsers = () => {
     .then((res) => res.data);
 };
 
+export const getPublicListUsers = () => {
+  return axiosAuth
+    .get<User[]>(`${REST_API_BASE_URL}/api/user/me/search`)
+    .then((res) => res.data);
+};
+
 export const getCurrentUser = () => {
   return axiosAuth.get<User>("/api/user/me").then((res) => res.data);
 };
@@ -43,7 +54,7 @@ export const getProfileInformation = () => {
 
 export const updateUserProfile = (updatedProfile: UserProfile) => {
   return axiosAuth
-    .put(`${REST_API_BASE_URL}/api/user/me/profile`, updatedProfile)
+    .put(`${REST_API_BASE_URL}/api/user/me/profile/edit`, updatedProfile)
     .then((res) => {
       return res.data;
     });
