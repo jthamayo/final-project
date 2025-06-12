@@ -4,6 +4,7 @@ import java.util.List;
 
 import io.github.jthamayo.backend.dto.NetworkDto;
 import io.github.jthamayo.backend.dto.UserDto;
+import io.github.jthamayo.backend.dto.UserSummary;
 
 public interface NetworkService {
 
@@ -20,6 +21,8 @@ public interface NetworkService {
     List<NetworkDto> getAllNetworks();
 
     List<UserDto> getUserConnections(Long userId);
+    
+    List<UserSummary> getUnconnectedUsers(Long userId);
 
     List<UserDto> getGroupConnections(Long gropupId);
 
@@ -27,7 +30,7 @@ public interface NetworkService {
 
     List<UserDto> getUsersExclusiveConnections(Long userId1, Long userId2);
 
-    List<UserDto> getUserSecondaryConnections(Long userId);
+    List<UserSummary> getUserSecondaryConnections(Long userId);
 
     // TODO add service to return a List of users sorted by the
     // level of affinity (frequency of connections within group)

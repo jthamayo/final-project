@@ -1,6 +1,7 @@
 package io.github.jthamayo.backend.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import io.github.jthamayo.backend.dto.RequestDto;
 
@@ -25,4 +26,6 @@ public interface RequestService {
     List<RequestDto> getPendingReceivedRequests(Long userId);
 
     List<RequestDto> getPendingSentRequests(Long userId);
+    
+    Optional<RequestDto> getPendingRequestBetweenUsers(Long senderId, Long receiverId);
 }

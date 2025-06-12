@@ -59,12 +59,6 @@ public class RequestController {
 	return ResponseEntity.ok(requests);
     }
 
-    @PostMapping("user/{senderId}/to/{receiverId}")
-    public ResponseEntity<RequestDto> sendUserRequest(@PathVariable Long senderId, @PathVariable Long receiverId) {
-	RequestDto request = requestService.sendUserRequest(senderId, receiverId);
-	return new ResponseEntity<>(request, HttpStatus.CREATED);
-    }
-
     @GetMapping("user/{id}/pending/received")
     public ResponseEntity<List<RequestDto>> getPendingReceivedRequests(@PathVariable("id") Long userId) {
 	List<RequestDto> requests = requestService.getPendingReceivedRequests(userId);

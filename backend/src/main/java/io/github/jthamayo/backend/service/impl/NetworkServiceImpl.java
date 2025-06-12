@@ -3,16 +3,21 @@ package io.github.jthamayo.backend.service.impl;
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import io.github.jthamayo.backend.dto.NetworkDto;
+import io.github.jthamayo.backend.dto.RequestDto;
 import io.github.jthamayo.backend.dto.UserDto;
+import io.github.jthamayo.backend.dto.UserSummary;
 import io.github.jthamayo.backend.entity.Group;
 import io.github.jthamayo.backend.entity.Network;
+import io.github.jthamayo.backend.entity.Request;
 import io.github.jthamayo.backend.entity.User;
 import io.github.jthamayo.backend.exception.InvalidOperationException;
 import io.github.jthamayo.backend.exception.ResourceNotFoundException;
@@ -20,8 +25,10 @@ import io.github.jthamayo.backend.mapper.NetworkMapper;
 import io.github.jthamayo.backend.mapper.UserMapper;
 import io.github.jthamayo.backend.repository.GroupRepository;
 import io.github.jthamayo.backend.repository.NetworkRepository;
+import io.github.jthamayo.backend.repository.RequestRepository;
 import io.github.jthamayo.backend.repository.UserRepository;
 import io.github.jthamayo.backend.service.NetworkService;
+import io.github.jthamayo.backend.service.RequestService;
 
 @Service
 public class NetworkServiceImpl implements NetworkService {
@@ -29,12 +36,14 @@ public class NetworkServiceImpl implements NetworkService {
     private NetworkRepository networkRepository;
     private UserRepository userRepository;
     private GroupRepository groupRepository;
+    private RequestService requestService;
 
     public NetworkServiceImpl(NetworkRepository networkRepository, UserRepository userRepository,
-	    GroupRepository groupRepository) {
+	    GroupRepository groupRepository, RequestRepository requestRepository, RequestService requestService) {
 	this.networkRepository = networkRepository;
 	this.userRepository = userRepository;
 	this.groupRepository = groupRepository;
+	this.requestService = requestService;
     }
 
     @Override
@@ -47,7 +56,7 @@ public class NetworkServiceImpl implements NetworkService {
 	if (existingNetwork.isPresent()) {
 	    throw new InvalidOperationException("Users are already connected");
 	}
-	//TODO verify accepted request
+	// TODO verify accepted request
 	Network network = NetworkMapper.mapToNetwork(networkDto);
 	network.setUser1(userRepository.findById(networkDto.getUserId1())
 		.orElseThrow(() -> new ResourceNotFoundException("User not found: " + networkDto.getUserId1())));
@@ -127,14 +136,35 @@ public class NetworkServiceImpl implements NetworkService {
     }
 
     @Override
-    public List<UserDto> getUserSecondaryConnections(Long userId) {
+    public List<UserSummary> getUserSecondaryConnections(Long userId) {
 	userRepository.findById(userId).orElseThrow(() -> new ResourceNotFoundException("User not found: " + userId));
 	Set<User> userConnections = new HashSet<>(networkRepository.findConnectedUsers(userId));
 	Set<User> secondaryConnections = userConnections.stream()
 		.flatMap(friend -> networkRepository.findConnectedUsers(friend.getId()).stream())
 		.filter(secondary -> !secondary.getId().equals(userId) && !userConnections.contains(secondary))
 		.collect(Collectors.toSet());
-	return secondaryConnections.stream().map(UserMapper::mapToUserDto).collect(Collectors.toList());
+	return secondaryConnections.stream().map(UserMapper::mapToUserSummary).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<UserSummary> getUnconnectedUsers(Long userId) {
+	userRepository.findById(userId).orElseThrow(() -> new ResourceNotFoundException("User not found: " + userId));
+	List<User> users = networkRepository.findUnconnectedUsers(userId, PageRequest.of(0, 50));
+	return users.stream().map(user -> {
+	    Optional<RequestDto> requested = requestService.getPendingRequestBetweenUsers(userId, user.getId());
+
+	    UserSummary userDto = UserMapper.mapToUserSummary(user);
+	    if (requested.isPresent()) {
+		RequestDto request = requested.get();
+		if (request.getUserReceiver().equals(userId)) {
+		    return null;
+		}
+		userDto.setHasPendingRequest(true);
+	    } else {
+		userDto.setHasPendingRequest(false);
+	    }
+	    return userDto;
+	}).filter(Objects::nonNull).collect(Collectors.toList());
     }
 
 }

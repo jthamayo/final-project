@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import io.github.jthamayo.backend.dto.NetworkDto;
 import io.github.jthamayo.backend.dto.UserDto;
+import io.github.jthamayo.backend.dto.UserSummary;
 import io.github.jthamayo.backend.service.NetworkService;
 
 @RestController
@@ -87,8 +88,8 @@ public class NetworkController {
     }
 
     @GetMapping("/user/{id}/secondary")
-    public ResponseEntity<List<UserDto>> getUserSecondaryConnections(@PathVariable("id") Long userId) {
-	List<UserDto> connections = networkService.getUserSecondaryConnections(userId);
+    public ResponseEntity<List<UserSummary>> getUserSecondaryConnections(@PathVariable("id") Long userId) {
+	List<UserSummary> connections = networkService.getUserSecondaryConnections(userId);
 	return ResponseEntity.ok(connections);
     }
 
