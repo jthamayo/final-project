@@ -22,6 +22,17 @@
   --color-light: #edee2e;
   --color-accent: #e1c4ff;
   --color-box: #edecf6;
+
+  --animate-fade: fade 0.3s ease-in forwards;
+
+  @keyframes fade {
+    0% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0;
+    }
+  }
 }
 
 @layer base {
@@ -92,11 +103,12 @@
     padding-left: 2rem;
     min-height: 60px;
   }
+
   .dark-box {
     color: white;
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: center;
     background-color: var(--color-base);
     width: 100%;
     border-radius: 1rem;
@@ -119,7 +131,62 @@
     left: 0;
   }
 
-  .icon{
-    
+  .square-button {
+    height: 140px;
+    background-color: var(--color-accent);
+    aspect-ratio: 1/1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-radius: 1rem;
+    position: relative;
+  }
+  .square-button > p {
+    position: absolute;
+    bottom: 1rem;
+  }
+
+  .square-button::before {
+    content: "";
+    transition: opacity 0.3s ease-in-out;
+    font-size: 5rem;
+    position: absolute;
+    color: #9c8aff;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    opacity: 0;
+    background-color: white;
+    border: solid 3px #9c8aff;
+    border-radius: 1rem;
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .square-button:hover::before {
+    content: "+";
+    background-image: url(assets/icons.svg#user);
+    opacity: 1;
+  }
+
+  .cell {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: var(--color-box);
+    width: 100%;
+    border-radius: 1rem;
+    padding: 0 2rem;
+    min-height: 60px;
+    border: 2px solid black;
+  }
+
+  .fade{
+    animation: var(--animate-fade);
+    animation-delay: 1000ms;
   }
 }

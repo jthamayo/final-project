@@ -53,10 +53,10 @@ const SignupComponent = () => {
 
   return (
     <div className="flex flex-col w-full px-8 h-full overflow-y-auto">
-      <h2 className="mt-8 text-white font-title text-4xl text-center">
+      <h2 className="my-8 text-white font-title text-4xl text-center">
         Sign up
       </h2>
-      <div className="w-full max-w-[1000px] m-auto bg-white rounded-4xl p-8 sm:p-16 relative">
+      <div className="w-full max-w-[1000px] m-auto bg-white rounded-4xl p-4 sm:p-12 relative">
         <form
           onSubmit={handleSubmit(onSubmit)}
           className="flex max-sm:flex-col justify-between gap-4 sm:gap-8"
@@ -244,7 +244,7 @@ const SignupComponent = () => {
             <button
               type="submit"
               disabled={isSubmitting}
-              className="box bg-base text-center text-white p-0 text-xl "
+              className="dark-box p-0 text-xl "
             >
               {isSubmitting ? "Signing up..." : "Sign up"}{" "}
             </button>

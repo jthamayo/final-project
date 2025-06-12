@@ -23,13 +23,13 @@ const LoginComponent = () => {
 
   return (
     <div className="flex flex-col">
-      <h2 className="text-white font-title text-4xl text-center"> Login</h2>
+      <h2 className="text-white text-4xl text-center"> Login</h2>
       <div className=" my-5 w-120 bg-white rounded-4xl">
         <form
           onSubmit={handleSubmit(onSubmit)}
           className="flex flex-col justify-between h-full p-15 gap-4"
         >
-          <label htmlFor="usernameOrEmail" className="font-title text-xl">
+          <label htmlFor="usernameOrEmail" className="text-xl">
             Username or Email
           </label>
           <input
@@ -38,7 +38,7 @@ const LoginComponent = () => {
             placeholder="Username or Email"
             className="bg-[#EDECF6] text-black w-full h-1/5 pl-5 rounded-xl box"
           />
-          <label htmlFor="password" className="font-title text-xl">
+          <label htmlFor="password" className=" text-xl">
             Password
           </label>
           <input
@@ -50,7 +50,7 @@ const LoginComponent = () => {
           {error && <p className="text-red-500">{error}</p>}
           <button
             type="submit"
-            className="bg-base text-white text-center text-xl font-title w-full h-1/5 rounded-xl mt-10 box p-0"
+            className="text-xl rounded-xl mt-10 dark-box p-0"
           >
             Sign in
           </button>
