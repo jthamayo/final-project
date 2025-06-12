@@ -1,7 +1,6 @@
 import "./App.css";
 import { Routes, Route } from "react-router-dom";
 
-import ListUserComponent from "./components/user/ListUserComponent";
 import SignupComponent from "./pages/auth/SignupComponent";
 import LoginComponent from "./pages/auth/LoginComponent";
 import NotFound from "./common/NotFound";
@@ -21,7 +20,6 @@ function App() {
             </PrivateRoute>
           }
         ></Route>
-        <Route path="/users" element={<ListUserComponent />}></Route>
         <Route path="/signup" element={<SignupComponent />}></Route>
         <Route path="/login" element={<LoginComponent />}></Route>
         <Route

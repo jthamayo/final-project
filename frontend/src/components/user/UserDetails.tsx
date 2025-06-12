@@ -11,7 +11,7 @@ export const UserDetails = ({ currentUser }: { currentUser: UserProfile }) => {
     email: currentUser.email,
   });
 
-  const handleChange = (e) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };

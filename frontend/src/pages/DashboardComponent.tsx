@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useAuth } from "../context/useAuth";
 import { useNavigate } from "react-router-dom";
 import UserAccount from "../components/user/UserAccount";
-import ListUserComponent from "../components/user/ListUserComponent";
+import ListUserComponent from "../components/ListUserComponent";
 import ProfileComponent from "../components/user/ProfileComponent";
 import { SettingsComponent } from "../components/SettingsComponent";
 
@@ -32,50 +32,68 @@ const DashboardComponent = () => {
             <ul className="flex flex-col gap-1">
               <li>
                 <button
-                  className="list"
+                  className="cell"
                   onClick={() => setActivePanel("profile")}
                 >
                   Profile
+                  <svg className="icon size-10">
+                    <use xlinkHref="assets/icons.svg#star"></use>
+                  </svg>
                 </button>
               </li>
               <li>
                 <button
-                  className="list"
+                  className="cell"
                   onClick={() => setActivePanel("search")}
                 >
                   Search
+                  <svg className="icon size-10">
+                    <use xlinkHref="assets/icons.svg#star"></use>
+                  </svg>
                 </button>
               </li>
               <li>
                 <button
-                  className="list"
+                  className="cell"
                   onClick={() => setActivePanel("settings")}
                 >
                   Settings
+                  <svg className="icon size-10">
+                    <use xlinkHref="assets/icons.svg#star"></use>
+                  </svg>
                 </button>
               </li>
               <li>
                 <button
-                  className="list"
+                  className="cell"
                   onClick={() => setActivePanel("schedule")}
                 >
                   Schedule
+                  <svg className="icon size-10">
+                    <use xlinkHref="assets/icons.svg#star"></use>
+                  </svg>
                 </button>
               </li>
               <li>
                 <button
-                  className="list"
+                  className="cell"
                   onClick={() => setActivePanel("messages")}
                 >
                   Messages
+                  <svg className="icon size-10">
+                    <use xlinkHref="assets/icons.svg#star"></use>
+                  </svg>
                 </button>
               </li>
               <li>
                 <button
-                  className="list"
+                  className="cell"
                   onClick={() => setActivePanel("chats")}
                 >
                   Chats
+                  <svg className="icon size-10">
+                    <use xlinkHref="assets/icons.svg#star"></use>
+                  </svg>
                 </button>
               </li>
             </ul>
@@ -87,6 +105,7 @@ const DashboardComponent = () => {
         {activePanel === "search" && <ListUserComponent />}
         {activePanel === "profile" && <ProfileComponent />}
         {activePanel === "settings" && <SettingsComponent />}
+        {activePanel === "Requests" && <RequestsComponent />}
       </div>
       {/* <section className="h-full w-4/5 p-8">
         <hgroup className="flex items-center justify-start gap-2">
