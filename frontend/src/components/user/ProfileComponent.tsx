@@ -8,6 +8,7 @@ import {
 import { VerificationProcess } from "./VerificationProcess";
 import Loading from "../../common/Loading";
 import { UserDetails } from "./UserDetails";
+import UserAvatar from "./UserAvatar";
 
 const ProfileComponent = () => {
   const [user, setUser] = useState<UserProfile | null>(null);
@@ -58,21 +59,9 @@ const ProfileComponent = () => {
             {isUploading ? (
               <p>Uploading...</p>
             ) : profilePic ? (
-              <img
-                src={profilePic.url}
-                alt="profile picture"
-                className="object-cover w-full h-full rounded-lg"
-              />
-            ) : user.profilePictureUrl ? (
-              <img
-                src={user.profilePictureUrl}
-                alt="profile picture"
-                className="object-cover w-full h-full rounded-lg"
-              />
+              <UserAvatar url={profilePic.url} />
             ) : (
-              <svg className="plus-icon w-2/3 h-2/3 text-muted">
-                <use xlinkHref="assets/icons.svg#upload"></use>
-              </svg>
+              <UserAvatar url={user.profilePictureUrl} />
             )}
             <label
               htmlFor="profile_pic"
@@ -98,18 +87,27 @@ const ProfileComponent = () => {
       {!user.isVerified && (
         <div className="flex py-4 gap-4">
           {user.jobs.length === 0 && (
-            <button className="h-40 rounded-3xl bg-accent aspect-square">
-              + Add a job
+            <button className="square-button">
+              <svg className="plus-icon size-1/3 text-muted">
+                <use xlinkHref="assets/icons.svg#users"></use>
+              </svg>
+              <p> Add a job</p>
             </button>
           )}
           {!user.vehicle && (
-            <button className="h-40 rounded-3xl bg-accent aspect-square">
-              + Add a Vehicle
+            <button className="square-button">
+              <svg className="plus-icon size-1/3 text-muted">
+                <use xlinkHref="assets/icons.svg#car"></use>
+              </svg>
+              <p> Add a Vehicle</p>
             </button>
           )}
           {!user.address && (
-            <button className="h-40 rounded-3xl bg-accent aspect-square">
-              + Add an Address
+            <button className="square-button">
+              <svg className="plus-icon size-1/3 text-muted">
+                <use xlinkHref="assets/icons.svg#location"></use>
+              </svg>
+              <p>Add an Address</p>
             </button>
           )}
         </div>
