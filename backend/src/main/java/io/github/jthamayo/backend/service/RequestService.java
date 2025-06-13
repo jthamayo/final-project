@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import io.github.jthamayo.backend.dto.RequestDto;
+import io.github.jthamayo.backend.dto.RequestDetailsDto;
 
 public interface RequestService {
 
@@ -23,9 +24,9 @@ public interface RequestService {
 
     RequestDto sendUserRequest(Long senderId, Long receiverId);
 
-    List<RequestDto> getPendingReceivedRequests(Long userId);
+    List<RequestDetailsDto> getPendingReceivedRequests(Long userId);
 
-    List<RequestDto> getPendingSentRequests(Long userId);
+    List<RequestDetailsDto> getPendingSentRequests(Long userId);
     
     Optional<RequestDto> getPendingRequestBetweenUsers(Long senderId, Long receiverId);
 }

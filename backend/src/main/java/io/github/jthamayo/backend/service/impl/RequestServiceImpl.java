@@ -8,6 +8,7 @@ import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
 
 import io.github.jthamayo.backend.dto.RequestDto;
+import io.github.jthamayo.backend.dto.RequestDetailsDto;
 import io.github.jthamayo.backend.entity.Network;
 import io.github.jthamayo.backend.entity.Request;
 import io.github.jthamayo.backend.entity.enums.UserRequestStatus;
@@ -99,17 +100,17 @@ public class RequestServiceImpl implements RequestService {
     }
 
     @Override
-    public List<RequestDto> getPendingReceivedRequests(Long userId) {
+    public List<RequestDetailsDto> getPendingReceivedRequests(Long userId) {
 	userRepository.findById(userId).orElseThrow(() -> new ResourceNotFoundException("User not found: " + userId));
 	List<Request> requests = requestRepository.findUserPendingReceivedRequests(userId);
-	return requests.stream().map(RequestMapper::mapToRequestDto).collect(Collectors.toList());
+	return requests.stream().map(RequestMapper::mapToRequestDetailsDto).collect(Collectors.toList());
     }
 
     @Override
-    public List<RequestDto> getPendingSentRequests(Long userId) {
+    public List<RequestDetailsDto> getPendingSentRequests(Long userId) {
 	userRepository.findById(userId).orElseThrow(() -> new ResourceNotFoundException("User not found: " + userId));
 	List<Request> requests = requestRepository.findUserPendingSentRequests(userId);
-	return requests.stream().map(RequestMapper::mapToRequestDto).collect(Collectors.toList());
+	return requests.stream().map(RequestMapper::mapToRequestDetailsDto).collect(Collectors.toList());
     }
 
     @Override

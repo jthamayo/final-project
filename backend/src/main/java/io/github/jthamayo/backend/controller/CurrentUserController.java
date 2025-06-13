@@ -18,6 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 import io.github.jthamayo.backend.dto.AddressDto;
 import io.github.jthamayo.backend.dto.JobDto;
 import io.github.jthamayo.backend.dto.RequestDto;
+import io.github.jthamayo.backend.dto.RequestDetailsDto;
 import io.github.jthamayo.backend.dto.UserDto;
 import io.github.jthamayo.backend.dto.UserProfileDto;
 import io.github.jthamayo.backend.dto.UserSummary;
@@ -111,9 +112,17 @@ public class CurrentUserController {
 	return new ResponseEntity<>(request, HttpStatus.CREATED);
     }
 
-    @GetMapping("requests/pending")
-    public ResponseEntity<List<RequestDto>> getPendingRequests(@AuthenticationPrincipal UserPrincipal currentUser) {
-	List<RequestDto> requests = requestService.getPendingReceivedRequests(currentUser.getId());
+    @GetMapping("requests/sent/pending")
+    public ResponseEntity<List<RequestDetailsDto>> getSentPendingRequests(
+	    @AuthenticationPrincipal UserPrincipal currentUser) {
+	List<RequestDetailsDto> requests = requestService.getPendingSentRequests(currentUser.getId());
+	return ResponseEntity.ok(requests);
+    }
+
+    @GetMapping("requests/received/pending")
+    public ResponseEntity<List<RequestDetailsDto>> getReceivedPendingRequests(
+	    @AuthenticationPrincipal UserPrincipal currentUser) {
+	List<RequestDetailsDto> requests = requestService.getPendingReceivedRequests(currentUser.getId());
 	return ResponseEntity.ok(requests);
     }
 }
