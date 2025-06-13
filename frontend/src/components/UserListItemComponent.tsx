@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import UserAvatar from "../components/user/UserAvatar.js";
-import { requestNetwork } from "../services/NetworkService.js";
+import { requestNetwork } from "../services/RequestService.js";
 import { PublicUser } from "../services/UserService.js";
 
 const UserListItemComponent = ({ user }: { user: PublicUser }) => {
