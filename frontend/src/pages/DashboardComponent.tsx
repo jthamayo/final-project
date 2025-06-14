@@ -6,6 +6,7 @@ import ListUserComponent from "../components/ListUserComponent";
 import ProfileComponent from "../components/user/ProfileComponent";
 import { SettingsComponent } from "../components/SettingsComponent";
 import ListRequestsComponent from "../components/ListRequestsComponent";
+import ListConnectedComponent from "../components/ListConnectedComponent";
 
 const DashboardComponent = () => {
   const { currentUser, isLoading, logout } = useAuth();
@@ -118,6 +119,7 @@ const DashboardComponent = () => {
         {activePanel === "profile" && <ProfileComponent />}
         {activePanel === "settings" && <SettingsComponent />}
         {activePanel === "requests" && <ListRequestsComponent />}
+        {activePanel === "chats" && <ListConnectedComponent />}
       </div>
     </div>
   );
