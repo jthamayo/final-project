@@ -31,7 +31,7 @@ const ListRequestsComponent = () => {
       <ul className="py-4 flex flex-col gap-2">
         {received.length != 0 ? (
           received.map((r, index) => (
-            <RequestListItemComponent request={r} key={index} />
+            <RequestListItemComponent request={r} isReceived={true} key={index} />
           ))
         ) : (
           <li className="text-red-500 box">You don't have any new requests</li>
@@ -41,7 +41,7 @@ const ListRequestsComponent = () => {
       <ul className="py-4 flex flex-col gap-2">
         {sent.length != 0 ? (
           sent.map((s, index) => (
-            <RequestListItemComponent request={s} key={index} />
+            <RequestListItemComponent request={s} isReceived={false} key={index} />
           ))
         ) : (
           <li className="text-red-500 box">
