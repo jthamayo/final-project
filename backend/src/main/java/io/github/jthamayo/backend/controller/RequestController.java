@@ -59,18 +59,6 @@ public class RequestController {
 	return ResponseEntity.ok(requests);
     }
 
-    @GetMapping("user/{id}/pending/received")
-    public ResponseEntity<List<RequestDto>> getPendingReceivedRequests(@PathVariable("id") Long userId) {
-	List<RequestDto> requests = requestService.getPendingReceivedRequests(userId);
-	return ResponseEntity.ok(requests);
-    }
-
-    @GetMapping("user/{id}/pending/sent")
-    public ResponseEntity<List<RequestDto>> getPendingSentRequests(@PathVariable("id") Long userId) {
-	List<RequestDto> requests = requestService.getPendingSentRequests(userId);
-	return ResponseEntity.ok(requests);
-    }
-
     @PutMapping("user/{userId}/reject/{requestId}")
     public ResponseEntity<RequestDto> rejectRequest(@PathVariable Long userId, @PathVariable Long requestId) {
 	RequestDto request = requestService.rejectRequest(userId, requestId);
