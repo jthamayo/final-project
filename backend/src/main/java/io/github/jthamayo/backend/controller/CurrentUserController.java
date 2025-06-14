@@ -17,13 +17,13 @@ import org.springframework.web.multipart.MultipartFile;
 
 import io.github.jthamayo.backend.dto.AddressDto;
 import io.github.jthamayo.backend.dto.JobDto;
+import io.github.jthamayo.backend.dto.NetworkDto;
 import io.github.jthamayo.backend.dto.RequestDto;
 import io.github.jthamayo.backend.dto.RequestDetailsDto;
 import io.github.jthamayo.backend.dto.UserDto;
 import io.github.jthamayo.backend.dto.UserProfileDto;
 import io.github.jthamayo.backend.dto.UserSummary;
 import io.github.jthamayo.backend.dto.VehicleDto;
-import io.github.jthamayo.backend.entity.User;
 import io.github.jthamayo.backend.exception.BadRequestException;
 import io.github.jthamayo.backend.security.UserPrincipal;
 import io.github.jthamayo.backend.service.NetworkService;
@@ -124,5 +124,26 @@ public class CurrentUserController {
 	    @AuthenticationPrincipal UserPrincipal currentUser) {
 	List<RequestDetailsDto> requests = requestService.getPendingReceivedRequests(currentUser.getId());
 	return ResponseEntity.ok(requests);
+    }
+
+    @PostMapping("requests/accept/{requestId}")
+    public ResponseEntity<NetworkDto> acceptRequest(@AuthenticationPrincipal UserPrincipal currentUser,
+	    @PathVariable Long requestId) {
+	RequestDto request = requestService.acceptRequest(currentUser.getId(), requestId);
+	NetworkDto network = networkService.createNetwork(new NetworkDto(currentUser.getId(), request.getUserSender()));
+	return new ResponseEntity<>(network, HttpStatus.CREATED);
+    }
+
+    @PutMapping("requests/reject/{requestId}")
+    public ResponseEntity<RequestDto> rejectRequest(@AuthenticationPrincipal UserPrincipal currentUser,
+	    @PathVariable Long requestId) {
+	RequestDto request = requestService.rejectRequest(currentUser.getId(), requestId);
+	return ResponseEntity.ok(request);
+    }
+
+    @GetMapping("/connections")
+    public ResponseEntity<List<UserSummary>> getUserConnections(@AuthenticationPrincipal UserPrincipal currentUser) {
+	List<UserSummary> networks = networkService.getUserConnections(currentUser.getId());
+	return ResponseEntity.ok(networks);
     }
 }
