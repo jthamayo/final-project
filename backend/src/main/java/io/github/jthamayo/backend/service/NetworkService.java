@@ -20,7 +20,7 @@ public interface NetworkService {
 
     List<NetworkDto> getAllNetworks();
 
-    List<UserDto> getUserConnections(Long userId);
+    List<UserSummary> getUserConnections(Long userId);
     
     List<UserSummary> getUnconnectedUsers(Long userId);
 

@@ -133,6 +133,11 @@ public class RequestServiceImpl implements RequestService {
 	if (!request.getUserReceiver().getId().equals(userId)) {
 	    throw new InvalidOperationException("User cannot reject this request");
 	}
+	Optional<Request> accepted = requestRepository.findAcceptedRequestBetweenUsers(request.getUserSender().getId(),
+		userId);
+	if (accepted.isPresent()) {
+	    throw new InvalidOperationException("User has previously accepted the request");
+	}
 	request.setStatus(UserRequestStatus.ACCEPTED);
 	return RequestMapper.mapToRequestDto(requestRepository.save(request));
     }

@@ -36,6 +36,7 @@ public class NetworkServiceImpl implements NetworkService {
     private NetworkRepository networkRepository;
     private UserRepository userRepository;
     private GroupRepository groupRepository;
+    private RequestRepository requestRepository;
     private RequestService requestService;
 
     public NetworkServiceImpl(NetworkRepository networkRepository, UserRepository userRepository,
@@ -44,6 +45,7 @@ public class NetworkServiceImpl implements NetworkService {
 	this.userRepository = userRepository;
 	this.groupRepository = groupRepository;
 	this.requestService = requestService;
+	this.requestRepository = requestRepository;
     }
 
     @Override
@@ -57,6 +59,11 @@ public class NetworkServiceImpl implements NetworkService {
 	    throw new InvalidOperationException("Users are already connected");
 	}
 	// TODO verify accepted request
+	Optional<Request> acceptedRequest = requestRepository.findAcceptedRequestBetweenUsers(networkDto.getUserId1(),
+		networkDto.getUserId2());
+	if (!acceptedRequest.isPresent()) {
+	    throw new InvalidOperationException("This request hasn't been accepted");
+	}
 	Network network = NetworkMapper.mapToNetwork(networkDto);
 	network.setUser1(userRepository.findById(networkDto.getUserId1())
 		.orElseThrow(() -> new ResourceNotFoundException("User not found: " + networkDto.getUserId1())));
@@ -108,10 +115,10 @@ public class NetworkServiceImpl implements NetworkService {
     }
 
     @Override
-    public List<UserDto> getUserConnections(Long userId) {
+    public List<UserSummary> getUserConnections(Long userId) {
 	userRepository.findById(userId).orElseThrow(() -> new ResourceNotFoundException("User not found: " + userId));
 	List<User> users = networkRepository.findConnectedUsers(userId);
-	return users.stream().map(UserMapper::mapToUserDto).collect(Collectors.toList());
+	return users.stream().map(UserMapper::mapToUserSummary).collect(Collectors.toList());
     }
 
     @Override
