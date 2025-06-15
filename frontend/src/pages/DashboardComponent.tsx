@@ -29,7 +29,7 @@ const DashboardComponent = () => {
         <h4 className="text-base border-2 border-gray-200 flex p-4 items-center justify-start gap-4">
           Dashboard
         </h4>
-        <div className="p-8 h-full flex flex-col justify-start gap-8">
+        <div className="p-4 h-full flex flex-col justify-start gap-8">
           <nav>
             <ul className="flex flex-col gap-1">
               <li>
@@ -37,7 +37,7 @@ const DashboardComponent = () => {
                   className="cell"
                   onClick={() => setActivePanel("profile")}
                 >
-                  Profile
+                  <p>Profile</p>
                   <svg className="icon size-10">
                     <use xlinkHref="assets/icons.svg#star"></use>
                   </svg>
@@ -48,9 +48,9 @@ const DashboardComponent = () => {
                   className="cell"
                   onClick={() => setActivePanel("search")}
                 >
-                  Search
+                  <p>Search</p>
                   <svg className="icon size-10">
-                    <use xlinkHref="assets/icons.svg#star"></use>
+                    <use xlinkHref="assets/icons.svg#search"></use>
                   </svg>
                 </button>
               </li>
@@ -59,9 +59,9 @@ const DashboardComponent = () => {
                   className="cell"
                   onClick={() => setActivePanel("settings")}
                 >
-                  Settings
+                  <p>Settings</p>
                   <svg className="icon size-10">
-                    <use xlinkHref="assets/icons.svg#star"></use>
+                    <use xlinkHref="assets/icons.svg#settings"></use>
                   </svg>
                 </button>
               </li>
@@ -70,9 +70,9 @@ const DashboardComponent = () => {
                   className="cell"
                   onClick={() => setActivePanel("schedule")}
                 >
-                  Schedule
+                  <p>Schedule</p>
                   <svg className="icon size-10">
-                    <use xlinkHref="assets/icons.svg#star"></use>
+                    <use xlinkHref="assets/icons.svg#calendar"></use>
                   </svg>
                 </button>
               </li>
@@ -81,20 +81,20 @@ const DashboardComponent = () => {
                   className="cell"
                   onClick={() => setActivePanel("messages")}
                 >
-                  Messages
+                  <p>Messages</p>
                   <svg className="icon size-10">
-                    <use xlinkHref="assets/icons.svg#star"></use>
+                    <use xlinkHref="assets/icons.svg#message"></use>
                   </svg>
                 </button>
               </li>
               <li>
                 <button
                   className="cell"
-                  onClick={() => setActivePanel("chats")}
+                  onClick={() => setActivePanel("friends")}
                 >
-                  Chats
+                  <p>Friends</p>
                   <svg className="icon size-10">
-                    <use xlinkHref="assets/icons.svg#star"></use>
+                    <use xlinkHref="assets/icons.svg#users"></use>
                   </svg>
                 </button>
               </li>
@@ -103,9 +103,9 @@ const DashboardComponent = () => {
                   className="cell"
                   onClick={() => setActivePanel("requests")}
                 >
-                  Requests
+                  <p>Requests</p>
                   <svg className="icon size-10">
-                    <use xlinkHref="assets/icons.svg#star"></use>
+                    <use xlinkHref="assets/icons.svg#notification"></use>
                   </svg>
                 </button>
               </li>
@@ -119,7 +119,7 @@ const DashboardComponent = () => {
         {activePanel === "profile" && <ProfileComponent />}
         {activePanel === "settings" && <SettingsComponent />}
         {activePanel === "requests" && <ListRequestsComponent />}
-        {activePanel === "chats" && <ListConnectedComponent />}
+        {activePanel === "friends" && <ListConnectedComponent />}
       </div>
     </div>
   );

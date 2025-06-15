@@ -44,21 +44,21 @@ const UserListItemComponent = ({ user }: { user: PublicUser }) => {
           </p>
         )}
         <button
-          className={`flex items-center rounded-md p-3 ${
-            requestSent ? "bg-green-300 cursor-default" : "bg-accent"
+          className={`flex items-center rounded-lg p-1 justify-center ${
+            requestSent ? "bg-green-300 cursor-default" : "bg-blue-500"
           }`}
           onClick={!requestSent ? handleRequest : undefined}
           disabled={requestSent}
         >
           {requestSent ? (
             <>
-              <p>Request sent</p>
-              <svg className="plus-icon size-7 text-muted flex items-center justify-center">
+              <p className="ml-3 text-white">Request sent</p>
+              <svg className="size-8 mr-1">
                 <use xlinkHref="assets/icons.svg#tick"></use>
               </svg>
             </>
           ) : (
-            <svg className="plus-icon size-7 text-muted flex items-center justify-center">
+            <svg className="size-12">
               <use xlinkHref="assets/icons.svg#add-user"></use>
             </svg>
           )}

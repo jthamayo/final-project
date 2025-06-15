@@ -133,7 +133,7 @@
 
   .square-button {
     height: 140px;
-    background-color: var(--color-accent);
+    background-color: var(--color-base);
     aspect-ratio: 1/1;
     display: flex;
     flex-direction: column;
@@ -145,6 +145,7 @@
   .square-button > p {
     position: absolute;
     bottom: 1rem;
+    color: white;
   }
 
   .square-button::before {
@@ -169,7 +170,7 @@
 
   .square-button:hover::before {
     content: "+";
-    background-image: url(assets/icons.svg#user);
+    background-image: url(assets/icons.svg#add);
     opacity: 1;
   }
 
@@ -177,12 +178,12 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    background-color: var(--color-box);
+    padding: 0 1rem;
+    background-color: var(--color-base);
     width: 100%;
     border-radius: 1rem;
-    padding: 0 2rem;
     min-height: 60px;
-    border: 2px solid black;
+    color: white;
   }
 
   .fade{
