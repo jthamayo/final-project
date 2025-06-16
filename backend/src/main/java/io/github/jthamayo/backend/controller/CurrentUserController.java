@@ -3,6 +3,7 @@ package io.github.jthamayo.backend.controller;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.boot.autoconfigure.amqp.RabbitConnectionDetails.Address;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -10,13 +11,16 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import io.github.jthamayo.backend.dto.AddressDto;
+import io.github.jthamayo.backend.dto.DependentDto;
 import io.github.jthamayo.backend.dto.JobDto;
+import io.github.jthamayo.backend.dto.JobWithAddressDto;
 import io.github.jthamayo.backend.dto.NetworkDto;
 import io.github.jthamayo.backend.dto.RequestDto;
 import io.github.jthamayo.backend.dto.RequestDetailsDto;
@@ -26,9 +30,13 @@ import io.github.jthamayo.backend.dto.UserSummary;
 import io.github.jthamayo.backend.dto.VehicleDto;
 import io.github.jthamayo.backend.exception.BadRequestException;
 import io.github.jthamayo.backend.security.UserPrincipal;
+import io.github.jthamayo.backend.service.AddressService;
+import io.github.jthamayo.backend.service.DependentService;
+import io.github.jthamayo.backend.service.JobService;
 import io.github.jthamayo.backend.service.NetworkService;
 import io.github.jthamayo.backend.service.RequestService;
 import io.github.jthamayo.backend.service.UserService;
+import io.github.jthamayo.backend.service.VehicleService;
 
 @RestController
 @RequestMapping("/api/user")
@@ -37,12 +45,21 @@ public class CurrentUserController {
     private UserService userService;
     private NetworkService networkService;
     private RequestService requestService;
+    private AddressService addressService;
+    private DependentService dependentService;
+    private JobService jobService;
+    private VehicleService vehicleService;
 
-    public CurrentUserController(UserService userService, NetworkService networkService,
-	    RequestService requestService) {
+    public CurrentUserController(UserService userService, NetworkService networkService, RequestService requestService,
+	    AddressService addressService, DependentService dependentService, JobService jobService,
+	    VehicleService vehicleService) {
 	this.userService = userService;
 	this.networkService = networkService;
 	this.requestService = requestService;
+	this.addressService = addressService;
+	this.dependentService = dependentService;
+	this.jobService = jobService;
+	this.vehicleService = vehicleService;
     }
 
     @GetMapping("/me")
@@ -145,5 +162,38 @@ public class CurrentUserController {
     public ResponseEntity<List<UserSummary>> getUserConnections(@AuthenticationPrincipal UserPrincipal currentUser) {
 	List<UserSummary> networks = networkService.getUserConnections(currentUser.getId());
 	return ResponseEntity.ok(networks);
+    }
+
+    @PostMapping("/add/address")
+    public ResponseEntity<AddressDto> addAddress(@AuthenticationPrincipal UserPrincipal currentUser,
+	    @RequestBody AddressDto addressDto) {
+	AddressDto address = addressService.createAddress(addressDto);
+	userService.addHomeAddress(currentUser.getId(), address);
+	return new ResponseEntity<>(address, HttpStatus.CREATED);
+    }
+
+    @PostMapping("/add/job")
+    public ResponseEntity<JobDto> addJob(@AuthenticationPrincipal UserPrincipal currentUser,
+	    @RequestBody JobWithAddressDto jobWithAddressDto) {
+	JobDto job = jobService.createJob(jobWithAddressDto.getJob());
+	AddressDto address = addressService.createAddress(jobWithAddressDto.getAddress());
+	userService.addJob(currentUser.getId(), job, address);
+	return new ResponseEntity<>(job, HttpStatus.CREATED);
+    }
+
+    @PostMapping("/add/dependents")
+    public ResponseEntity<DependentDto> addDependent(@AuthenticationPrincipal UserPrincipal currentUser,
+	    @RequestBody DependentDto dependentDto) {
+	DependentDto dependent = dependentService.createDependent(dependentDto);
+	userService.addDependent(currentUser.getId(), dependent);
+	return new ResponseEntity<>(dependent, HttpStatus.CREATED);
+    }
+
+    @PostMapping("/add/vehicle")
+    public ResponseEntity<VehicleDto> addVehicle(@AuthenticationPrincipal UserPrincipal currentUser,
+	    @RequestBody VehicleDto vehicleDto) {
+	VehicleDto vehicle = vehicleService.createVehicle(vehicleDto);
+	userService.addVehicle(currentUser.getId(), vehicle);
+	return new ResponseEntity<>(vehicle, HttpStatus.CREATED);
     }
 }

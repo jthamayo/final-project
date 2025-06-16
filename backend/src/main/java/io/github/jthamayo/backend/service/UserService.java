@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.web.multipart.MultipartFile;
 
 import io.github.jthamayo.backend.dto.AddressDto;
+import io.github.jthamayo.backend.dto.DependentDto;
 import io.github.jthamayo.backend.dto.JobDto;
 import io.github.jthamayo.backend.dto.UserDto;
 import io.github.jthamayo.backend.dto.UserProfileDto;
@@ -21,25 +22,27 @@ public interface UserService {
     UserDto updateUser(Long userId, UserDto updatedUser);
 
     void deleteUser(Long userId);
-    
+
     UserDto addHomeAddress(Long userId, AddressDto homeAddressDto);
-    
+
     UserDto addJob(Long userId, JobDto jobDto, AddressDto addressDto);
-    
+
     List<JobDto> getJobs(Long userId);
 
     UserDto addVehicle(Long userId, VehicleDto vehicleDto);
-    
+
+    UserDto addDependent(Long userId, DependentDto dependentDto);
+
     VehicleDto getVehicle(Long userId);
-    
+
     AddressDto getHomeAddress(Long userId);
-    
+
     UserDto getUserByUsername(String username);
-    
+
     UserProfileDto getProfile(Long userId);
-    
+
     String uploadProfilePicture(Long userId, MultipartFile file);
-    
+
     String getProfilePicture(Long userId);
-    
+
 }

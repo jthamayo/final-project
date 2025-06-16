@@ -1,6 +1,5 @@
 package io.github.jthamayo.backend.service.impl;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -12,11 +11,13 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import io.github.jthamayo.backend.dto.AddressDto;
+import io.github.jthamayo.backend.dto.DependentDto;
 import io.github.jthamayo.backend.dto.JobDto;
 import io.github.jthamayo.backend.dto.UserDto;
 import io.github.jthamayo.backend.dto.UserProfileDto;
 import io.github.jthamayo.backend.dto.VehicleDto;
 import io.github.jthamayo.backend.entity.Address;
+import io.github.jthamayo.backend.entity.Dependent;
 import io.github.jthamayo.backend.entity.Group;
 import io.github.jthamayo.backend.entity.Job;
 import io.github.jthamayo.backend.entity.User;
@@ -26,10 +27,12 @@ import io.github.jthamayo.backend.exception.BadRequestException;
 import io.github.jthamayo.backend.exception.InvalidOperationException;
 import io.github.jthamayo.backend.exception.ResourceNotFoundException;
 import io.github.jthamayo.backend.mapper.AddressMapper;
+import io.github.jthamayo.backend.mapper.DependentMapper;
 import io.github.jthamayo.backend.mapper.JobMapper;
 import io.github.jthamayo.backend.mapper.UserMapper;
 import io.github.jthamayo.backend.mapper.VehicleMapper;
 import io.github.jthamayo.backend.repository.AddressRepository;
+import io.github.jthamayo.backend.repository.DependentRepository;
 import io.github.jthamayo.backend.repository.GroupRepository;
 import io.github.jthamayo.backend.repository.JobRepository;
 import io.github.jthamayo.backend.repository.UserRepository;
@@ -45,18 +48,20 @@ public class UserServiceImpl implements UserService {
     private AddressRepository addressRepository;
     private VehicleRepository vehicleRepository;
     private JobRepository jobRepository;
+    private DependentRepository dependentRepository;
 
     private CloudinaryService cloudinaryService;
 
     public UserServiceImpl(UserRepository userRepository, GroupRepository groupRepository,
 	    AddressRepository addressRepository, JobRepository jobRepository, VehicleRepository vehicleRepository,
-	    CloudinaryService cloudinaryService) {
+	    DependentRepository dependentRepository, CloudinaryService cloudinaryService) {
 	this.userRepository = userRepository;
 	this.groupRepository = groupRepository;
 	this.addressRepository = addressRepository;
 	this.jobRepository = jobRepository;
 	this.vehicleRepository = vehicleRepository;
 	this.cloudinaryService = cloudinaryService;
+	this.dependentRepository = dependentRepository;
     }
 
     @Override
@@ -106,6 +111,12 @@ public class UserServiceImpl implements UserService {
 			    .orElseThrow(() -> new ResourceNotFoundException("Job not found")))
 		    .collect(Collectors.toList());
 	    user.setJobs(jobs);
+	}
+	if (updatedUser.getDependentIds() != null) {
+	    List<Dependent> dependents = updatedUser.getDependentIds().stream().map((dependentId) -> dependentRepository
+		    .findById(dependentId).orElseThrow(() -> new ResourceNotFoundException("")))
+		    .collect(Collectors.toList());
+	    user.setDependents(dependents);
 	}
 	return UserMapper.mapToUserDto(userRepository.save(user));
     }
@@ -162,6 +173,16 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public UserDto addDependent(Long userId, DependentDto dependentDto) {
+	User user = userRepository.findById(userId)
+		.orElseThrow(() -> new ResourceNotFoundException("User does not exist with given id: " + userId));
+	Dependent dependent = DependentMapper.mapToDependent(dependentDto);
+	dependent.setGuardian(user);
+	user.getDependents().add(dependentRepository.save(dependent));
+	return UserMapper.mapToUserDto(userRepository.save(user));
+    }
+
+    @Override
     public List<JobDto> getJobs(Long userId) {
 	User user = userRepository.findById(userId)
 		.orElseThrow(() -> new ResourceNotFoundException("User does not exist with given id: " + userId));
@@ -214,7 +235,8 @@ public class UserServiceImpl implements UserService {
 			: new ArrayList<>(),
 		user.getHomeAddress() != null ? AddressMapper.mapToAddressDto(user.getHomeAddress()) : null,
 		user.getVehicle() != null ? VehicleMapper.mapToVehicleDto(user.getVehicle()) : null,
-		user.getProfilePictureUrl(), user.isVerified());
+		user.getProfilePictureUrl(), user.isVerified(), user.getDependents() != null ? user.getDependents()
+			.stream().map(DependentMapper::mapToDependentDto).collect(Collectors.toList()) : null);
 	return profile;
     }
 

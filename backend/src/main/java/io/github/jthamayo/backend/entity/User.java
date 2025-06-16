@@ -1,5 +1,6 @@
 package io.github.jthamayo.backend.entity;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -55,6 +56,9 @@ public class User extends BaseEntity {
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Job> jobs;
+
+    @OneToMany(mappedBy = "guardian", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Dependent> dependents = new ArrayList<>();
 
     @OneToOne(optional = true, cascade = CascadeType.PERSIST)
     @JoinColumn(name = "home_address_id")
@@ -202,6 +206,14 @@ public class User extends BaseEntity {
     public void setProfilePictureUrl(String profilePictureUrl) {
 	this.profilePictureUrl = profilePictureUrl;
     }
+
+    public List<Dependent> getDependents() {
+	return dependents;
+    }
+
+    public void setDependents(List<Dependent> dependents) {
+	this.dependents = dependents;
+    }
     //////////////// CONSTRUCTOR////////////////
 
     public User() {
@@ -233,7 +245,7 @@ public class User extends BaseEntity {
 
     public User(Long id, String firstName, String lastName, String username, String email, String phoneNumber,
 	    Group group, List<Job> jobs, Address homeAddress, Vehicle vehicle, Boolean isVerified,
-	    String profilePictureUrl, Set<Role> roles) {
+	    String profilePictureUrl, Set<Role> roles, List<Dependent> dependents) {
 	this.id = id;
 	this.firstName = firstName;
 	this.lastName = lastName;
@@ -247,6 +259,7 @@ public class User extends BaseEntity {
 	this.isVerified = isVerified;
 	this.profilePictureUrl = profilePictureUrl;
 	this.roles = roles;
+	this.dependents = dependents;
     }
 
 }

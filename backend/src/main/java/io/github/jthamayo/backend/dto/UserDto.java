@@ -39,6 +39,8 @@ public class UserDto {
     private Long groupId;
 
     private List<Long> jobIds;
+    
+    private List<Long> dependentIds;
 
     private Long homeAddressId;
 
@@ -163,7 +165,23 @@ public class UserDto {
     public void setProfilePictureUrl(String profilePictureUrl) {
 	this.profilePictureUrl = profilePictureUrl;
     }
+    
+    public List<Long> getDependentIds() {
+        return dependentIds;
+    }
 
+    public void setDependentIds(List<Long> dependentIds) {
+        this.dependentIds = dependentIds;
+    }
+
+    public Boolean getIsVerified() {
+        return isVerified;
+    }
+
+    public void setIsVerified(Boolean isVerified) {
+        this.isVerified = isVerified;
+    }
+    
     //////////////// CONSTRUCTOR////////////////
 
     public UserDto() {
@@ -171,7 +189,7 @@ public class UserDto {
 
     public UserDto(Long id, String firstName, String lastName, String username, String email, String phoneNumber,
 	    Long groupId, List<Long> jobIds, Long homeAddressId, Long vehicleId, List<Long> roleIds, String profilePictureUrl,
-	    Boolean isVerified) {
+	    Boolean isVerified, List<Long> dependentIds) {
 	this.id = id;
 	this.firstName = firstName;
 	this.lastName = lastName;
@@ -185,6 +203,7 @@ public class UserDto {
 	this.roleIds = new HashSet<>(roleIds);
 	this.profilePictureUrl = profilePictureUrl;
 	this.isVerified = isVerified;
+	this.dependentIds = dependentIds;
     }
 
 }

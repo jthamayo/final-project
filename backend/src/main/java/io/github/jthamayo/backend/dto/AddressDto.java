@@ -76,7 +76,8 @@ public class AddressDto {
 
     }
 
-    public AddressDto(Long id, String city, String street, String zip, String country, Integer number, AddressType type) {
+    public AddressDto(Long id, String city, String street, String zip, String country, Integer number,
+	    AddressType type) {
 	this.id = id;
 	this.city = city;
 	this.street = street;
@@ -93,5 +94,14 @@ public class AddressDto {
 	this.country = country;
 	this.number = number;
 	this.type = type;
+    }
+
+    public AddressDto(String city, String street, String zip, String country, Integer number, String addressType) {
+	this.city = city;
+	this.street = street;
+	this.zip = zip;
+	this.country = country;
+	this.number = number;
+	this.type = AddressType.valueOf(addressType.toUpperCase());
     }
 }

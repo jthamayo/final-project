@@ -68,8 +68,8 @@ public class NetworkController {
     }
 
     @GetMapping("/user/{id}")
-    public ResponseEntity<List<UserDto>> getUserConnections(@PathVariable("id") Long userId) {
-	List<UserDto> connections = networkService.getUserConnections(userId);
+    public ResponseEntity<List<UserSummary>> getUserConnections(@PathVariable("id") Long userId) {
+	List<UserSummary> connections = networkService.getUserConnections(userId);
 	return ResponseEntity.ok(connections);
     }
 

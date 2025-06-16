@@ -15,6 +15,7 @@ public class UserProfileDto {
     private VehicleDto vehicle;
     private String profilePictureUrl;
     private Boolean isVerified;
+    private List<DependentDto> dependents;
 
     ////////////////////////////////////////////////////////////////////////
 
@@ -114,10 +115,35 @@ public class UserProfileDto {
 	this.isVerified = isVerified;
     }
 
+    public AddressDto getAddress() {
+	return address;
+    }
+
+    public void setAddress(AddressDto address) {
+	this.address = address;
+    }
+
+    public VehicleDto getVehicle() {
+	return vehicle;
+    }
+
+    public void setVehicle(VehicleDto vehicle) {
+	this.vehicle = vehicle;
+    }
+
+    public List<DependentDto> getDependents() {
+	return dependents;
+    }
+
+    public void setDependents(List<DependentDto> dependents) {
+	this.dependents = dependents;
+    }
+
     ////////////////////////////////////////////////////////////////////////////////
 
     public UserProfileDto(Long id, String username, String email, String phoneNumber, String firstName, String lastName,
-	    List<JobDto> jobs, AddressDto address, VehicleDto vehicle, String profilePictureUrl, Boolean isVerified) {
+	    List<JobDto> jobs, AddressDto address, VehicleDto vehicle, String profilePictureUrl, Boolean isVerified,
+	    List<DependentDto> dependents) {
 	this.id = id;
 	this.username = username;
 	this.email = email;
@@ -129,6 +155,7 @@ public class UserProfileDto {
 	this.vehicle = vehicle;
 	this.profilePictureUrl = profilePictureUrl;
 	this.isVerified = isVerified;
+	this.dependents = dependents;
     }
 
     public UserProfileDto() {

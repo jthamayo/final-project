@@ -17,7 +17,8 @@ public class UserMapper {
 		user.getHomeAddress() != null ? user.getHomeAddress().getId() : null,
 		user.getVehicle() != null ? user.getVehicle().getId() : null,
 		user.getRoles().stream().map((role) -> role.getId()).collect(Collectors.toList()),
-		user.getProfilePictureUrl(), user.isVerified());
+		user.getProfilePictureUrl(), user.isVerified(), user.getDependents() != null ? user.getDependents()
+			.stream().map((dependent) -> dependent.getId()).collect(Collectors.toList()) : null);
     }
 
     public static User mapToUser(UserDto userDto) {
@@ -26,7 +27,7 @@ public class UserMapper {
     }
 
     public static UserSummary mapToUserSummary(User user) {
-	return new UserSummary(user.getFirstName(), user.getLastName(), user.getUsername(),
-		user.getEmail(), user.getProfilePictureUrl());
+	return new UserSummary(user.getFirstName(), user.getLastName(), user.getUsername(), user.getEmail(),
+		user.getProfilePictureUrl());
     }
 }

@@ -25,7 +25,6 @@ public class JobWithAddressDto {
     }
 
     public JobWithAddressDto(JobDto job, AddressDto address) {
-	super();
 	this.job = job;
 	this.address = address;
     }
