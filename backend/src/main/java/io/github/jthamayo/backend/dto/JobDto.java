@@ -5,8 +5,8 @@ public class JobDto {
     private Long id;
     private Long addressId;
     private Long userId;
-    private Boolean irregular;
-    private Boolean nocturnal;
+    private Boolean isIrregular;
+    private Boolean isNocturnal;
 
     ///////////////////////////// GETTERS&SETTERS//////////////////////////////
 
@@ -35,19 +35,19 @@ public class JobDto {
     }
 
     public Boolean isIrregular() {
-	return irregular;
+	return isIrregular;
     }
 
-    public void setIrregular(Boolean irregular) {
-	this.irregular = irregular;
+    public void setIrregular(Boolean isIrregular) {
+	this.isIrregular = isIrregular;
     }
 
     public Boolean isNocturnal() {
-	return nocturnal;
+	return isNocturnal;
     }
 
-    public void setNocturnal(Boolean nocturnal) {
-	this.nocturnal = nocturnal;
+    public void setNocturnal(Boolean isNocturnal) {
+	this.isNocturnal = isNocturnal;
     }
 
     ////////////////////// CONSTRUCTORS////////////////////////////
@@ -56,19 +56,19 @@ public class JobDto {
 
     }
 
-    public JobDto(Long id, Long addressId, Long userId, Boolean irregular, Boolean nocturnal) {
+    public JobDto(Long id, Long addressId, Long userId, Boolean isIrregular, Boolean isNocturnal) {
 	this.id = id;
 	this.addressId = addressId;
 	this.userId = userId;
-	this.irregular = irregular;
-	this.nocturnal = nocturnal;
+	this.isIrregular = isIrregular;
+	this.isNocturnal = isNocturnal;
     }
 
-    public JobDto(Long addressId, Long userId, Boolean irregular, Boolean nocturnal) {
+    public JobDto(Long addressId, Long userId, Boolean isIrregular, Boolean isNocturnal) {
 	this.addressId = addressId;
 	this.userId = userId;
-	this.irregular = irregular;
-	this.nocturnal = nocturnal;
+	this.isIrregular = isIrregular;
+	this.isNocturnal = isNocturnal;
     }
 
 }

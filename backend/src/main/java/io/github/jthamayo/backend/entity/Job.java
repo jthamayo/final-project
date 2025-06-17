@@ -21,8 +21,8 @@ public class Job {
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
-    private Boolean irregular;
-    private Boolean nocturnal;
+    private Boolean isIrregular;
+    private Boolean isNocturnal;
 
     ///////////////////////////// GETTERS&SETTERS//////////////////////////////
 
@@ -51,39 +51,38 @@ public class Job {
     }
 
     public Boolean isIrregular() {
-	return irregular;
+	return isIrregular;
     }
 
-    public void setIrregular(Boolean irregular) {
-	this.irregular = irregular;
+    public void setIrregular(Boolean isIrregular) {
+	this.isIrregular = isIrregular;
     }
 
-    public boolean isNocturnal() {
-	return nocturnal;
+    public Boolean isNocturnal() {
+	return isNocturnal;
     }
 
-    public void setNocturnal(Boolean nocturnal) {
-	this.nocturnal = nocturnal;
+    public void setNocturnal(Boolean isNocturnal) {
+	this.isNocturnal = isNocturnal;
     }
 
     ////////////////////// CONSTRUCTORS////////////////////////////
-
     public Job() {
 
     }
 
-    public Job(Long id, Address address, User user, Boolean irregular, Boolean nocturnal) {
+    public Job(Long id, Address address, User user, Boolean isIrregular, Boolean isNocturnal) {
 	this.id = id;
 	this.address = address;
 	this.user = user;
-	this.irregular = irregular;
-	this.nocturnal = nocturnal;
+	this.isIrregular = isIrregular;
+	this.isNocturnal = isNocturnal;
     }
 
-    public Job(Long id, Boolean irregular, Boolean nocturnal) {
+    public Job(Long id, Boolean isIrregular, Boolean isNocturnal) {
 	this.id = id;
-	this.irregular = irregular;
-	this.nocturnal = nocturnal;
+	this.isIrregular = isIrregular;
+	this.isNocturnal = isNocturnal;
     }
 
 }
