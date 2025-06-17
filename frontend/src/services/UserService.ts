@@ -3,6 +3,7 @@ import axiosAuth from "../util/axiosInstance";
 import axios from "axios";
 import { Address } from "./AddressService";
 import { Job } from "./JobService";
+import { Dependent } from "./DependentService";
 import { Vehicle } from "./VehicleService";
 
 
@@ -25,6 +26,7 @@ export interface UserProfile extends User {
   vehicle: Vehicle;
   address: Address;
   jobs: Job[];
+  dependents: Dependent[];
   profilePictureUrl: string;
 }
 
