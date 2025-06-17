@@ -29,7 +29,7 @@ public class DependentServiceImpl implements DependentService {
 		.orElseThrow(() -> new ResourceNotFoundException(
 			"User does not exist with given id: " + dependentDto.getGuardianId()));
 	dependent.setGuardian(user);
-	// userAdd Child
+	user.getDependents().add(dependent);
 	return DependentMapper.mapToDependentDto(dependentRepository.save(dependent));
     }
 

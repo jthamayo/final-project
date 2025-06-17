@@ -1,7 +1,12 @@
 package io.github.jthamayo.backend.entity.enums;
 
-public enum AllergyType {
-    PEANUTS, TREE_NUTS, MILK, EGGS, SHELLFISH, FISH, WHEAT, SOY, GLUTEN, POLLEN, DUST_MITES, INSECT_STINGS, LATEX,
-    PET_DANDER, MOLD, MEDICATIONS
+import com.fasterxml.jackson.annotation.JsonCreator;
 
+public enum AllergyType {
+    PEANUTS, TREE_NUTS, MILK, EGGS, GLUTEN, INSECT_STINGS, MEDICATIONS, OTHER;
+
+    @JsonCreator
+    public static AllergyType fromString(String key) {
+	return key == null ? null : AllergyType.valueOf(key.toUpperCase());
+    }
 }

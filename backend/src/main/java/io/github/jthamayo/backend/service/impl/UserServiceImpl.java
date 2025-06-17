@@ -13,6 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 import io.github.jthamayo.backend.dto.AddressDto;
 import io.github.jthamayo.backend.dto.DependentDto;
 import io.github.jthamayo.backend.dto.JobDto;
+import io.github.jthamayo.backend.dto.ScheduleDto;
 import io.github.jthamayo.backend.dto.UserDto;
 import io.github.jthamayo.backend.dto.UserProfileDto;
 import io.github.jthamayo.backend.dto.VehicleDto;
@@ -181,7 +182,7 @@ public class UserServiceImpl implements UserService {
 	user.getDependents().add(dependentRepository.save(dependent));
 	return UserMapper.mapToUserDto(userRepository.save(user));
     }
-
+    
     @Override
     public List<JobDto> getJobs(Long userId) {
 	User user = userRepository.findById(userId)
@@ -257,6 +258,12 @@ public class UserServiceImpl implements UserService {
     public String getProfilePicture(Long userId) {
 	User user = userRepository.findById(userId).orElseThrow(() -> new ResourceNotFoundException("User not found"));
 	return user.getProfilePictureUrl();
+    }
+
+    @Override
+    public ScheduleDto addSchedule(ScheduleDto schedule) {
+	// TODO Auto-generated method stub
+	return null;
     }
 
 }

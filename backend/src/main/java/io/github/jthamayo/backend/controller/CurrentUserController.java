@@ -2,7 +2,7 @@ package io.github.jthamayo.backend.controller;
 
 import java.util.List;
 import java.util.Map;
-
+import io.github.jthamayo.backend.service.impl.JobServiceImpl;
 import org.springframework.boot.autoconfigure.amqp.RabbitConnectionDetails.Address;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -42,6 +42,10 @@ import io.github.jthamayo.backend.service.VehicleService;
 @RequestMapping("/api/user")
 public class CurrentUserController {
 
+    private final JobServiceImpl jobServiceImpl;
+
+    private final JobController jobController;
+
     private UserService userService;
     private NetworkService networkService;
     private RequestService requestService;
@@ -52,7 +56,7 @@ public class CurrentUserController {
 
     public CurrentUserController(UserService userService, NetworkService networkService, RequestService requestService,
 	    AddressService addressService, DependentService dependentService, JobService jobService,
-	    VehicleService vehicleService) {
+	    VehicleService vehicleService, JobController jobController, JobServiceImpl jobServiceImpl) {
 	this.userService = userService;
 	this.networkService = networkService;
 	this.requestService = requestService;
@@ -60,6 +64,8 @@ public class CurrentUserController {
 	this.dependentService = dependentService;
 	this.jobService = jobService;
 	this.vehicleService = vehicleService;
+	this.jobController = jobController;
+	this.jobServiceImpl = jobServiceImpl;
     }
 
     @GetMapping("/me")
@@ -162,7 +168,7 @@ public class CurrentUserController {
     public ResponseEntity<List<UserSummary>> getUserConnections(@AuthenticationPrincipal UserPrincipal currentUser) {
 	List<UserSummary> networks = networkService.getUserConnections(currentUser.getId());
 	return ResponseEntity.ok(networks);
-    }
+    }    
 
     @PostMapping("/add/address")
     public ResponseEntity<AddressDto> addAddress(@AuthenticationPrincipal UserPrincipal currentUser,
@@ -175,8 +181,11 @@ public class CurrentUserController {
     @PostMapping("/add/job")
     public ResponseEntity<JobDto> addJob(@AuthenticationPrincipal UserPrincipal currentUser,
 	    @RequestBody JobWithAddressDto jobWithAddressDto) {
-	JobDto job = jobService.createJob(jobWithAddressDto.getJob());
+	JobDto jobDto = jobWithAddressDto.getJob();
 	AddressDto address = addressService.createAddress(jobWithAddressDto.getAddress());
+	jobDto.setAddressId(address.getId());
+	jobDto.setUserId(currentUser.getId());
+	JobDto job = jobService.createJob(jobDto);
 	userService.addJob(currentUser.getId(), job, address);
 	return new ResponseEntity<>(job, HttpStatus.CREATED);
     }
@@ -184,6 +193,7 @@ public class CurrentUserController {
     @PostMapping("/add/dependents")
     public ResponseEntity<DependentDto> addDependent(@AuthenticationPrincipal UserPrincipal currentUser,
 	    @RequestBody DependentDto dependentDto) {
+	dependentDto.setGuardianId(currentUser.getId());
 	DependentDto dependent = dependentService.createDependent(dependentDto);
 	userService.addDependent(currentUser.getId(), dependent);
 	return new ResponseEntity<>(dependent, HttpStatus.CREATED);
