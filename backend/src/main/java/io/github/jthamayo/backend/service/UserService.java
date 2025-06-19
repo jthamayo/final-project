@@ -1,6 +1,7 @@
 package io.github.jthamayo.backend.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.web.multipart.MultipartFile;
 
@@ -50,7 +51,7 @@ public interface UserService {
 
     ScheduleDto addSchedule(ScheduleDto schedule);
     
-    GroupParticipantsDto getUserGroupParticipants(Long userId);
+    Optional<GroupParticipantsDto> getUserGroupParticipants(Long userId);
     
     GroupParticipantsDto addUserToGroup(Long userId, String username);
 

@@ -17,6 +17,7 @@ const ConnectionListItemComponent = ({
     try {
       const res = await addUserToGroup(user.username);
       addParticipant(res);
+      setShowConfirm(false);
     } catch (err) {
       console.error("Failed to add user", err);
     }
@@ -39,7 +40,7 @@ const ConnectionListItemComponent = ({
             <p className="text-gray-500">{user.email}</p>
           </div>
         </div>
-        {!user.hasGroup && (
+        {!user.hasGroup ? (
           <button
             onClick={() => setShowConfirm(true)}
             className="flex items-center gap-2 bg-blue-400 hover:bg-blue-500 p-2 px-4 rounded-lg mr-4 text-white"
@@ -52,6 +53,15 @@ const ConnectionListItemComponent = ({
               ></use>
             </svg>
           </button>
+        ) : (
+          <div className="bg-accent flex items-center p-2 rounded-md text-white">
+            <svg className="icon size-8">
+              <use xlinkHref="assets/icons.svg#users"></use>
+            </svg>
+            <svg className="icon size-8">
+              <use xlinkHref="assets/icons.svg#tick"></use>
+            </svg>
+          </div>
         )}
       </li>
       {showConfirm && (

@@ -43,10 +43,10 @@ const ListGroupCandidatesComponent = ({
   };
 
   return (
-    <section className="p-4 max-h-3/4 flex flex-col items-center gap-4">
+    <section className="p-10 max-h-3/4 flex flex-col items-center gap-4">
       {!groupCreated ? (
         <>
-          <h4>Invite friends to your group</h4>
+          <h4 className="text-center">{candidates.length > 0 ? "Invite friends to your group" : "You don't have any friends to invite!"}</h4>
           <ul className="py-4 flex flex-col gap-2 overflow-y-auto">
             {candidates.map((candidate, index) => (
               <GroupCandidateListItemComponent

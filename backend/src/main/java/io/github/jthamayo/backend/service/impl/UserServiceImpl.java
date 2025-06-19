@@ -3,6 +3,7 @@ package io.github.jthamayo.backend.service.impl;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -270,9 +271,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public GroupParticipantsDto getUserGroupParticipants(Long userId) {
+    public Optional<GroupParticipantsDto> getUserGroupParticipants(Long userId) {
 	User user = userRepository.findById(userId).orElseThrow(() -> new ResourceNotFoundException("User not found"));
-	return GroupMapper.mapToGroupParticipantsDto(user.getGroup());
+	Group group = user.getGroup();
+	if (group == null) {
+	    return Optional.empty();
+	}
+	return Optional.of(GroupMapper.mapToGroupParticipantsDto(user.getGroup()));
     }
 
     @Override
@@ -291,5 +296,5 @@ public class UserServiceImpl implements UserService {
 	invited.setGroup(group);
 	return GroupMapper.mapToGroupParticipantsDto(groupRepository.save(group));
     }
-    
+
 }

@@ -3,8 +3,7 @@ package io.github.jthamayo.backend.controller;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import io.github.jthamayo.backend.service.impl.JobServiceImpl;
-import org.springframework.boot.autoconfigure.amqp.RabbitConnectionDetails.Address;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -225,8 +224,8 @@ public class CurrentUserController {
 
     @GetMapping("/group")
     public ResponseEntity<GroupParticipantsDto> getGroup(@AuthenticationPrincipal UserPrincipal currentUser) {
-	GroupParticipantsDto group = userService.getUserGroupParticipants(currentUser.getId());
-	return ResponseEntity.ok(group);
+	return userService.getUserGroupParticipants(currentUser.getId()).map(ResponseEntity::ok)
+		.orElseGet(() -> ResponseEntity.noContent().build());
     }
 
     @PostMapping("/group/add/{username}")

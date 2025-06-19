@@ -17,7 +17,7 @@ const ListConnectedComponent = () => {
     const fetchUsers = async () => {
       try {
         const group = await getGroup();
-        setGroup(group);
+        setGroup(group || null);
         const network = await getUserNetwork();
         setFriends(network);
       } catch (err) {
