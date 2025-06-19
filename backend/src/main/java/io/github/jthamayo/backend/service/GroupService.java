@@ -12,12 +12,14 @@ public interface GroupService {
     GroupDto getGroupById(Long groupId);
 
     List<UserDto> getAllUsers(Long groupId);
-    
+
     List<GroupDto> getAllGroups();
 
     GroupDto updateGroup(Long groupId, GroupDto groupDto);
 
     void deleteGroup(Long groupId);
-    
+
     GroupDto removeUserFromGroup(Long groupId, Long userId);
+
+    GroupDto createGroupFromUsername(List<String> username);
 }

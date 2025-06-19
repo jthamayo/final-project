@@ -9,6 +9,7 @@ import io.github.jthamayo.backend.dto.GroupDto;
 import io.github.jthamayo.backend.dto.UserDto;
 import io.github.jthamayo.backend.entity.Group;
 import io.github.jthamayo.backend.entity.User;
+import io.github.jthamayo.backend.exception.InvalidOperationException;
 import io.github.jthamayo.backend.exception.ResourceNotFoundException;
 import io.github.jthamayo.backend.mapper.GroupMapper;
 import io.github.jthamayo.backend.mapper.UserMapper;
@@ -92,4 +93,22 @@ public class GroupServiceImpl implements GroupService {
 	return groups.stream().map(GroupMapper::mapToGroupDto).collect(Collectors.toList());
     }
 
+    @Override
+    public GroupDto createGroupFromUsername(List<String> usernames) {
+	if (usernames == null || usernames.isEmpty()) {
+	    throw new InvalidOperationException("User list must not be empty.");
+	}
+	List<User> users = usernames.stream()
+		.map(username -> userRepository.findByUsername(username)
+			.orElseThrow(() -> new ResourceNotFoundException("User not found")))
+		.collect(Collectors.toList());
+	Group group = new Group(users);
+	for (User user : users) {
+	    if (user.getGroup() != null) {
+		throw new InvalidOperationException("User '" + user.getUsername() + "' already belongs to a group.");
+	    }
+	}
+	users.forEach(user -> user.setGroup(group));
+	return GroupMapper.mapToGroupDto(groupRepository.save(group));
+    }
 }

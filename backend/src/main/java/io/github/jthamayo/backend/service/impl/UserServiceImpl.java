@@ -12,6 +12,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import io.github.jthamayo.backend.dto.AddressDto;
 import io.github.jthamayo.backend.dto.DependentDto;
+import io.github.jthamayo.backend.dto.GroupDto;
+import io.github.jthamayo.backend.dto.GroupParticipantsDto;
 import io.github.jthamayo.backend.dto.JobDto;
 import io.github.jthamayo.backend.dto.ScheduleDto;
 import io.github.jthamayo.backend.dto.UserDto;
@@ -29,6 +31,7 @@ import io.github.jthamayo.backend.exception.InvalidOperationException;
 import io.github.jthamayo.backend.exception.ResourceNotFoundException;
 import io.github.jthamayo.backend.mapper.AddressMapper;
 import io.github.jthamayo.backend.mapper.DependentMapper;
+import io.github.jthamayo.backend.mapper.GroupMapper;
 import io.github.jthamayo.backend.mapper.JobMapper;
 import io.github.jthamayo.backend.mapper.UserMapper;
 import io.github.jthamayo.backend.mapper.VehicleMapper;
@@ -182,7 +185,7 @@ public class UserServiceImpl implements UserService {
 	user.getDependents().add(dependentRepository.save(dependent));
 	return UserMapper.mapToUserDto(userRepository.save(user));
     }
-    
+
     @Override
     public List<JobDto> getJobs(Long userId) {
 	User user = userRepository.findById(userId)
@@ -266,4 +269,27 @@ public class UserServiceImpl implements UserService {
 	return null;
     }
 
+    @Override
+    public GroupParticipantsDto getUserGroupParticipants(Long userId) {
+	User user = userRepository.findById(userId).orElseThrow(() -> new ResourceNotFoundException("User not found"));
+	return GroupMapper.mapToGroupParticipantsDto(user.getGroup());
+    }
+
+    @Override
+    public GroupParticipantsDto addUserToGroup(Long userId, String username) {
+	User user = userRepository.findById(userId).orElseThrow(() -> new ResourceNotFoundException("User not found"));
+	User invited = userRepository.findByUsername(username)
+		.orElseThrow(() -> new ResourceNotFoundException("User not found"));
+	Group group = user.getGroup();
+	if (group == null) {
+	    throw new InvalidOperationException("Current user does not belong to a group.");
+	}
+	if (invited.getGroup() != null) {
+	    throw new InvalidOperationException("User already belongs to another group.");
+	}
+	group.getUsers().add(invited);
+	invited.setGroup(group);
+	return GroupMapper.mapToGroupParticipantsDto(groupRepository.save(group));
+    }
+    
 }

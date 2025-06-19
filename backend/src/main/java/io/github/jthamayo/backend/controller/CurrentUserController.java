@@ -1,5 +1,6 @@
 package io.github.jthamayo.backend.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import io.github.jthamayo.backend.service.impl.JobServiceImpl;
@@ -19,6 +20,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import io.github.jthamayo.backend.dto.AddressDto;
 import io.github.jthamayo.backend.dto.DependentDto;
+import io.github.jthamayo.backend.dto.GroupDto;
+import io.github.jthamayo.backend.dto.GroupParticipantsDto;
 import io.github.jthamayo.backend.dto.JobDto;
 import io.github.jthamayo.backend.dto.JobWithAddressDto;
 import io.github.jthamayo.backend.dto.NetworkDto;
@@ -32,6 +35,7 @@ import io.github.jthamayo.backend.exception.BadRequestException;
 import io.github.jthamayo.backend.security.UserPrincipal;
 import io.github.jthamayo.backend.service.AddressService;
 import io.github.jthamayo.backend.service.DependentService;
+import io.github.jthamayo.backend.service.GroupService;
 import io.github.jthamayo.backend.service.JobService;
 import io.github.jthamayo.backend.service.NetworkService;
 import io.github.jthamayo.backend.service.RequestService;
@@ -42,10 +46,6 @@ import io.github.jthamayo.backend.service.VehicleService;
 @RequestMapping("/api/user")
 public class CurrentUserController {
 
-    private final JobServiceImpl jobServiceImpl;
-
-    private final JobController jobController;
-
     private UserService userService;
     private NetworkService networkService;
     private RequestService requestService;
@@ -53,10 +53,11 @@ public class CurrentUserController {
     private DependentService dependentService;
     private JobService jobService;
     private VehicleService vehicleService;
+    private GroupService groupService;
 
     public CurrentUserController(UserService userService, NetworkService networkService, RequestService requestService,
 	    AddressService addressService, DependentService dependentService, JobService jobService,
-	    VehicleService vehicleService, JobController jobController, JobServiceImpl jobServiceImpl) {
+	    VehicleService vehicleService, GroupService groupService) {
 	this.userService = userService;
 	this.networkService = networkService;
 	this.requestService = requestService;
@@ -64,8 +65,7 @@ public class CurrentUserController {
 	this.dependentService = dependentService;
 	this.jobService = jobService;
 	this.vehicleService = vehicleService;
-	this.jobController = jobController;
-	this.jobServiceImpl = jobServiceImpl;
+	this.groupService = groupService;
     }
 
     @GetMapping("/me")
@@ -168,7 +168,23 @@ public class CurrentUserController {
     public ResponseEntity<List<UserSummary>> getUserConnections(@AuthenticationPrincipal UserPrincipal currentUser) {
 	List<UserSummary> networks = networkService.getUserConnections(currentUser.getId());
 	return ResponseEntity.ok(networks);
-    }    
+    }
+
+    @GetMapping("/group/candidates")
+    public ResponseEntity<List<UserSummary>> getUngroupedUserConnections(
+	    @AuthenticationPrincipal UserPrincipal currentUser) {
+	List<UserSummary> networks = networkService.getUngroupedUserConnections(currentUser.getId());
+	return ResponseEntity.ok(networks);
+    }
+
+    @PostMapping("/add/group")
+    public ResponseEntity<GroupDto> addGroup(@AuthenticationPrincipal UserPrincipal currentUser,
+	    @RequestBody List<String> usernames) {
+	List<String> participants = new ArrayList<>(usernames);
+	participants.add(currentUser.getUsername());
+	GroupDto group = groupService.createGroupFromUsername(participants);
+	return ResponseEntity.ok(group);
+    }
 
     @PostMapping("/add/address")
     public ResponseEntity<AddressDto> addAddress(@AuthenticationPrincipal UserPrincipal currentUser,
@@ -205,5 +221,18 @@ public class CurrentUserController {
 	VehicleDto vehicle = vehicleService.createVehicle(vehicleDto);
 	userService.addVehicle(currentUser.getId(), vehicle);
 	return new ResponseEntity<>(vehicle, HttpStatus.CREATED);
+    }
+
+    @GetMapping("/group")
+    public ResponseEntity<GroupParticipantsDto> getGroup(@AuthenticationPrincipal UserPrincipal currentUser) {
+	GroupParticipantsDto group = userService.getUserGroupParticipants(currentUser.getId());
+	return ResponseEntity.ok(group);
+    }
+
+    @PostMapping("/group/add/{username}")
+    public ResponseEntity<GroupParticipantsDto> addUserToGroup(@AuthenticationPrincipal UserPrincipal currentUser,
+	    @PathVariable String username) {
+	GroupParticipantsDto group = userService.addUserToGroup(currentUser.getId(), username);
+	return ResponseEntity.ok(group);
     }
 }

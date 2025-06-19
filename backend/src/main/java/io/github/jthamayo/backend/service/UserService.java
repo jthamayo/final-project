@@ -6,6 +6,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import io.github.jthamayo.backend.dto.AddressDto;
 import io.github.jthamayo.backend.dto.DependentDto;
+import io.github.jthamayo.backend.dto.GroupDto;
+import io.github.jthamayo.backend.dto.GroupParticipantsDto;
 import io.github.jthamayo.backend.dto.JobDto;
 import io.github.jthamayo.backend.dto.UserDto;
 import io.github.jthamayo.backend.dto.UserProfileDto;
@@ -47,5 +49,9 @@ public interface UserService {
     String getProfilePicture(Long userId);
 
     ScheduleDto addSchedule(ScheduleDto schedule);
+    
+    GroupParticipantsDto getUserGroupParticipants(Long userId);
+    
+    GroupParticipantsDto addUserToGroup(Long userId, String username);
 
 }
