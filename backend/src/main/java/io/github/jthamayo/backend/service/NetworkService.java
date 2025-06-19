@@ -22,6 +22,8 @@ public interface NetworkService {
 
     List<UserSummary> getUserConnections(Long userId);
     
+    List<UserSummary> getUngroupedUserConnections(Long userId);
+    
     List<UserSummary> getUnconnectedUsers(Long userId);
 
     List<UserDto> getGroupConnections(Long gropupId);

@@ -6,7 +6,7 @@ import io.github.jthamayo.backend.entity.Job;
 public class JobMapper {
 
     public static JobDto mapToJobDto(Job job) {
-	return new JobDto(job.getId(), job.getAddress().getId(), job.getUser().getId(), job.isIrregular(),
+	return new JobDto(job.getId(), job.getAddress() != null ? job.getAddress().getId() : null, job.getUser().getId(), job.isIrregular(),
 		job.isNocturnal());
     }
 

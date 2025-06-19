@@ -174,4 +174,12 @@ public class NetworkServiceImpl implements NetworkService {
 	}).filter(Objects::nonNull).collect(Collectors.toList());
     }
 
+    @Override
+    public List<UserSummary> getUngroupedUserConnections(Long userId) {
+	userRepository.findById(userId).orElseThrow(() -> new ResourceNotFoundException("User not found: " + userId));
+	List<User> users = networkRepository.findConnectedUsers(userId).stream()
+		.filter((user) -> user.getGroup() == null).collect(Collectors.toList());
+	return users.stream().map(UserMapper::mapToUserSummary).collect(Collectors.toList());
+    }
+
 }
