@@ -27,7 +27,7 @@ public class UserMapper {
     }
 
     public static UserSummary mapToUserSummary(User user) {
-	return new UserSummary(user.getFirstName(), user.getLastName(), user.getUsername(), user.getEmail(),
-		user.getProfilePictureUrl());
+	return new UserSummary( user.getUsername(), user.getFirstName(), user.getLastName(), user.getEmail(),
+		user.getProfilePictureUrl(), user.getGroup() != null);
     }
 }

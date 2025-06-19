@@ -88,7 +88,7 @@ public class UserController {
     public ResponseEntity<UserSummary> getUserByUsername(@PathVariable String username) {
 	UserDto userDto = userService.getUserByUsername(username);
 	return ResponseEntity.ok(new UserSummary(userDto.getFirstName(), userDto.getLastName(), userDto.getUsername(),
-		userDto.getEmail(), userDto.getProfilePictureUrl()));
+		userDto.getEmail(), userDto.getProfilePictureUrl(), userDto.getGroupId() != null));
 
     }
 

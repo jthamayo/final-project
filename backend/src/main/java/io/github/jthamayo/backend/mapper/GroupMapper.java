@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import io.github.jthamayo.backend.dto.GroupDto;
+import io.github.jthamayo.backend.dto.GroupParticipantsDto;
+import io.github.jthamayo.backend.dto.UserSummary;
 import io.github.jthamayo.backend.entity.Group;
 import io.github.jthamayo.backend.entity.User;
 
@@ -20,5 +22,11 @@ public class GroupMapper {
 	group.setId(groupDto.getId());
 	return group;
 
+    }
+
+    public static GroupParticipantsDto mapToGroupParticipantsDto(Group group) {
+	List<UserSummary> participants = group.getUsers().stream().map(UserMapper::mapToUserSummary)
+		.collect(Collectors.toList());
+	return new GroupParticipantsDto(group.getId(), participants);
     }
 }

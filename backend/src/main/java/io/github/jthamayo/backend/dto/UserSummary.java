@@ -9,6 +9,7 @@ public class UserSummary {
     private String email;
     private String profilePictureUrl;
     private Boolean hasPendingRequest;
+    private Boolean hasGroup;
 
     public UserSummary(Long id, String firstName, String lastName, String username, String email) {
 	this.id = id;
@@ -17,13 +18,15 @@ public class UserSummary {
 	this.username = username;
 	this.email = email;
     }
-    
-    public UserSummary(String firstName, String lastName, String username, String email, String profilePictureUrl) {
+ 
+    public UserSummary(String username, String firstName, String lastName, String email,
+	    String profilePictureUrl, Boolean hasGroup) {
+	this.username = username;
 	this.firstName = firstName;
 	this.lastName = lastName;
-	this.username = username;
 	this.email = email;
 	this.profilePictureUrl = profilePictureUrl;
+	this.hasGroup = hasGroup;
     }
 
     public String getUsername() {
@@ -81,6 +84,16 @@ public class UserSummary {
     public void setHasPendingRequest(Boolean hasPendingRequest) {
         this.hasPendingRequest = hasPendingRequest;
     }
+
+    public Boolean getHasGroup() {
+        return hasGroup;
+    }
+
+    public void setHasGroup(Boolean hasGroup) {
+        this.hasGroup = hasGroup;
+    }
+    
+    
     
 
 }
