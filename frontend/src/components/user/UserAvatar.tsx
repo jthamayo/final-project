@@ -1,6 +1,6 @@
 const UserAvatar = ({ url }: { url: string }) => {
   return (
-    <div className="avatar min-h-10 aspect-square bg-base rounded-md h-full">
+    <div className={`avatar min-h-10 aspect-square rounded-lg h-full ${url? "bg-transparent" : "bg-blue-300"}`}>
       {url ? (
         <img
           src={url}

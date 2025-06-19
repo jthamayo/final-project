@@ -100,7 +100,7 @@
     background-color: var(--color-box);
     width: 100%;
     border-radius: 1rem;
-    padding-left: 2rem;
+    padding: 0 2rem;
     min-height: 60px;
   }
 
@@ -186,8 +186,15 @@
     color: white;
   }
 
-  .fade{
+  .fade {
     animation: var(--animate-fade);
     animation-delay: 1000ms;
+  }
+
+  .button {
+    background-color: var(--color-blue-400);
+    padding: 0.7rem;
+    color: white;
+    border-radius: 0.4rem;
   }
 }
