@@ -10,7 +10,7 @@ import ListConnectedComponent from "../components/ListConnectedComponent";
 
 const DashboardComponent = () => {
   const { currentUser, isLoading, logout } = useAuth();
-  const [activePanel, setActivePanel] = useState("profile");
+  const [activePanel, setActivePanel] = useState("friends");
   const navigate = useNavigate();
 
   useEffect(() => {

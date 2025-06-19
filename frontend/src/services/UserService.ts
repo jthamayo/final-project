@@ -15,6 +15,7 @@ export interface PublicUser {
   isVerified: boolean;
   profilePictureUrl: string;
   hasPendingRequest: boolean;
+  hasGroup: boolean;
 }
 
 export interface User extends PublicUser{
