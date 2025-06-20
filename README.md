@@ -6,12 +6,13 @@ A full-stack web application built with Java and Spring Boot on the backend, and
 
 ## Features
 
-- User authentication and authorization  
-- CRUD operations for managing data  
-- Responsive and modern UI using Tailwind CSS  
-- Integration between frontend and backend via REST API  
-- Unit and integration testing  
-- Clean and modular project structure  
+- User authentication and authorization with JWT Tokens 
+- CRUD operations for managing data
+- Mobile-first using Tailwind CSS  
+- Integration between frontend and backend via REST API
+- Unit testing  
+- React modular frontend project structure
+- Structured backend with separation of concerns and RESTful data management
 
 ## Technologies Used
 
