@@ -1,5 +1,5 @@
-# Final Project
-
+# Syncare
+![syncare](https://res.cloudinary.com/ddguqr8l8/image/upload/v1750538921/readme_mr50r4.png)
 ## Description
 
 A full-stack web application built with Java and Spring Boot on the backend, and React with TypeScript on the frontend.
