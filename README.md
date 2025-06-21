@@ -1,5 +1,7 @@
 # Syncare
 ![syncare](https://res.cloudinary.com/ddguqr8l8/image/upload/v1750538921/readme_mr50r4.png)
+
+![groups](https://res.cloudinary.com/ddguqr8l8/image/upload/v1750545264/groups_xdnpbe.png)
 ## Description
 
 A full-stack web application built with Java and Spring Boot on the backend, and React with TypeScript on the frontend.
@@ -51,9 +53,13 @@ These instructions will help you run the project locally for development and tes
  cd backend 
  ```
 
-3. Install MySQL, Start MySQL Server and create a database
+3. Install MySQL, Start MySQL Server and create a database. Insert roles USER, and ADMIN in the database.
 
-4. Configure `application.properties`
+```SQL
+ INSERT INTO roles (name) VALUES ('USER'), ('ADMIN');
+ ```
+
+5. Configure `application.properties`
 
 * Copy the `src/main/resources/application.properties.example` file
 
