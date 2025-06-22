@@ -52,11 +52,11 @@ const SignupComponent = () => {
   };
 
   return (
-    <div className="flex flex-col w-full px-8 h-full overflow-y-auto">
+    <div className="flex flex-col w-full px-8 h-full overflow-y-auto items-center justify-center">
       <h2 className="my-8 text-white font-title text-4xl text-center">
         Sign up
       </h2>
-      <div className="w-full max-w-[1000px] m-auto bg-white rounded-4xl p-4 sm:p-12 relative">
+      <div className="w-full max-w-[1000px] mt-0 bg-white rounded-4xl p-4 sm:p-12 relative">
         <form
           onSubmit={handleSubmit(onSubmit)}
           className="flex max-sm:flex-col justify-between gap-4 sm:gap-8"

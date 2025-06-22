@@ -6,7 +6,6 @@ import { Job } from "./JobService";
 import { Dependent } from "./DependentService";
 import { Vehicle } from "./VehicleService";
 
-
 export interface PublicUser {
   firstName: string;
   lastName: string;
@@ -18,7 +17,7 @@ export interface PublicUser {
   hasGroup: boolean;
 }
 
-export interface User extends PublicUser{
+export interface User extends PublicUser {
   id: number;
 }
 

@@ -33,7 +33,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       const res = await loginUser({ usernameOrEmail, password });
       localStorage.setItem(ACCESS_TOKEN, res.accessToken);
       await loadCurrentUser();
-      navigate(`/`);
+      navigate(`/dashboard`);
     } catch (err) {
       console.error("Login failed", err);
       throw err;
@@ -44,7 +44,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     localStorage.removeItem(ACCESS_TOKEN);
     setCurrentUser(null);
     setIsAuthenticated(false);
-    navigate("/");
+    navigate("/login");
   };
 
   useEffect(() => {
