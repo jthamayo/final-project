@@ -19,6 +19,7 @@ const ListUserComponent = () => {
 
   return (
     <div className="w-full">
+      <h2 className="m-4">Search other users</h2>
       <ul className="flex flex-col gap-4 p-4">
         {users.map((user, index) => (
           <UserListItemComponent key={index} user={user} />

@@ -117,7 +117,7 @@ const AddressForm = () => {
       {state === "success" && (
         <div className="bg-green-300 flex rounded-lg p-4 mt-8">
           <svg className="plus-icon size-7 text-muted flex items-center justify-center">
-            <use xlinkHref="assets/icons.svg#tick"></use>
+            <use xlinkHref="/assets/icons.svg#tick"></use>
           </svg>
           <p className="text-white">You have added an Address</p>
         </div>

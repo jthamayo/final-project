@@ -9,7 +9,7 @@ const UserAvatar = ({ url }: { url: string }) => {
         />
       ) : (
         <svg className="plus-icon w-full h-full text-muted flex items-center justify-center p-[20%]">
-          <use xlinkHref="assets/icons.svg#user"></use>
+          <use xlinkHref="/assets/icons.svg#user"></use>
         </svg>
       )}
     </div>

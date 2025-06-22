@@ -18,7 +18,7 @@ const GroupCandidateListItemComponent = ({
 
   return (
     <li
-      className={`text-black rounded-md w-full flex items-center justify-between p-4 gap-12 ${
+      className={`text-black rounded-md w-full flex items-center justify-between p-4 gap-12 relative ${
         isSelected ? " bg-blue-200" : " bg-box"
       }`}
     >
@@ -31,7 +31,7 @@ const GroupCandidateListItemComponent = ({
           <p className="text-gray-500">{user.email}</p>
         </div>
       </div>
-      <div className="flex items-center gap-2">
+      <div className="flex items-center gap-2 absolute top-2 right-2">
         <button
           onClick={handleClick}
           className={`${
@@ -42,7 +42,7 @@ const GroupCandidateListItemComponent = ({
         >
           <svg className="icon size-8">
             <use
-              xlinkHref={`assets/icons.svg#${
+              xlinkHref={`/assets/icons.svg#${
                 isSelected ? "delete-user" : "add-user"
               }`}
             ></use>

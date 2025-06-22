@@ -61,7 +61,16 @@ const ProfileComponent = () => {
   return (
     <section className="p-4 flex flex-col w-full justify-between gap-4 relative">
       <div className="flex relative overflow-hidden h-[300px]">
-        <div className="h-1/2 w-full absolute bg-base rounded-lg"></div>
+        <div
+          className="h-2/3 w-full absolute bg-base rounded-lg overflow-hidden"
+          style={{
+            backgroundImage: "url('/assets/backgorund.png')",
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+            backgroundRepeat: "no-repeat",
+          }}
+        ></div>
+
         <div className="z-10 h-2/3 m-auto flex justify-center items-center">
           <div className="size-50 bg-box p-2 aspect-square rounded-lg relative">
             {isUploading ? (
@@ -83,12 +92,12 @@ const ProfileComponent = () => {
                 accept=".jpg,.png,.jpeg"
               />
               <svg className="size-9 absolute top-1/2 left-1/2 -translate-1/2 p-1">
-                <use xlinkHref="assets/icons.svg#pencil"></use>
+                <use xlinkHref="/assets/icons.svg#pencil"></use>
               </svg>
             </label>
           </div>
           <div className="absolute -bottom-4 left-1/2 -translate-1/2">
-            <h2 className="text-base text-center font-bold">
+            <h2 className="text-base text-center font-bold text-nowrap">
               Hello, {user.username}
             </h2>
           </div>
@@ -104,14 +113,14 @@ const ProfileComponent = () => {
                 className="square-button aspect-auto"
               >
                 <svg className="plus-icon size-1/3 text-muted">
-                  <use xlinkHref="assets/icons.svg#calendar"></use>
+                  <use xlinkHref="/assets/icons.svg#calendar"></use>
                 </svg>
                 <p> Add a job</p>
               </button>
             ) : (
               <div className="square-button aspect-auto bg-accent">
                 <svg className="plus-icon size-1/3 text-muted">
-                  <use xlinkHref="assets/icons.svg#tick"></use>
+                  <use xlinkHref="/assets/icons.svg#tick"></use>
                 </svg>
                 <p>Address</p>
               </div>
@@ -122,14 +131,14 @@ const ProfileComponent = () => {
                 className="square-button aspect-auto"
               >
                 <svg className="plus-icon size-1/3 text-muted">
-                  <use xlinkHref="assets/icons.svg#car"></use>
+                  <use xlinkHref="/assets/icons.svg#car"></use>
                 </svg>
                 <p> Add a vehicle</p>
               </button>
             ) : (
               <div className="square-button aspect-auto bg-accent">
                 <svg className="plus-icon size-1/3 text-muted">
-                  <use xlinkHref="assets/icons.svg#tick"></use>
+                  <use xlinkHref="/assets/icons.svg#tick"></use>
                 </svg>
                 <p>Address</p>
               </div>
@@ -140,14 +149,14 @@ const ProfileComponent = () => {
                 onClick={() => setActiveModal("address")}
               >
                 <svg className="plus-icon size-1/3 text-muted">
-                  <use xlinkHref="assets/icons.svg#location"></use>
+                  <use xlinkHref="/assets/icons.svg#location"></use>
                 </svg>
                 <p>Add an address</p>
               </button>
             ) : (
               <div className="square-button aspect-auto bg-accent">
                 <svg className="plus-icon size-1/3 text-muted">
-                  <use xlinkHref="assets/icons.svg#tick"></use>
+                  <use xlinkHref="/assets/icons.svg#tick"></use>
                 </svg>
                 <p>Address</p>
               </div>
@@ -158,14 +167,14 @@ const ProfileComponent = () => {
                 className="square-button aspect-auto"
               >
                 <svg className="plus-icon size-1/3 text-muted">
-                  <use xlinkHref="assets/icons.svg#users"></use>
+                  <use xlinkHref="/assets/icons.svg#users"></use>
                 </svg>
                 <p>Add family</p>
               </button>
             ) : (
               <div className="square-button aspect-auto bg-accent">
                 <svg className="plus-icon size-1/3 text-muted">
-                  <use xlinkHref="assets/icons.svg#tick"></use>
+                  <use xlinkHref="/assets/icons.svg#tick"></use>
                 </svg>
                 <p>Family</p>
               </div>
@@ -183,7 +192,7 @@ const ProfileComponent = () => {
           <JobForm />
         </Modal>
       )}
-       {activeModal === "vehicle" && (
+      {activeModal === "vehicle" && (
         <Modal onClose={() => setActiveModal(null)}>
           <VehicleForm />
         </Modal>

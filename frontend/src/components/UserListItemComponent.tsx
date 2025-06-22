@@ -22,7 +22,7 @@ const UserListItemComponent = ({ user }: { user: PublicUser }) => {
   };
 
   return (
-    <li className="bg-white text-black rounded-md w-full flex items-center justify-between p-4">
+    <li className="bg-white text-black rounded-md w-full flex items-center justify-between p-4 relative">
       <div className="flex items-center justify-evenly gap-4 h-25">
         <div className="bg-accent h-full aspect-square rounded-lg relative">
           <UserAvatar url={user.profilePictureUrl} />
@@ -45,7 +45,7 @@ const UserListItemComponent = ({ user }: { user: PublicUser }) => {
         )}
         <button
           className={`flex items-center rounded-lg p-1 justify-center ${
-            requestSent ? "bg-green-300 cursor-default" : "bg-blue-500"
+            requestSent ? "bg-green-300 cursor-default absolute right-2 top-2" : "bg-base"
           }`}
           onClick={!requestSent ? handleRequest : undefined}
           disabled={requestSent}
@@ -54,12 +54,12 @@ const UserListItemComponent = ({ user }: { user: PublicUser }) => {
             <>
               <p className="ml-3 text-white">Request sent</p>
               <svg className="size-8 mr-1">
-                <use xlinkHref="assets/icons.svg#tick"></use>
+                <use xlinkHref="/assets/icons.svg#tick"></use>
               </svg>
             </>
           ) : (
-            <svg className="size-12">
-              <use xlinkHref="assets/icons.svg#add-user"></use>
+            <svg className="size-8 md:size-12">
+              <use xlinkHref="/assets/icons.svg#add-user"></use>
             </svg>
           )}
         </button>

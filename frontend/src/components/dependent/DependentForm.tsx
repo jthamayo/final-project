@@ -160,7 +160,7 @@ const DependentForm = () => {
         <div className="bg-green-300 flex rounded-lg p-4 mt-8">
           <p className="text-white">You have successfully added a Dependent</p>
           <svg className="plus-icon size-7 text-muted flex items-center justify-center">
-            <use xlinkHref="assets/icons.svg#tick"></use>
+            <use xlinkHref="/assets/icons.svg#tick"></use>
           </svg>
         </div>
       )}

@@ -25,7 +25,7 @@ const ConnectionListItemComponent = ({
 
   return (
     <>
-      <li className="bg-white text-black rounded-md w-full flex items-center justify-between p-4">
+      <li className="bg-white text-black rounded-md w-full flex items-center justify-between p-4 relative">
         <div className="flex items-center justify-evenly gap-4 h-25">
           <div className="bg-accent h-full aspect-square rounded-lg relative">
             <UserAvatar url={user.profilePictureUrl} />
@@ -43,23 +43,23 @@ const ConnectionListItemComponent = ({
         {!user.hasGroup ? (
           <button
             onClick={() => setShowConfirm(true)}
-            className="flex items-center gap-2 bg-blue-400 hover:bg-blue-500 p-2 px-4 rounded-lg mr-4 text-white"
+            className="flex items-center gap-2 bg-blue-400 hover:bg-blue-500 p-2 px-4 rounded-lg mr-4 text-white max-sm:absolute -bottom-5 right-5 z-5"
           >
             Add {user.username} to your group
             <svg className="icon size-8">
               <use
-                xlinkHref={`assets/icons.svg#add-user
+                xlinkHref={`/assets/icons.svg#add-user
               `}
               ></use>
             </svg>
           </button>
         ) : (
-          <div className="bg-accent flex items-center p-2 rounded-md text-white">
+          <div className="bg-accent flex items-center p-2 rounded-md text-white max-sm:absolute top-2 right-2 z-5">
             <svg className="icon size-8">
-              <use xlinkHref="assets/icons.svg#users"></use>
+              <use xlinkHref="/assets/icons.svg#users"></use>
             </svg>
             <svg className="icon size-8">
-              <use xlinkHref="assets/icons.svg#tick"></use>
+              <use xlinkHref="/assets/icons.svg#tick"></use>
             </svg>
           </div>
         )}

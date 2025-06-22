@@ -51,10 +51,10 @@ const UserListItemComponent = ({
       : null;
 
   return (
-    <li className="bg-white text-black rounded-md w-full flex items-center gap-2 justify-between p-4 h-30">
+    <li className="bg-white text-black rounded-md w-full flex items-center gap-2 justify-between p-4 h-30 relative">
       <div className="h-full flex items-center justify-start gap-2">
         <UserAvatar url={user.profilePictureUrl} />
-        <div className="flex gap-2 items-center">
+        <div className="flex flex-col sm:flex-row gap-2 items-start sm:items-center">
           <h5 className="text-xl font-bold">{user.username}</h5>
           <p className="text-gray-400"> · {getNumberDays(request.sentDate)}</p>
           {status !== "pending" && resolveMessage && (
@@ -63,27 +63,27 @@ const UserListItemComponent = ({
         </div>
       </div>
       {isReceived && (
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 absolute right-2 top-2">
           <button
             onClick={handleAccept}
-            className={`box p-0 aspect-square justify-center ${
+            className={`flex size-10 p-0 aspect-square justify-center items-center rounded-md ${
               status === "rejected" ? "bg-gray-300 opacity-20" : "bg-green-300"
             }`}
             disabled={status !== "pending"}
           >
             <svg className="plus-icon size-7 text-muted flex items-center justify-center">
-              <use xlinkHref="assets/icons.svg#tick"></use>
+              <use xlinkHref="/assets/icons.svg#tick"></use>
             </svg>
           </button>
           <button
             onClick={handleReject}
-            className={`box p-0 aspect-square justify-center ${
+            className={`flex size-10 p-0 aspect-square justify-center items-center rounded-md ${
               status === "accepted" ? "bg-gray-300 opacity-20" : "bg-red-300"
             }`}
             disabled={status !== "pending"}
           >
             <svg className="plus-icon size-7 text-muted flex items-center justify-center">
-              <use xlinkHref="assets/icons.svg#cancel"></use>
+              <use xlinkHref="/assets/icons.svg#cancel"></use>
             </svg>
           </button>
         </div>
