@@ -48,7 +48,7 @@ public class JobServiceTest {
 
     @BeforeEach
     void setUp() {
-	user = new User(1L, "testUser", "lastname", "username", "email", "phoneNumber");
+	user = new User(1L, "testUser", "lastname", "username", "email", "phoneNumber", false);
 	address = new Address(1L, "city", "street", "zip", "country", 6, AddressType.HOME);
     }
 

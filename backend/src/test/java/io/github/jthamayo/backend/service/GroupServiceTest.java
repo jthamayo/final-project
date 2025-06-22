@@ -36,6 +36,8 @@ public class GroupServiceTest {
     private GroupRepository groupRepository;
     @Mock
     private UserRepository userRepository;
+    @Mock
+    private GroupChatService groupChatService;
     @InjectMocks
     private GroupServiceImpl groupService;
 
@@ -44,8 +46,8 @@ public class GroupServiceTest {
 
 	@BeforeEach
 	void setUp() {
-	    User user1 = new User(2L, "testUser1", "lastname", "username", "email", "phoneNumber");
-	    User user2 = new User(3L, "testUser2", "lastname", "username", "email", "phoneNumber");
+	    User user1 = new User(2L, "testUser1", "lastname", "username", "email", "phoneNumber", false);
+	    User user2 = new User(3L, "testUser2", "lastname", "username", "email", "phoneNumber", false);
 	    users = List.of(user1, user2);
 	    usersDto = List.of(user1.getId(), user2.getId());
 	    when(userRepository.findById(2L)).thenReturn(Optional.of(user1));
@@ -100,8 +102,8 @@ public class GroupServiceTest {
 
 	@BeforeEach
 	void setUp() {
-	    User user1 = new User(2L, "testUser1", "lastname", "username", "email", "phoneNumber");
-	    User user2 = new User(3L, "testUser2", "lastname", "username", "email", "phoneNumber");
+	    User user1 = new User(2L, "testUser1", "lastname", "username", "email", "phoneNumber", false);
+	    User user2 = new User(3L, "testUser2", "lastname", "username", "email", "phoneNumber", false);
 	    users = List.of(user1, user2);
 	    usersDto = List.of(user1.getId(), user2.getId());
 	}

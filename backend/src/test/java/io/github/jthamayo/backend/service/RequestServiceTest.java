@@ -49,8 +49,8 @@ public class RequestServiceTest {
 
 	@BeforeEach
 	void setUp() {
-	    user1 = new User(2L, "testUser1", "lastname", "username", "email", "phoneNumber");
-	    user2 = new User(3L, "testUser2", "lastname", "username", "email", "phoneNumber");
+	    user1 = new User(2L, "testUser1", "lastname", "username", "email", "phoneNumber", false);
+	    user2 = new User(3L, "testUser2", "lastname", "username", "email", "phoneNumber", false);
 	    when(userRepository.findById(2L)).thenReturn(Optional.of(user1));
 	    when(userRepository.findById(3L)).thenReturn(Optional.of(user2));
 	}
@@ -100,8 +100,8 @@ public class RequestServiceTest {
 
 	@BeforeEach
 	void setUp() {
-	    user1 = new User(2L, "testUser1", "lastname", "username", "email", "phoneNumber");
-	    user2 = new User(3L, "testUser2", "lastname", "username", "email", "phoneNumber");
+	    user1 = new User(2L, "testUser1", "lastname", "username", "email", "phoneNumber", false);
+	    user2 = new User(3L, "testUser2", "lastname", "username", "email", "phoneNumber", false);
 	}
 
 	@Test
