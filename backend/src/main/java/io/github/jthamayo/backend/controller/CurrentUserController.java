@@ -16,13 +16,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.server.ResponseStatusException;
 
 import io.github.jthamayo.backend.dto.AddressDto;
 import io.github.jthamayo.backend.dto.DependentDto;
+import io.github.jthamayo.backend.dto.GroupChatDto;
 import io.github.jthamayo.backend.dto.GroupDto;
 import io.github.jthamayo.backend.dto.GroupParticipantsDto;
 import io.github.jthamayo.backend.dto.JobDto;
 import io.github.jthamayo.backend.dto.JobWithAddressDto;
+import io.github.jthamayo.backend.dto.MessageDto;
+import io.github.jthamayo.backend.dto.NetworkChatDto;
 import io.github.jthamayo.backend.dto.NetworkDto;
 import io.github.jthamayo.backend.dto.RequestDto;
 import io.github.jthamayo.backend.dto.RequestDetailsDto;
@@ -34,8 +38,10 @@ import io.github.jthamayo.backend.exception.BadRequestException;
 import io.github.jthamayo.backend.security.UserPrincipal;
 import io.github.jthamayo.backend.service.AddressService;
 import io.github.jthamayo.backend.service.DependentService;
+import io.github.jthamayo.backend.service.GroupChatService;
 import io.github.jthamayo.backend.service.GroupService;
 import io.github.jthamayo.backend.service.JobService;
+import io.github.jthamayo.backend.service.NetworkChatService;
 import io.github.jthamayo.backend.service.NetworkService;
 import io.github.jthamayo.backend.service.RequestService;
 import io.github.jthamayo.backend.service.UserService;
@@ -44,7 +50,7 @@ import io.github.jthamayo.backend.service.VehicleService;
 @RestController
 @RequestMapping("/api/user")
 public class CurrentUserController {
-
+    
     private UserService userService;
     private NetworkService networkService;
     private RequestService requestService;
@@ -53,10 +59,13 @@ public class CurrentUserController {
     private JobService jobService;
     private VehicleService vehicleService;
     private GroupService groupService;
+    private GroupChatService groupChatService;
+    private NetworkChatService networkChatService;
 
     public CurrentUserController(UserService userService, NetworkService networkService, RequestService requestService,
 	    AddressService addressService, DependentService dependentService, JobService jobService,
-	    VehicleService vehicleService, GroupService groupService) {
+	    VehicleService vehicleService, GroupService groupService, GroupChatService groupChatService,
+	    NetworkChatService networkChatService) {
 	this.userService = userService;
 	this.networkService = networkService;
 	this.requestService = requestService;
@@ -65,6 +74,8 @@ public class CurrentUserController {
 	this.jobService = jobService;
 	this.vehicleService = vehicleService;
 	this.groupService = groupService;
+	this.groupChatService = groupChatService;
+	this.networkChatService = networkChatService;
     }
 
     @GetMapping("/me")
@@ -233,5 +244,37 @@ public class CurrentUserController {
 	    @PathVariable String username) {
 	GroupParticipantsDto group = userService.addUserToGroup(currentUser.getId(), username);
 	return ResponseEntity.ok(group);
+    }
+
+    @PostMapping("/message/send/user")
+    public ResponseEntity<MessageDto> sendMessageToUser(@AuthenticationPrincipal UserPrincipal currentUser,
+	    @RequestBody MessageDto message) {
+	System.out.println("here");
+	if (!currentUser.getUsername().equals(message.getSenderUsername())) {
+	    throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "You are not the sender of this message.");
+	}
+	MessageDto sentMessage = networkChatService.sendMessage(message);
+	return new ResponseEntity<>(sentMessage, HttpStatus.CREATED);
+    }
+
+    @PostMapping("/message/send/group")
+    public ResponseEntity<MessageDto> sendMessageToGroup(@AuthenticationPrincipal UserPrincipal currentUser,
+	    @RequestBody MessageDto message) {
+	if (!currentUser.getUsername().equals(message.getSenderUsername())) {
+	    throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "You are not the sender of this message.");
+	}
+	MessageDto sentMessage = groupChatService.sendMessage(message);
+	return new ResponseEntity<>(sentMessage, HttpStatus.CREATED);
+    }
+    
+    @GetMapping("/chats")
+    public ResponseEntity<List<NetworkChatDto>> getAllUserChats(@AuthenticationPrincipal UserPrincipal currentUser){
+	List<NetworkChatDto> chats = networkChatService.getAllUserChats(currentUser.getId());
+	return ResponseEntity.ok(chats);
+    }
+    @GetMapping("/groupchat")
+    public ResponseEntity<GroupChatDto> getUserGroupChat(@AuthenticationPrincipal UserPrincipal currentUser){
+	GroupChatDto chat = groupChatService.getUserGroupChat(currentUser.getId());
+	return ResponseEntity.ok(chat);
     }
 }

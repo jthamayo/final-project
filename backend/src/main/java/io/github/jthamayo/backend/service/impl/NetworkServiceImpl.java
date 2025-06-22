@@ -27,6 +27,7 @@ import io.github.jthamayo.backend.repository.GroupRepository;
 import io.github.jthamayo.backend.repository.NetworkRepository;
 import io.github.jthamayo.backend.repository.RequestRepository;
 import io.github.jthamayo.backend.repository.UserRepository;
+import io.github.jthamayo.backend.service.NetworkChatService;
 import io.github.jthamayo.backend.service.NetworkService;
 import io.github.jthamayo.backend.service.RequestService;
 
@@ -38,14 +39,17 @@ public class NetworkServiceImpl implements NetworkService {
     private GroupRepository groupRepository;
     private RequestRepository requestRepository;
     private RequestService requestService;
+    private NetworkChatService networkChatService;
 
     public NetworkServiceImpl(NetworkRepository networkRepository, UserRepository userRepository,
-	    GroupRepository groupRepository, RequestRepository requestRepository, RequestService requestService) {
+	    GroupRepository groupRepository, RequestRepository requestRepository, RequestService requestService,
+	    NetworkChatService networkChatService) {
 	this.networkRepository = networkRepository;
 	this.userRepository = userRepository;
 	this.groupRepository = groupRepository;
 	this.requestService = requestService;
 	this.requestRepository = requestRepository;
+	this.networkChatService = networkChatService;
     }
 
     @Override
@@ -58,7 +62,6 @@ public class NetworkServiceImpl implements NetworkService {
 	if (existingNetwork.isPresent()) {
 	    throw new InvalidOperationException("Users are already connected");
 	}
-	// TODO verify accepted request
 	Optional<Request> acceptedRequest = requestRepository.findAcceptedRequestBetweenUsers(networkDto.getUserId1(),
 		networkDto.getUserId2());
 	if (!acceptedRequest.isPresent()) {
@@ -70,7 +73,9 @@ public class NetworkServiceImpl implements NetworkService {
 	network.setUser2(userRepository.findById(networkDto.getUserId2())
 		.orElseThrow(() -> new ResourceNotFoundException("User not found: " + networkDto.getUserId2())));
 	network.setDateStart(LocalDate.now());
-	return NetworkMapper.mapToNetworkDto(networkRepository.save(network));
+	Network savedNetwork = networkRepository.save(network);
+	networkChatService.createNetworkChat(savedNetwork.getId());
+	return NetworkMapper.mapToNetworkDto(savedNetwork);
     }
 
     @Override

@@ -50,8 +50,7 @@ public class MessageDto {
 	this.chatId = chatId;
     }
 
-    public MessageDto(Long id, String content, String senderUsername, LocalDateTime sentAt, Long chatId) {
-	this.id = id;
+    public MessageDto(String content, String senderUsername, LocalDateTime sentAt, Long chatId) {
 	this.content = content;
 	this.senderUsername = senderUsername;
 	this.sentAt = sentAt;

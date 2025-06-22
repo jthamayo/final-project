@@ -6,8 +6,10 @@ import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
+import jakarta.persistence.Table;
 
 @Entity
+@Table(name = "group_chats")
 @DiscriminatorValue("GROUP")
 public class GroupChat extends Chat {
 

@@ -15,6 +15,7 @@ import io.github.jthamayo.backend.mapper.GroupMapper;
 import io.github.jthamayo.backend.mapper.UserMapper;
 import io.github.jthamayo.backend.repository.GroupRepository;
 import io.github.jthamayo.backend.repository.UserRepository;
+import io.github.jthamayo.backend.service.GroupChatService;
 import io.github.jthamayo.backend.service.GroupService;
 
 @Service
@@ -22,10 +23,12 @@ public class GroupServiceImpl implements GroupService {
 
     private GroupRepository groupRepository;
     private UserRepository userRepository;
+    private GroupChatService groupChatService;
 
-    public GroupServiceImpl(UserRepository userRepository, GroupRepository groupRepository) {
+    public GroupServiceImpl(UserRepository userRepository, GroupRepository groupRepository, GroupChatService groupChatService) {
 	this.groupRepository = groupRepository;
 	this.userRepository = userRepository;
+	this.groupChatService = groupChatService;
     }
 
     @Override
@@ -37,7 +40,9 @@ public class GroupServiceImpl implements GroupService {
 		.collect(Collectors.toList());
 	users.forEach(user -> user.setGroup(group));
 	group.setUsers(users);
-	return GroupMapper.mapToGroupDto(groupRepository.save(group));
+	Group savedGroup = groupRepository.save(group);
+	groupChatService.createGroupChat(savedGroup.getId());
+	return GroupMapper.mapToGroupDto(savedGroup);
     }
 
     @Override
@@ -109,6 +114,8 @@ public class GroupServiceImpl implements GroupService {
 	    }
 	}
 	users.forEach(user -> user.setGroup(group));
-	return GroupMapper.mapToGroupDto(groupRepository.save(group));
+	Group savedGroup = groupRepository.save(group);
+	groupChatService.createGroupChat(savedGroup.getId());
+	return GroupMapper.mapToGroupDto(savedGroup);
     }
 }

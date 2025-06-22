@@ -8,8 +8,11 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 
 @Entity
+@Table(name = "messages")
+
 public class Message {
 
     @Id
@@ -72,18 +75,18 @@ public class Message {
 
     }
     
-    public Message(Long id, String content, LocalDateTime sentAt) {
-	this.id = id;
+    public Message(String content, LocalDateTime sentAt) {
 	this.content = content;
 	this.sentAt = sentAt;
     }
 
-    public Message(Long id, String content, LocalDateTime sentAt, User sender, Chat chat) {
-	this.id = id;
+    public Message(String content, LocalDateTime sentAt, User sender, Chat chat) {
 	this.content = content;
 	this.sentAt = sentAt;
 	this.sender = sender;
 	this.chat = chat;
     }
+    
+    
 
 }

@@ -15,6 +15,9 @@ public interface NetworkRepository extends JpaRepository<Network, Long> {
 
     @Query("SELECT n FROM Network n WHERE n.user1.id = :userId1 AND n.user2.id = :userId2")
     Optional<Network> findNetworkBetweenUsers(@Param("userId1") Long userId1, @Param("userId2") Long userId2);
+    
+    @Query("SELECT n FROM Network n WHERE n.user1.id = :userId OR n.user2.id = :userId")
+    List<Network> findAllUserNetworks(@Param("userId") Long userId);
 
     @Query("""
     	SELECT u FROM User u WHERE u.id IN

@@ -2,33 +2,38 @@ package io.github.jthamayo.backend.dto;
 
 import java.util.List;
 
-
-public class NetworkChatDto extends ChatDto{
+public class NetworkChatDto extends ChatDto {
 
     private Long networkId;
-    private List<String> participantsUsername;
+    private List<UserSummary> participants;
 
     public Long getNetworkId() {
-        return networkId;
+	return networkId;
     }
 
     public void setNetworkId(Long networkId) {
-        this.networkId = networkId;
+	this.networkId = networkId;
     }
 
-    public List<String> getParticipantUsername() {
-        return participantsUsername;
+    public List<UserSummary> getParticipants() {
+	return participants;
     }
+
+    public void setParticipantsUsername(List<UserSummary> participants) {
+	this.participants = participants;
+    }
+
+    public void setParticipants(List<UserSummary> participants) {
+	this.participants = participants;
+    }
+
+    /////////////////////////////// CONSTRUCTOR///////////////////////////////////////
+
     
-    public void setParticipantUsername(List<String> participantsUsername) {
-	this.participantsUsername = participantsUsername;
-    }
-
-    ///////////////////////////////CONSTRUCTOR///////////////////////////////////////
-
-    public NetworkChatDto(Long networkId, List<String> participantsUsername, List<MessageDto> messages) {
+    public NetworkChatDto(Long id, Long networkId, List<UserSummary> participants, List<MessageDto> messages) {
+	this.setId(id);
 	this.setMessages(messages);
 	this.networkId = networkId;
-	this.participantsUsername = participantsUsername;
-    }    
+	this.participants = participants;
+    }
 }

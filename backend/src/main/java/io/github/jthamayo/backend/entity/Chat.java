@@ -10,8 +10,10 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Inheritance;
 import jakarta.persistence.InheritanceType;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 
 @Entity
+@Table(name = "chats")
 @Inheritance(strategy = InheritanceType.JOINED)
 public abstract class Chat {
     
