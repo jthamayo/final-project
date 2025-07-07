@@ -1,5 +1,6 @@
 export const REST_API_BASE_URL = 'http://localhost:8080';
 export const ACCESS_TOKEN = 'accessToken';
+export const WEBSOCKET_BASE_URL = 'http://localhost:8080/ws';
 
 export const FIRSTNAME_MIN_LENGTH = 2;
 export const FIRSTNAME_MAX_LENGTH = 20;
